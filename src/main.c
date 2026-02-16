@@ -6,147 +6,58 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 15:54:05 by abita             #+#    #+#             */
-/*   Updated: 2026/02/12 16:02:22 by abita            ###   ########.fr       */
+/*   Updated: 2026/02/16 19:03:22 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-int is_valid_row(char *line)
+int	input_validity(t_line	*line, t_data *data, int argc, char **argv)
 {
-	int i;
-	int len;
-
-	if (!line || line[0] == '\0')
-		return (0);
-	i = 0;
-	len = 0;
-	while (line[i] && line[i] != '\n')
-		i++;
-	len = i;
-	if (line[0] != WALL)
-		return (0);
-	if (line[len - 1] != WALL)
-		return (0);
-	return (1);
-}
-
-int is_all_ones(char *last_map_line)
-{
-	int i;
-
-	i = 0;
-	while(last_map_line[i])
+	if (argc < 2)
 	{
-		if (last_map_line[i] != WALL && !ft_isspace(last_map_line[i]))
-			return (0);
-		i++;
+		write (2, "WARNING: [pass a map file: '.cub'].\n", 37);
+		ft_exit_error(data);
 	}
-	return (1);
-}
-
-int open_file(void)
-{
-	int			fd;
-	char    	*next_line;
-	char		*first_map_line;
-	char		*last_map_line;
-	int			is_first_line;
-	int			error;
-	char		*tmp;
-
-	fd = open("map.cub", O_RDONLY);
-	if (fd == -1)
-		return (print_error("Error: opening the file\n"), ERROR_FD);
-	
-	printf("opened the file\n");
-	
-	first_map_line = NULL;
-	last_map_line = NULL;
-	is_first_line = 1;
-	error = 0;
-	
-	while ((next_line = get_next_line(fd)) != NULL)
+	if (argc > 2)
 	{
-		int i = 0;
-		while(ft_isspace(next_line[i]))
-			i++;
-		////////////////
-		// so, literally, what i do is that i created these 2 variables first and last row,
-		// to keep track in case these rows are other than 1s. They should always be 1 nontheless
-		// so what i do, i check for each char, and if the first_map_line is empty, 
-		// then add only the first line
-		// in case we have:
-		// 		00000000
-		// 		00000000
-		// 		11111111
-		// here our first_map_line will be: 00000000
-		// where as the last_map_line will just be overwritten for each iteration until it reaches the end
-		// and as a result our last_map_line will be: 11111111
-		////////////////
-		if (next_line[i] != '\0')
-		{
-			if (is_first_line)
-			{
-				first_map_line = ft_strdup(&next_line[i]);
-				is_first_line = 0;
-			}
-			free(last_map_line);
-			last_map_line = ft_strdup(&next_line[i]);
-			if (!is_valid_row(&next_line[i]))
-			{
-				error = 1;
-				free(next_line);
-				break ;
-			}
-		}
-		printf("%s\n", next_line);
-		free(next_line);
+		write(2, "WARNING: [too many arguments].\n", 32);
+		ft_exit_error(data);
 	}
-	close (fd);
-	// need to clean the static var from gnl so i leave it to clean it
-	if (!error)
-	{
-		if (first_map_line && !is_all_ones(first_map_line))
-			error = 1;
-		if (last_map_line && !is_all_ones(last_map_line))
-			error = 1;
-	}
-	////////////////
-	// here i validate the first and last rows to check if it contains 1 or also spaces,
-	// if it contains smth else than it frees and displays error, that the map is not valid
-	////////////////
-	if (error)
-	{
-		while ((tmp = get_next_line(fd)) != NULL)
-			free(tmp);
-		print_error("ERROR: Invalid map\n");
-		free(first_map_line);
-		free(last_map_line);
+	char *path;
+	char *dot_found;
+	// int compare;
+
+	path = argv[1];
+	printf("path: %s\n", path);
+	dot_found = ft_strrchr(path, '.');
+	if (!dot_found)
 		return (EXIT_FAILURE);
-	}
-	free(first_map_line);
-	free(last_map_line);
-	printf("Map validation passed\n");
-	return (EXIT_SUCCESS);
+	printf("dot_found: %s\n", dot_found);
+	// printf("compare: %i\n", compare);
+	// compare = ft_strcmp(dot_found, ".cub");
+	if (ft_strcmp(dot_found, ".cub") == 0)
+	{ 
+		if (open_file(path, line) != EXIT_SUCCESS)
+			return (ERROR_OPENING_FILE);
+	}		
+	return (0);
 }
 
-int main()
-{	
-	t_data		data;
+int	main(int argc, char **argv)
+{
+	t_data	data;
+	t_line	line;
 
-	printf("entering\n");
-	
-	if (open_file() != EXIT_SUCCESS)
-		return (print_error("ERROR: opening the file\n"), ERROR_OPENING_FILE);
-	
-	printf("file reading finished\n");
-	printf("about to init the window\n");
-	
+	ft_bzero(&data, sizeof(t_data));
+	ft_bzero(&line, sizeof(t_line));
+
+	printf("entering\n"); // DEBUG
+	input_validity(&line, &data, argc, argv);
+	printf("file reading finished\n");    // DEBUG
+	printf("about to init the window\n"); // DEBUG
 	init_window_and_display(&data);
-
-	printf("init the window\n");
-	
+	printf("init the window\n"); // DEBUG
 	mlx_loop_helper(&data);
 	return (EXIT_SUCCESS);
 }
