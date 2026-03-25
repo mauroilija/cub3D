@@ -1,7 +1,7 @@
 # cub3D
 This project is a team project that is inspired by the world famous eponymous 90's game, which was the first FPS ever. 
 
-##Resources:
+## Resources:
 Raycasting: https://www.scottsmitelli.com/articles/we-can-fix-your-raycaster/
 Raycasting: https://lodev.org/cgtutor/raycasting.html
 https://www.youtube.com/watch?v=DPfxjQ6sqrc
