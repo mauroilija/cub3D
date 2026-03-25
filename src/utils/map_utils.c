@@ -1,20 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_return.c                                     :+:      :+:    :+:   */
+/*   map_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/11 17:29:49 by abita             #+#    #+#             */
-/*   Updated: 2026/02/11 17:30:02 by abita            ###   ########.fr       */
+/*   Created: 2026/02/16 13:56:33 by abita             #+#    #+#             */
+/*   Updated: 2026/02/17 18:08:33 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-void	print_error(const char *msg)
+int	is_valid_input(char line)
 {
-	write(STDERR_FILENO, RED, 5);
-	write(STDERR_FILENO, msg, ft_strlen(msg));
-	write(STDERR_FILENO, RED, 5);
+	return (line == SPACE || line == WALL || line == NORTH || line == SOUTH
+		|| line == EAST || line == WEST || line == ' ' || line == '\t');
+}
+int	is_player(char line)
+{
+	return (line == NORTH || line == SOUTH || line == EAST || line == WEST);
+}
+
+int	is_all_ones(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] != WALL && !ft_isspace(line[i]))
+			return (0);
+		i++;
+	}
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/02/16 19:03:24 by abita            ###   ########.fr       */
+/*   Updated: 2026/02/26 18:00:39 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,40 @@
 # define SOUTH 'S'
 # define EAST 'E'
 # define WEST 'W'
-
+////////////////////////////////////////////////////////////////////////////////
 /* ************************************************************************** */
 /*                                   ENUM Error FD                            */
 /* ************************************************************************** */
 typedef enum e_return_values
 {
-	ERROR_FD = -1,
-	ERROR_OPENING_FILE = -2
+	ERROR = -1,
+	ERROR_FD = -2,
+	ERROR_OPENING_FILE = -3,
+	ERROR_INVALID_MAP = -4,
+	ERROR_MALLOC = -5
 }			e_return_values;
 
+/* ************************************************************************** */
+/*                             ENUM Texture Types                             */
+/* ************************************************************************** */
+typedef enum e_txt_type
+{
+	NO,
+	SO,
+	WE,
+	EA
+}			t_txt_type;
+
+/* ************************************************************************** */
+/*                             ENUM Color   Types                             */
+/* ************************************************************************** */
+typedef enum e_color_type
+{
+	F = 11,
+	C = 12
+}			t_color_type;
+
+////////////////////////////////////////////////////////////////////////////////
 /* ************************************************************************** */
 /*                                   MLX Struct                               */
 /* ************************************************************************** */
@@ -79,7 +103,7 @@ typedef struct s_data
 }			t_data;
 
 /* ************************************************************************** */
-/*                                   FD				                           */
+/*                                   FD_line Struct									*/
 /* ************************************************************************** */
 typedef struct s_line
 {
@@ -88,8 +112,37 @@ typedef struct s_line
 	int		is_first_line;
 	int		error;
 	char	*tmp;
+	int		player_count;
+	int		map_started;
 }			t_line;
 
+
+/* ************************************************************************** */
+/*                                   Color Struct                             */
+/* ************************************************************************** */
+
+typedef struct s_color_data
+{
+	int		floor_color;
+	int		ceiling_color;
+}			t_color_data;
+
+
+/* ************************************************************************** */
+/*                                   Texture Struct	                          */
+/* ************************************************************************** */
+
+typedef struct s_texture_data
+{
+	int no;
+	int so;
+	int we;
+	int ea;
+	int fd;
+} t_texture_data;
+
+
+////////////////////////////////////////////////////////////////////////////////
 /* ************************************************************************** */
 /*                                   MLX Window                               */
 /* ************************************************************************** */
@@ -106,18 +159,32 @@ int			ft_exit_error(t_data *data);
 /* ************************************************************************** */
 
 void		print_error(const char *msg);
-void		initialize_line(t_line *line);
 int			is_all_ones(char *last_map_line);
-int			is_valid_row(char *line);
-int			is_valid_map_char(char *line);
-int			valid_input(char line);
+int			is_player(char line);
+int			is_valid_input(char line);
 
 /* ************************************************************************** */
-/*                                  MAP                                     */
+/*                                  Parser                                    */
 /* ************************************************************************** */
 
-int			open_file(char *path, t_line *line);
-int			validate_map_borders(t_line *line);
-void		process_map_line(char *next_line, t_line *line);
+int	parser(char *path, t_line *map, t_color_data *c_data, t_texture_data *t_data);
+
+// map //
+int			parse_map_line(char *line, t_line *map);
+int			is_valid_row(char *line, t_line *map);
+int			is_valid_map(char *line, t_line *map);
+
+// textures //
+int	parse_texture(char *line, t_texture_data *t_data);
+
+// color //
+int			parse_color(char *line, t_color_data *c_data);
+
+// utils //
+void		init_line(t_line *line);
+int			skip_whitespace(char *line);
+int			is_texture_line(char *line);
+int			is_color_line(char *line);
+void		free_split(char **split);
 
 #endif
