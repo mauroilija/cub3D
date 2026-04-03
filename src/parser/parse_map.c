@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 13:55:41 by abita             #+#    #+#             */
-/*   Updated: 2026/02/24 20:12:02 by abita            ###   ########.fr       */
+/*   Updated: 2026/02/26 18:02:01 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,67 +50,46 @@ int	is_valid_map(char *line, t_line *map)
 int	is_valid_row(char *line, t_line *map)
 {
 	int	len;
-	char **mat;
-	(void)map;
 
+	(void)map;
 	if (!line)
 		return (0);
 	len = 0;
 	while (line[len] && line[len] != '\n')
 		len++;
-	
-/////////////////////////////////////////////////
-
-
-	mat = ft_split(line, '\n');
-	if (!mat)
-		return(free(mat), 1);
-	
-	int N = sizeof(mat) / sizeof(mat[0]);
-    int M = sizeof(mat[0]) / sizeof(mat[0][0]);	
-	for(int i = 0; i < N * M; i++)
-	{
-		int row  = i / M;
-		int col = i % M;
-		printf("%c\n", mat[row][col]);
-		free(mat[i]);
-	}
-	free(mat);	
 	// printf("len: %i\n", len);
-	// printf("line[%i]: %s\n", len, line);
+	printf("line[%i]: %s\n", len, line);
 	if (line[0] != WALL)
 		return (0);
 	if (line[len - 1] != WALL)
 		return (0);
 	// printf("last row: %s", map->last_map_line);
-	
 	return (1);
 }
 
 int	parse_map_line(char *line, t_line *map)
 {
-	int	i;
+	int		i;
+	char	*clean;
 
 	i = 0;
-	// map->map_started = 0;
 	while (ft_isspace(line[i]))
 		i++;
 	if (line[i] == '\0')
 		return (EXIT_SUCCESS);
-	if (!is_valid_map(line, map))
-	{
+	clean = ft_strtrim(&line[i], "\n");
+	if (!clean)
+		return (ERROR_MALLOC);
+	if (!is_valid_map(clean, map))
 		map->error = 1;
-		return (ERROR_INVALID_MAP);
-	}
 	if (map->is_first_line)
 	{
-		map->first_map_line = ft_strdup(&line[i]);
+		map->first_map_line = ft_strdup(clean);
 		map->is_first_line = 0;
 	}
 	free(map->last_map_line);
-	map->last_map_line = ft_strdup(&line[i]);
-	if (!is_valid_row(&line[i], map))
+	map->last_map_line = ft_strdup(clean);
+	if (!is_valid_row(clean, map))
 		map->error = 1;
-
-	return (EXIT_SUCCESS);
+	return (free(clean), EXIT_SUCCESS);
 }

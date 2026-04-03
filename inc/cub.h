@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/02/24 12:44:01 by abita            ###   ########.fr       */
+/*   Updated: 2026/02/26 18:00:39 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ typedef enum e_return_values
 	ERROR = -1,
 	ERROR_FD = -2,
 	ERROR_OPENING_FILE = -3,
-	ERROR_INVALID_MAP = -4
+	ERROR_INVALID_MAP = -4,
+	ERROR_MALLOC = -5
 }			e_return_values;
 
 /* ************************************************************************** */
