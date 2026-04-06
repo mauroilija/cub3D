@@ -8,3 +8,5 @@ Useful resources for this project are:
 - Raycasting: [Raycasting article](https://www.scottsmitelli.com/articles/we-can-fix-your-raycaster/)
 - Raycasting: [Lode's Computer Graphics Tutorial](https://lodev.org/cgtutor/raycasting.html)
 - Raycasting: [3DSage Make Your Own Raycaster](https://www.youtube.com/watch?v=gYRrGTC7GtACub3D)
+- Flood Fill: [Flood Fill - Labeling/Coloring the Connected Components](https://usaco.guide/CP2.pdf#page=90)
+- Flood Fill: [Flood Fill](https://darrenyao.com/usacobook/cpp.pdf#page=51)
