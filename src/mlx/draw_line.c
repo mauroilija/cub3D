@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: milija-h <milija-h@student.42vienna.c      +#+  +:+       +#+        */
+/*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 17:37:12 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/07 17:37:14 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/07 19:49:36 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 void	draw_vertical_lines(int height, int width, int color, t_data *data)
 {
-	
+
 }

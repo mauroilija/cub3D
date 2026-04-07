@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
+/*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/02/26 18:00:39 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/07 20:27:22 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,15 +80,20 @@ typedef enum e_color_type
 	C = 12
 }			t_color_type;
 
+/* ************************************************************************** */
+/*                                   PLAYER                                   */
+/* ************************************************************************** */
 typedef struct s_player
 {
 	float	x_position; // position in the x-axis
 	float	y_position; // position in the y-axis
+	float	x_direction;
+	float	y_direction;
 	bool	key_up;
 	bool	key_down;
 	bool	key_right;
 	bool	key_left;
-}	t_player;
+}				t_player;
 
 ////////////////////////////////////////////////////////////////////////////////
 /* ************************************************************************** */
@@ -109,7 +114,6 @@ typedef struct s_data
 	void	*mlx;
 	void	*win;
 	int		i;
-
 }			t_data;
 
 /* ************************************************************************** */
