@@ -80,6 +80,16 @@ typedef enum e_color_type
 	C = 12
 }			t_color_type;
 
+typedef struct s_player
+{
+	float	x_position; // position in the x-axis
+	float	y_position; // position in the y-axis
+	bool	key_up;
+	bool	key_down;
+	bool	key_right;
+	bool	key_left;
+}	t_player;
+
 ////////////////////////////////////////////////////////////////////////////////
 /* ************************************************************************** */
 /*                                   MLX Struct                               */
@@ -186,5 +196,11 @@ int			skip_whitespace(char *line);
 int			is_texture_line(char *line);
 int			is_color_line(char *line);
 void		free_split(char **split);
+
+/* ************************************************************************** */
+/*                                  Executor                                  */
+/* ************************************************************************** */
+
+void	init_player(t_player *player);
 
 #endif

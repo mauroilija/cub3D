@@ -46,7 +46,6 @@ OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 # ==========================
 
 all: $(LIBFT) $(NAME)
-	@echo "$(GREEN)Building Cub3D...$(RESET)"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c inc/cub.h
 	@mkdir -p $(dir $@)
@@ -54,6 +53,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c inc/cub.h
 
 
 $(NAME): $(OBJS)
+	@echo "$(GREEN)Compiling Cub3D...$(RESET)"
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(LIBS) -o $(NAME)
 
 
