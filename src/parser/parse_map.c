@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 13:55:41 by abita             #+#    #+#             */
-/*   Updated: 2026/02/26 18:02:01 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/06 22:50:33 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ int	is_valid_row(char *line, t_line *map)
 	while (line[len] && line[len] != '\n')
 		len++;
 	// printf("len: %i\n", len);
-	printf("line[%i]: %s\n", len, line);
 	if (line[0] != WALL)
 		return (0);
 	if (line[len - 1] != WALL)
@@ -66,7 +65,65 @@ int	is_valid_row(char *line, t_line *map)
 	// printf("last row: %s", map->last_map_line);
 	return (1);
 }
+char **map_add_line(char **old, char *line)
+{
+	int i;
+	char **new;
 
+	i = 0;
+	while (old && old[i])
+		i++;
+	new = (char **)ft_calloc((i + 2), sizeof(char *));
+	if (!new)
+		return (NULL);
+	i = 0;
+	while (old && old[i])
+	{
+		new[i] = old[i];
+		i++;
+	}
+	new[i++] = ft_strdup(line);
+	new[i] = NULL;
+	free(old);
+	return (new);
+}
+void flood_fill(t_line grid, )
+{
+	if (y < 0 || x < 0 || y >= height || x >= height)
+		return ; // if outside grid 
+	if (grid[y][x] == ' ' || grid[y][x] == '\0');
+		return ;
+	flood_fill(y, x+1, color);
+	flood_fill(y, x-1, color);
+	flood_fill(y-1, x, color);
+	flood_fill(y+1, x, color);
+}
+int grid_validation(t_line *map)
+{
+	int x;
+	int y;
+	int curr_size;
+	
+	y = 0;
+	curr_size = 0;
+	while (y < map->height)
+	{
+		x = 0;
+		while (map->grid[y][x])
+		{
+			if (map->grid[y][x] == '0')
+			{
+				//check up, down, left, right
+				// if (!vizited[y][x])
+					// curr_size = 0;
+				flood_fill(x, y, map->grid[y][x], map->height);
+			}
+			x++;
+		}
+		y++;
+	}
+	return (1);
+}
 int	parse_map_line(char *line, t_line *map)
 {
 	int		i;
@@ -82,6 +139,7 @@ int	parse_map_line(char *line, t_line *map)
 		return (ERROR_MALLOC);
 	if (!is_valid_map(clean, map))
 		map->error = 1;
+	
 	if (map->is_first_line)
 	{
 		map->first_map_line = ft_strdup(clean);
@@ -91,5 +149,11 @@ int	parse_map_line(char *line, t_line *map)
 	map->last_map_line = ft_strdup(clean);
 	if (!is_valid_row(clean, map))
 		map->error = 1;
+	map->grid = map_add_line(map->grid, clean);
+	map->height++;
+
+	grid_validation(map);
+	// printf("line: %s\n", line);
+	// printf("each line len: %lu\n", ft_strlen(line));
 	return (free(clean), EXIT_SUCCESS);
 }

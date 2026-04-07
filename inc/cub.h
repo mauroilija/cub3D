@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/02/26 18:00:39 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/06 18:59:56 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,10 +103,12 @@ typedef struct s_data
 }			t_data;
 
 /* ************************************************************************** */
-/*                                   FD_line Struct									*/
+/*                                   FD_line Struct							  */
 /* ************************************************************************** */
 typedef struct s_line
 {
+	char	**grid;
+	int		height;
 	char	*first_map_line;
 	char	*last_map_line;
 	int		is_first_line;
