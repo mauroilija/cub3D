@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arselabita <arselabita@student.42.fr>      +#+  +:+       +#+        */
+/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:02:56 by abita             #+#    #+#             */
-/*   Updated: 2026/04/07 20:46:13 by arselabita       ###   ########.fr       */
+/*   Updated: 2026/04/08 21:00:10 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	validate_map(t_line *map)
 		print_error("ERROR: Map not closed.\n");
 		return (EXIT_FAILURE);
 	}
-	if (map->player_count != 1 || map.player_count == 0)
+	if (map->player_count != 1 || map->player_count == 0)
 	{
 		print_error("ERROR: Map should contain only one player.\n");
 		return (EXIT_FAILURE);
@@ -58,7 +58,7 @@ static int	is_map_line(char *line)
 	while (line[i] && line[i] != '\n')
 	{
 		if (!is_valid_input(line[i]))
-			return (0);
+			return ( printf("Invalid char: '%c' (ASCII %d)\n", line[i], line[i]), 0);
 		i++;
 	}
 	return (1);
@@ -66,26 +66,47 @@ static int	is_map_line(char *line)
 static int	parse_line(char *line, t_line *map, t_color_data *c_data, t_texture_data *t_data)
 {
 	int		i;
+	int ret;
 
 	i = 0;
 	while (line[i] == ' ' || line[i] == '\t')
 		i++;
 	if (line[i] == '\0' || line[i] == '\n')
 		return (1);
+	//////////////////////////////////////////////////////////
+	// printf("map_started: %d\n", map->map_started);
+	
+	// printf("Checking line: [%s]\n", &line[i]);
+	// printf("is_map_line: %d\n", is_map_line(&line[i]));
+
+	// printf("Texture check: %d\n", is_texture_line(&line[i]));
+	// printf("Color check: %d\n", is_color_line(&line[i]));	
+	//////////////////////////////////////////////////////////
+
 	if (!map->map_started)
 	{
-		if (is_texture_line(line))
-			return (parse_texture(&line[i], t_data));
-		if (is_color_line(line))
+		if (is_texture_line(&line[i]))
+		{
+			printf("TEXTURE STARTS HERE\n");
+			ret = parse_texture(&line[i], t_data);
+			if (ret != EXIT_SUCCESS)
+				return (EXIT_FAILURE);
+			printf("parse_texture returned: %d\n", ret);
+			return (ret);
+		}
+		if (is_color_line(&line[i]))
+		{
+			printf("COLOR STARTS HERE\n");
 			return (parse_color(&line[i], c_data));
-		if (is_map_line(line))
+		}
+		if (is_map_line(&line[i]))
 		{
 			map->map_started = 1;
+			printf("MAP STARTS HERE\n");
 			return(parse_map_line(&line[i], map));
 		}
 		return (print_error("Error: invalid line before map.\n"), EXIT_FAILURE);
 	}
-	close(t_data->fd);
 	if (!is_map_line(line))
 		return (print_error("Error: invalid content after map.\n"), EXIT_FAILURE);
 	return (parse_map_line(&line[i], map));
