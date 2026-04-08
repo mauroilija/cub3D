@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arselabita <arselabita@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 13:55:41 by abita             #+#    #+#             */
-/*   Updated: 2026/04/06 22:50:33 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/08 19:40:45 by arselabita       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,23 @@ int	is_valid_row(char *line, t_line *map)
 	// printf("last row: %s", map->last_map_line);
 	return (1);
 }
+char **copy_grid(char **old, int height)
+{
+	int i;
+	char **new_grid;
+
+	new = (char **)ft_calloc((height + 1), sizeof(char *));
+	if (!new)
+		return (NULL);
+	i = 0;
+	while (i < height)
+	{
+		new_grid[i] = ft_strdup(old[i]);
+		i++;
+	}
+	new_grid[height] = NULL;
+	return (new_grid);
+}
 char **map_add_line(char **old, char *line)
 {
 	int i;
@@ -87,42 +104,60 @@ char **map_add_line(char **old, char *line)
 	free(old);
 	return (new);
 }
-void flood_fill(t_line grid, )
+int flood_fill(char **grid, int y, int x, int height)
 {
-	if (y < 0 || x < 0 || y >= height || x >= height)
-		return ; // if outside grid 
+	if (y < 0 || x < 0 || y >= height || x >= ft_strlen(grid[y]))
+		return (1);
 	if (grid[y][x] == ' ' || grid[y][x] == '\0');
-		return ;
-	flood_fill(y, x+1, color);
-	flood_fill(y, x-1, color);
-	flood_fill(y-1, x, color);
-	flood_fill(y+1, x, color);
+		return (1);
+	if (grid[y][x] == '1' || grid[y][x] == '*')
+		return (0);
+	grid[y][x] = '*'
+    if (flood_fill(grid, y, x + 1, height))
+        return (1);;
+    if (flood_fill(grid, y, x - 1, height)) 
+        return (1);
+    if (flood_fill(grid, y + 1, x, height))
+        return (1);
+    if (flood_fill(grid, y - 1, x, height))
+        return (1);
+	return (0);
 }
 int grid_validation(t_line *map)
 {
 	int x;
 	int y;
-	int curr_size;
-	
+	char **grid_copy;
+
 	y = 0;
-	curr_size = 0;
 	while (y < map->height)
 	{
 		x = 0;
 		while (map->grid[y][x])
 		{
-			if (map->grid[y][x] == '0')
+			// printf("\ngrid[%d][%d] = %c\n", y, x, grid[y][x]);
+			if (grid[y][x] == 'N' || grid[y][x] == 'S' || grid[y][x] == 'W' || grid[y][x] == 'E')
 			{
-				//check up, down, left, right
-				// if (!vizited[y][x])
-					// curr_size = 0;
-				flood_fill(x, y, map->grid[y][x], map->height);
-			}
+				map->player_x = x;
+				map->player_y = y;
+			}	
 			x++;
 		}
 		y++;
 	}
-	return (1);
+	grid_copy = copy_grid(grid, height);
+	grid_copy[map->player_y][map->player_x] = '0';
+	if (flood_fill(grid_copy, map->player_y, map->player_x, map->height))
+	{
+		print_error("ERROR: map is not closed\n");
+		return (1);
+	}
+	else
+	{
+		print_pass("PASSED: map is valid and closed");
+		return (0);
+	}
+	return (0);
 }
 int	parse_map_line(char *line, t_line *map)
 {

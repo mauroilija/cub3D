@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arselabita <arselabita@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:02:56 by abita             #+#    #+#             */
-/*   Updated: 2026/02/24 15:36:46 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/07 20:46:13 by arselabita       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	validate_map(t_line *map)
 		print_error("ERROR: Map not closed.\n");
 		return (EXIT_FAILURE);
 	}
-	if (map->player_count != 1)
+	if (map->player_count != 1 || map.player_count == 0)
 	{
 		print_error("ERROR: Map should contain only one player.\n");
 		return (EXIT_FAILURE);
@@ -71,7 +71,7 @@ static int	parse_line(char *line, t_line *map, t_color_data *c_data, t_texture_d
 	while (line[i] == ' ' || line[i] == '\t')
 		i++;
 	if (line[i] == '\0' || line[i] == '\n')
-		return (0);
+		return (1);
 	if (!map->map_started)
 	{
 		if (is_texture_line(line))

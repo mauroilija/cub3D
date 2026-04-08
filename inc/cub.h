@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arselabita <arselabita@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/04/06 18:59:56 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/08 19:35:48 by arselabita       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 
 // coloring error
 # define RED "\033[31m"
+# define GREEN "\e[0;32m"
 # define RESET_COLOR "\033[0m"
 
 // scaling
@@ -116,6 +117,8 @@ typedef struct s_line
 	char	*tmp;
 	int		player_count;
 	int		map_started;
+	int player_x;
+	int player_y;
 }			t_line;
 
 
@@ -164,6 +167,7 @@ void		print_error(const char *msg);
 int			is_all_ones(char *last_map_line);
 int			is_player(char line);
 int			is_valid_input(char line);
+void	print_pass(const char *msg); // might remove later
 
 /* ************************************************************************** */
 /*                                  Parser                                    */
