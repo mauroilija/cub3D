@@ -90,8 +90,8 @@ int get_validation(char **grid, int height)
 {
     int x;
     int y;
-    int player_x = 0;
-    int player_y = 0;
+    int player_x;
+    int player_y;
     char **grid_copy;
 
     y = 0;
