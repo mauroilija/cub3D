@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/04/07 20:27:22 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/08 21:39:07 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ typedef struct s_texture_data
 	int we;
 	int ea;
 	int fd;
-} t_texture_data;
+}			t_texture_data;
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -206,5 +206,6 @@ void		free_split(char **split);
 /* ************************************************************************** */
 
 void	init_player(t_player *player);
+void	draw_player(t_data *data, t_player *player);
 
 #endif

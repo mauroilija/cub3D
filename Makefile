@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abita <abita@student.42.fr>                +#+  +:+       +#+         #
+#    By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/11 14:58:16 by abita             #+#    #+#              #
-#    Updated: 2026/02/19 15:24:22 by abita            ###   ########.fr        #
+#    Updated: 2026/04/08 21:42:51 by milija-h         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,8 @@ SRCS = \
 	  parser/parse_color.c \
 	  parser/parse_utils.c \
 	  parser/parse_texture.c \
+	  mlx/player.c \
+	  
 
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 
