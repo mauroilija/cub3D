@@ -28,7 +28,10 @@ char **map_add_line(char **old, char *line)
 		new[i] = old[i];
 		i++;
 	}
-	new[i++] = strdup(line);
+	// new[i++] = strdup(line);
+    char *clean = strdup(line);
+    clean[strcspn(clean, "\n")] = '\0';
+    new[i++] = clean;
 	new[i] = NULL;
 	free(old);
 	return (new);
@@ -42,13 +45,54 @@ int ft_strlen(const char *str)
 		i++;
 	return (i);
 }
+char **copy_grid(char **old, int height)
+{
+	char **new_copy;
+    int i;
+
+	new_copy = (char **)calloc((height + 1), sizeof(char *));
+	if (!new_copy)
+		return (NULL);
+	i = 0;
+	while (i < height)
+	{
+		new_copy[i] = strdup(old[i]);
+		i++;
+	}
+	new_copy[height] = NULL;
+	return (new_copy);
+}
+int flood_fill(char **grid, int y, int x, int height)
+{
+    // printf("here: flood_fill called with y = %d, x = %d\n", y, x);
+    // printf("what:\n height - 1: '%d'\n && y: %d\n && x: %d\n && grid[%d]: %d\n", height - 1, y, x, y, ft_strlen(grid[y]));
+    
+    if (y < 0 || y >= height || x < 0 || x >= ft_strlen(grid[y]))
+        return (1);
+    // here i check if the map is open by checking for spaces around the '0' cells, if a space then i return;
+    if (grid[y][x] == ' ' || grid[y][x] == '\0')
+        return (1);
+    if (grid[y][x] == '1' || grid[y][x] == '*') // then i have either encountered a wall or i have been at a cell before i just stop and return
+        return (0);
+    grid[y][x] = '*'; //.. this i just mark the position just visited to let me knw that i have been here before  
+    if (flood_fill(grid, y, x + 1, height))
+        return (1);;
+    if (flood_fill(grid, y, x - 1, height)) 
+        return (1);
+    if (flood_fill(grid, y + 1, x, height))
+        return (1);
+    if (flood_fill(grid, y - 1, x, height))
+        return (1);
+    return (0);
+}
 
 int get_validation(char **grid, int height)
 {
     int x;
     int y;
-    float x_pos = 0.0;
-    float y_pos = 0.0;
+    int player_x = 0;
+    int player_y = 0;
+    char **grid_copy;
 
     y = 0;
     while (y < height)
@@ -56,34 +100,51 @@ int get_validation(char **grid, int height)
         x = 0;
         while (grid[y][x])
         {
-            //  printf("grid[%d][%d] = %c\n", y, x, grid[y][x]);
-             if (grid[y][x] == 'N' || grid[y][x] == 'S' || grid[y][x] == 'E' || grid[y][x] == 'W')
-             {
-                x_pos = x + 0.5;
-                y_pos = y + 0.5; 
-                printf("player position: x = %f, y = %f\n", x_pos, y_pos);
-             }
-            if (grid[y][x] == '0')
+            // printf("\ngrid[%d][%d] = %c\n", y, x, grid[y][x]);
+            // printf("here: \nheight - 1: '%d'\n && y: %d\n && x: %d\n", height - 1, y, x);
+            if (grid[y][x] == 'N' || grid[y][x] == 'S' || grid[y][x] == 'E' || grid[y][x] == 'W')
             {
-                if ((grid[y][x - 1] == ' ' || grid[y][x - 1] == '\0') ||
-                    (grid[y][x + 1] == ' ' || grid[y][x + 1] == '\0') ||
-                    (grid[y - 1][x] == ' ' || grid[y - 1][x] == '\0') ||
-                    (grid[y + 1][x] == ' ' || grid[y + 1][x] == '\0'))
-                    {
-                        printf("ERROR: map is not closed\n");
-                        return (1);
-                    }
-                if (x >= ft_strlen(grid[y - 1]) || x >= ft_strlen(grid[y + 1])) // for uneven rows
-                {
-                    printf("ERROR: map doest have even\n");
-                    return (1);
-                }
-                if ()
-                printf("cell [%d][%d] is valid\n", y, x);
+                player_x = x;
+                player_y = y; 
+                // printf("player position: x = %d, y = %d\n", player_x, player_y);
             }
+            // if (grid[y][x] == '0')
+            // {
+            //     if (x >= ft_strlen(grid[y - 1]) || x >= ft_strlen(grid[y + 1])) // for uneven rows
+            //     {
+            //         printf("ERROR: map doest have even\n");
+            //         return (1);
+            //     }
+            //     if ((grid[y][x - 1] == ' ' || grid[y][x - 1] == '\0') ||
+            //     (grid[y][x + 1] == ' ' || grid[y][x + 1] == '\0') ||
+            //     (grid[y - 1][x] == ' ' || grid[y - 1][x] == '\0') ||
+            //     (grid[y + 1][x] == ' ' || grid[y + 1][x] == '\0'))
+            //     {
+            //         printf("ERROR: map is not closed\n");
+            //         return (1);
+            //     }
+            //     // if ((grid[y][x - 1] == '1') || (grid[y][x + 1] == '1') || 
+            //     //     (grid[y - 1][x] == '1') || (grid[y + 1][x] == '1'))
+            //     //     {
+            //     //         printf("ERROR: map is not valid\n");
+            //     //         return (1);
+            //     //     }
+            //     printf("cell [%d][%d] is valid\n", y, x);
+            // }
             x++;
         }
         y++;
+    }
+    grid_copy = copy_grid(grid, height);
+    grid_copy[player_y][player_x] = '0';
+    if (flood_fill(grid_copy, player_y, player_x, height)){
+        printf("ERROR: map is not closed\n");
+        return (1);
+    }
+    else
+    {
+        printf("PASSED: map is valid and closed\n");
+        return (0);
     }
     return (0);
 }
