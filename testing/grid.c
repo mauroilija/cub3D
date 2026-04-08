@@ -42,10 +42,13 @@ int ft_strlen(const char *str)
 		i++;
 	return (i);
 }
+
 int get_validation(char **grid, int height)
 {
     int x;
     int y;
+    float x_pos = 0.0;
+    float y_pos = 0.0;
 
     y = 0;
     while (y < height)
@@ -53,6 +56,13 @@ int get_validation(char **grid, int height)
         x = 0;
         while (grid[y][x])
         {
+            //  printf("grid[%d][%d] = %c\n", y, x, grid[y][x]);
+             if (grid[y][x] == 'N' || grid[y][x] == 'S' || grid[y][x] == 'E' || grid[y][x] == 'W')
+             {
+                x_pos = x + 0.5;
+                y_pos = y + 0.5; 
+                printf("player position: x = %f, y = %f\n", x_pos, y_pos);
+             }
             if (grid[y][x] == '0')
             {
                 if ((grid[y][x - 1] == ' ' || grid[y][x - 1] == '\0') ||
@@ -68,6 +78,7 @@ int get_validation(char **grid, int height)
                     printf("ERROR: map doest have even\n");
                     return (1);
                 }
+                if ()
                 printf("cell [%d][%d] is valid\n", y, x);
             }
             x++;
