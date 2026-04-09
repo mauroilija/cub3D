@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/04/08 21:39:07 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/09 20:15:28 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 
 // coloring error
 # define RED "\033[31m"
+# define GREEN "\e[0;32m"
 # define RESET_COLOR "\033[0m"
 
 // scaling
@@ -117,10 +118,12 @@ typedef struct s_data
 }			t_data;
 
 /* ************************************************************************** */
-/*                                   FD_line Struct									*/
+/*                                   FD_line Struct							  */
 /* ************************************************************************** */
 typedef struct s_line
 {
+	char	**grid;
+	int		height;
 	char	*first_map_line;
 	char	*last_map_line;
 	int		is_first_line;
@@ -128,6 +131,8 @@ typedef struct s_line
 	char	*tmp;
 	int		player_count;
 	int		map_started;
+	int player_x;
+	int player_y;
 }			t_line;
 
 
@@ -176,6 +181,7 @@ void		print_error(const char *msg);
 int			is_all_ones(char *last_map_line);
 int			is_player(char line);
 int			is_valid_input(char line);
+void	print_pass(const char *msg); // might remove later
 
 /* ************************************************************************** */
 /*                                  Parser                                    */
