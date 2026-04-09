@@ -90,8 +90,8 @@ int get_validation(char **grid, int height)
 {
     int x;
     int y;
-    int player_x;
-    int player_y;
+    int player_x = 0;
+    int player_y = 0;
     char **grid_copy;
 
     y = 0;
@@ -129,7 +129,7 @@ int get_validation(char **grid, int height)
             //     //         printf("ERROR: map is not valid\n");
             //     //         return (1);
             //     //     }
-            //     printf("cell [%d][%d] is valid\n", y, x);
+                printf("cell [%d][%d] is valid\n", y, x);
             // }
             x++;
         }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
+/*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:06:52 by abita             #+#    #+#             */
-/*   Updated: 2026/02/19 15:36:02 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/09 15:40:51 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@ void	init_line(t_line *map)
 	map->error = 0;
 	map->player_count = 0;
 	map->map_started = 0;
+	 map->height = 0;
+	 map->player_x = 0;
+	 map->player_x = 0;
 }
 
 int	skip_whitespace(char *line)
