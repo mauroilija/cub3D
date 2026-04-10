@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/04/09 20:15:28 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/10 13:22:30 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 // scaling
 # define WIDTH 400
 # define HEIGHT 400
+# define TILE_SIZE 20
 
 // arrow keys
 # define LEFT 65361
@@ -59,7 +60,7 @@ typedef enum e_return_values
 	ERROR_OPENING_FILE = -3,
 	ERROR_INVALID_MAP = -4,
 	ERROR_MALLOC = -5
-}			e_return_values;
+}			t_return_values;
 
 /* ************************************************************************** */
 /*                             ENUM Texture Types                             */
@@ -90,6 +91,11 @@ typedef struct s_player
 	float	y_position; // position in the y-axis
 	float	x_direction;
 	float	y_direction;
+	float	plane_x;
+	float	plane_y;
+	float	fov;
+	float	plane_len;
+	float	dot_product;
 	bool	key_up;
 	bool	key_down;
 	bool	key_right;
@@ -211,7 +217,7 @@ void		free_split(char **split);
 /*                                  Executor                                  */
 /* ************************************************************************** */
 
-void	init_player(t_player *player);
+void	init_player(t_player *player, t_line *map);
 void	draw_player(t_data *data, t_player *player);
 
 #endif

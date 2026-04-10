@@ -1,0 +1,851 @@
+
+
+================================================================================
+  CUB3D — COMPLETE FORMULA REFERENCE
+  All formulas, explanations, and context of use
+================================================================================
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  SECTION 1 — INITIALISATION
+  (run once at program start, never again unless you reset the player)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+────────────────────────────────────────────────────────────────────────────────
+1.1  FOV FROM PLANE AND DIR LENGTHS
+────────────────────────────────────────────────────────────────────────────────
+
+  Formula:
+    FOV = 2 * atan(planeLen / dirLen)
+        = 2 * atan(0.66 / 1.0)
+        ≈ 66°
+
+  Context of use:
+    You almost never compute this at runtime. Instead, you pick the FOV you
+    want (66° is classic FPS), then solve for planeLen:
+      planeLen = dirLen * tan(FOV / 2)
+      planeLen = 1.0 * tan(33°) ≈ 0.66
+
+    The direction vector is kept at length 1.0 by convention. The plane length
+    then encodes the FOV entirely. Wider plane = wider FOV.
+
+  Why it works:
+    The direction vector is the "focal length" (distance from eye to screen).
+    The plane is the "film width / 2". atan gives you the half-angle to one
+    edge of the screen. Double it for total horizontal FOV.
+
+
+────────────────────────────────────────────────────────────────────────────────
+1.2  CAMERA PLANE — PERPENDICULAR TO DIR
+────────────────────────────────────────────────────────────────────────────────
+
+  Formula:
+    // dir = (dx, dy)  →  perpendicular = (-dy, dx)
+    planeX = -dirY * 0.66
+    planeY =  dirX * 0.66
+
+    // sanity check: dot product must always equal 0
+    dot = dirX*planeX + dirY*planeY   // should be 0.0
+
+  Context of use:
+    Called once at init, and then the rotation matrix (section 5.2) keeps
+    dir and plane perpendicular automatically throughout the game.
+    Never set planeX/Y independently from dirX/Y — they are a rigid pair.
+
+  Why it works:
+    Rotating a 2D vector 90° counter-clockwise: swap components and negate
+    the new X. Multiplying by 0.66 sets the plane's length to 0.66, which
+    encodes the 66° FOV. The dot-product of a vector and its perpendicular
+    is always 0 — use this as your debug assertion.
+
+
+────────────────────────────────────────────────────────────────────────────────
+1.3  DDA STEP SIGNS
+────────────────────────────────────────────────────────────────────────────────
+
+  Formula:
+    stepX = (rayDirX >= 0) ? 1 : -1
+    stepY = (rayDirY >= 0) ? 1 : -1
+
+  Context of use:
+    Computed once per ray, at the start of each column's ray setup.
+    Used in the DDA loop to know which direction to advance the map cursor.
+
+  Why it works:
+    The DDA marches tile by tile. stepX/Y are just ±1 — they tell the
+    marcher whether to go right (+1) or left (-1) in X, and down (+1) or
+    up (-1) in Y. Derived purely from ray direction sign.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  SECTION 2 — RAY SETUP  (per column, runs screenWidth times per frame)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+────────────────────────────────────────────────────────────────────────────────
+2.1  cameraX — MAP COLUMN TO [-1, +1]
+────────────────────────────────────────────────────────────────────────────────
+
+  Formula:
+    cameraX = 2.0 * x / screenWidth - 1.0
+
+    // examples for screenWidth = 320:
+    x = 0          →  cameraX = -1.0   (left edge)
+    x = 160        →  cameraX =  0.0   (dead center)
+    x = 319        →  cameraX ≈ +1.0   (right edge)
+
+  Context of use:
+    First thing computed for each column x in the main render loop.
+    Everything else for this column derives from cameraX.
+
+  Why it works:
+    Linear remap of [0, screenWidth) onto [-1, +1]. This is the parametric
+    position along the camera plane. cameraX = 0 means "shoot the center
+    ray". cameraX = ±1 means "shoot the boundary ray". Every column maps to
+    exactly one point on the plane and thus to exactly one ray direction.
+
+
+────────────────────────────────────────────────────────────────────────────────
+2.2  RAY DIRECTION  *** DO NOT NORMALISE ***
+────────────────────────────────────────────────────────────────────────────────
+
+  Formula:
+    rayDirX = dirX + planeX * cameraX
+    rayDirY = dirY + planeY * cameraX
+
+    // length is NOT 1.0 for off-center rays:
+    //   length = sqrt(rayDirX² + rayDirY²)  ≥  1.0
+    // NEVER normalise this vector — see deltaDist note below
+
+  Context of use:
+    Computed right after cameraX, once per column. Used in deltaDist,
+    sideDist, and the DDA loop.
+
+  Why it works:
+    For cameraX=0 (center column), planeX*0 = 0, so rayDir = dir exactly
+    (unit length, pointing straight ahead). For off-center columns, the
+    plane component deviates the ray left or right by the proportional amount.
+    The non-unit length of off-center rays is load-bearing: it provides the
+    implicit fisheye correction. Normalising destroys this correction and
+    causes barrel distortion.
+
+
+────────────────────────────────────────────────────────────────────────────────
+2.3  PLAYER'S TILE POSITION AND FRACTIONAL OFFSET
+────────────────────────────────────────────────────────────────────────────────
+
+  Formula:
+    mapX = (int)posX    // which tile column the player is in
+    mapY = (int)posY    // which tile row the player is in
+
+    // fractional part = how far into the tile (0.0 to <1.0)
+    fracX = posX - mapX
+    fracY = posY - mapY
+
+  Context of use:
+    Computed once per column (or just once per frame if preferred, since
+    posX/Y don't change mid-frame). Used to compute sideDistX/Y.
+
+  Why it works:
+    The DDA needs to start in the player's current tile (integer part) and
+    know how far into that tile the player stands (fractional part), in order
+    to compute the distance to the first grid crossing in each axis.
+
+
+────────────────────────────────────────────────────────────────────────────────
+2.4  DELTA DIST — DISTANCE PER FULL TILE STEP
+────────────────────────────────────────────────────────────────────────────────
+
+  Formula:
+    // safe version — handles rayDir component = 0 (ray parallel to axis):
+    deltaDistX = (rayDirX == 0) ? 1e30 : fabs(1.0 / rayDirX)
+    deltaDistY = (rayDirY == 0) ? 1e30 : fabs(1.0 / rayDirY)
+
+  Context of use:
+    Computed once per ray, right after rayDir. Used in sideDist init and
+    in the DDA loop body. Never changes during the march.
+
+  Why it works:
+    "If I take one full tile step in the X direction, how far do I travel
+    along the ray?" Pythagorean answer: 1 / |rayDirX|. Because rayDir is
+    NOT normalised, this gives the correct perpendicular-distance-per-tile
+    automatically — no cosine correction is ever needed later. If a rayDir
+    component is 0, the ray is parallel to that axis and will never cross
+    that axis's grid lines, so we use a large number (1e30 = effectively
+    infinity) to ensure those crossings are never chosen.
+
+
+────────────────────────────────────────────────────────────────────────────────
+2.5  SIDE DIST — DISTANCE TO FIRST GRID LINE
+────────────────────────────────────────────────────────────────────────────────
+
+  Formula:
+    // X axis:
+    if (rayDirX < 0) {
+        stepX     = -1
+        sideDistX = (posX - mapX) * deltaDistX        // dist to left edge
+    } else {
+        stepX     =  1
+        sideDistX = (mapX + 1.0 - posX) * deltaDistX  // dist to right edge
+    }
+
+    // Y axis (same logic):
+    if (rayDirY < 0) {
+        stepY     = -1
+        sideDistY = (posY - mapY) * deltaDistY
+    } else {
+        stepY     =  1
+        sideDistY = (mapY + 1.0 - posY) * deltaDistY
+    }
+
+  Context of use:
+    Run once per ray, after deltaDistX/Y are known. These bootstrap the DDA
+    loop. After the first crossing, the loop just keeps adding deltaDistX/Y.
+
+  Why it works:
+    Before the main DDA loop, we need to find how far the ray travels before
+    it hits its FIRST vertical grid line (X crossing) and FIRST horizontal
+    grid line (Y crossing). If the ray goes left, the first X-line is the
+    left edge of the current tile, at distance fracX * deltaDistX. If the
+    ray goes right, it's the right edge, at distance (1-fracX) * deltaDistX.
+    After that first crossing, every subsequent crossing is exactly
+    deltaDistX further — that's the DDA invariant.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  SECTION 3 — DDA MARCH LOOP
+  (runs until a wall is found; O(distance), not O(map size))
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+────────────────────────────────────────────────────────────────────────────────
+3.1  DDA STEP — ADVANCE TO NEXT GRID CROSSING
+────────────────────────────────────────────────────────────────────────────────
+
+  Formula:
+    while (no wall hit) {
+        if (sideDistX < sideDistY) {
+            sideDistX += deltaDistX
+            mapX      += stepX
+            side       = 0          // hit a vertical wall (X-face)
+        } else {
+            sideDistY += deltaDistY
+            mapY      += stepY
+            side       = 1          // hit a horizontal wall (Y-face)
+        }
+        if (map[mapX][mapY] > 0) break    // wall found — exit loop
+    }
+
+  Context of use:
+    The innermost loop of the raycaster. Runs once per wall-hit test.
+    The `side` variable is used afterward to determine perpWallDist and
+    texture orientation.
+
+  Why it works:
+    Always step whichever axis currently has the smaller accumulated distance
+    — that is the next grid crossing along the ray. Add deltaDistX or
+    deltaDistY to advance to the one after that. This is the complete DDA.
+    It's O(distance to wall), not O(map size), and it never misses a wall
+    because it processes every single grid crossing in order.
+
+
+────────────────────────────────────────────────────────────────────────────────
+3.2  PERPENDICULAR WALL DISTANCE  *** THE MOST IMPORTANT FORMULA ***
+────────────────────────────────────────────────────────────────────────────────
+
+  Formula:
+    if (side == 0)
+        perpWallDist = sideDistX - deltaDistX
+    else
+        perpWallDist = sideDistY - deltaDistY
+
+  Context of use:
+    Computed immediately after the DDA loop exits. Everything that follows
+    (lineHeight, texturing, z-buffer) depends on this single value.
+
+  Why it works:
+    After the DDA loop, sideDistX contains the distance to the crossing
+    AFTER the wall (the one that would have been the next step). Subtracting
+    deltaDistX gives the distance to the crossing AT the wall — which is the
+    perpendicular distance from the camera plane to the wall. This is exact,
+    requires zero trigonometry, and — because rayDir was never normalised —
+    the fisheye correction is already baked in. This is the payoff of the
+    entire delta/side architecture.
+
+  *** CRITICAL: do NOT use sqrt(hitX² + hitY²) here. That gives Euclidean
+  distance, which produces fisheye barrel distortion. perpWallDist is what
+  you want. ***
+
+
+────────────────────────────────────────────────────────────────────────────────
+3.3  EXACT WALL HIT POSITION (for texture mapping)
+────────────────────────────────────────────────────────────────────────────────
+
+  Formula:
+    if (side == 0)
+        wallX = posY + perpWallDist * rayDirY
+    else
+        wallX = posX + perpWallDist * rayDirX
+
+    wallX = wallX - floor(wallX)    // keep fractional part: result in [0, 1)
+
+  Context of use:
+    Computed after perpWallDist, before the draw loop. wallX feeds into
+    texX to pick the correct column of the wall texture.
+
+  Why it works:
+    wallX is the exact world coordinate along the wall face where the ray
+    hit. Note the cross-axis logic: if side==0 (vertical wall, hit on X axis),
+    we use the Y component to find where along that vertical wall we hit,
+    and vice versa. floor() removes the integer tile part, leaving just the
+    fractional offset from 0 (left edge of tile) to 1 (right edge).
+
+
+────────────────────────────────────────────────────────────────────────────────
+3.4  TEXTURE COLUMN FROM wallX
+────────────────────────────────────────────────────────────────────────────────
+
+  Formula:
+    texX = (int)(wallX * texWidth)
+
+    // flip for correct orientation (prevents mirroring):
+    if (side == 0 && rayDirX > 0) texX = texWidth - texX - 1
+    if (side == 1 && rayDirY < 0) texX = texWidth - texX - 1
+
+  Context of use:
+    Computed once per column. texX is constant for the entire vertical
+    strip — only texY changes as we march down the pixels.
+
+  Why it works:
+    wallX in [0,1) maps linearly to texture columns [0, texWidth).
+    The flip conditions correct for mirroring: without them, a wall
+    approached from one direction shows the texture correctly, but
+    from the other direction it appears reversed.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  SECTION 4 — RENDERING (per column)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+────────────────────────────────────────────────────────────────────────────────
+4.1  WALL STRIP HEIGHT ON SCREEN
+────────────────────────────────────────────────────────────────────────────────
+
+  Formula:
+    lineHeight = (int)(screenHeight / perpWallDist)
+
+  Context of use:
+    Computed right after perpWallDist. Everything in the draw phase
+    (drawStart, drawEnd, texture step) derives from lineHeight.
+
+  Why it works:
+    Core perspective projection: closer walls (smaller perpWallDist) produce
+    taller strips; farther walls produce shorter ones. At perpWallDist=1.0
+    the wall fills the screen height exactly. At perpWallDist=2.0 it fills
+    half. This is the raycaster equivalent of 1/z projection.
+
+
+────────────────────────────────────────────────────────────────────────────────
+4.2  DRAW START AND END PIXELS (clamped to screen bounds)
+────────────────────────────────────────────────────────────────────────────────
+
+  Formula:
+    drawStart = -lineHeight / 2 + screenHeight / 2
+    if (drawStart < 0) drawStart = 0
+
+    drawEnd = lineHeight / 2 + screenHeight / 2
+    if (drawEnd >= screenHeight) drawEnd = screenHeight - 1
+
+  Context of use:
+    Defines the vertical range of pixels to fill for this column's wall strip.
+    The draw loop runs from drawStart to drawEnd (inclusive).
+
+  Why it works:
+    The wall strip is centred vertically on the screen (horizon at
+    screenHeight/2). Without clamping, very close walls produce lineHeight
+    larger than screenHeight and the loop would write outside the pixel buffer.
+    Clamping cuts off the portions of the wall above/below the screen without
+    affecting the texture coordinate calculation (texPos handles the offset).
+
+
+────────────────────────────────────────────────────────────────────────────────
+4.3  TEXTURE Y STEP AND STARTING POSITION
+────────────────────────────────────────────────────────────────────────────────
+
+  Formula:
+    step   = 1.0 * texHeight / lineHeight
+    texPos = (drawStart - screenHeight / 2 + lineHeight / 2) * step
+
+  Context of use:
+    Computed once per column, before the pixel draw loop. step and texPos
+    are then used inside the loop (section 4.4).
+
+  Why it works:
+    We cannot draw every texel — the strip might be 400px tall but the
+    texture is only 64px high. `step` is how many texture rows to advance
+    per screen pixel. texPos initialises at the texel that corresponds to
+    drawStart — which is NOT texel 0 when the wall is very close and we've
+    clamped (the top of the wall is above the screen, so we start reading
+    partway down the texture). The (drawStart - screenHeight/2 + lineHeight/2)
+    term computes how many pixels from the top of the unclamped strip we
+    actually start drawing.
+
+
+────────────────────────────────────────────────────────────────────────────────
+4.4  TEXTURE Y COORDINATE IN THE DRAW LOOP
+────────────────────────────────────────────────────────────────────────────────
+
+  Formula:
+    // inside the column draw loop (y from drawStart to drawEnd):
+    texY    = (int)texPos & (texHeight - 1)
+    texPos += step
+    color   = texture[texX][texY]
+
+  Context of use:
+    Inside the innermost drawing loop. Runs once per pixel in the wall strip.
+
+  Why it works:
+    `& (texHeight - 1)` is fast power-of-2 modulo — keeps texY inside
+    [0, texHeight) without a division. Works because texture dimensions must
+    be powers of 2 (64, 128, 256...). If your texture is not power-of-2,
+    use `% texHeight` instead (slower). Casting to int truncates texPos to
+    the integer texel row.
+
+
+────────────────────────────────────────────────────────────────────────────────
+4.5  SIDE SHADING (darken Y-axis walls for depth illusion)
+────────────────────────────────────────────────────────────────────────────────
+
+  Formula:
+    if (side == 1) {
+        color.r = color.r / 2    // or >> 1
+        color.g = color.g / 2
+        color.b = color.b / 2
+    }
+
+  Context of use:
+    Applied to the color after reading from the texture, before writing to
+    the pixel buffer. One branch, zero trig, instant depth.
+
+  Why it works:
+    Walls hit on side==1 (horizontal grid lines = north/south faces) are
+    halved in brightness. This fakes directional lighting at zero cost.
+    Without it, all walls look flat and it's impossible to read corners.
+    Dividing by 2 is a right-bitshift: `color >> 1` if working with packed
+    integers. The exact axis you darken is a style choice — just be consistent.
+
+
+────────────────────────────────────────────────────────────────────────────────
+4.6  FLOOR AND CEILING (flat color — sufficient for 42 eval)
+────────────────────────────────────────────────────────────────────────────────
+
+  Formula:
+    // above drawStart → ceiling color
+    for (y = 0; y < drawStart; y++)
+        pixel[x][y] = ceilingColor
+
+    // below drawEnd → floor color
+    for (y = drawEnd; y < screenHeight; y++)
+        pixel[x][y] = floorColor
+
+  Context of use:
+    Filled each frame, either per-column alongside wall rendering or in a
+    separate full-screen pass before the wall loop.
+
+  Why it works:
+    Everything above the wall strip is sky/ceiling, everything below is
+    floor. Solid colors, no depth, no perspective. Simple and fast.
+    For the 42 project this is almost always sufficient.
+
+
+────────────────────────────────────────────────────────────────────────────────
+4.7  TEXTURED FLOOR / CEILING (advanced — not required for base eval)
+────────────────────────────────────────────────────────────────────────────────
+
+  Formula:
+    // for each floor pixel at screen row y (y > drawEnd for floor):
+    rowDist = (0.5 * screenHeight) / (y - screenHeight / 2.0)
+
+    // ray directions at column 0 and column screenWidth-1:
+    rayDirX_left  = dirX - planeX
+    rayDirY_left  = dirY - planeY
+    rayDirX_right = dirX + planeX
+    rayDirY_right = dirY + planeY
+
+    floorStepX = rowDist * (rayDirX_right - rayDirX_left) / screenWidth
+    floorStepY = rowDist * (rayDirY_right - rayDirY_left) / screenWidth
+
+    // world position for column 0 of this row:
+    floorX = posX + rowDist * rayDirX_left
+    floorY = posY + rowDist * rayDirY_left
+
+    // then advance by floorStepX/Y for each column x:
+    floorX += floorStepX * x
+    floorY += floorStepY * x
+
+    tileX = (int)floorX & (texWidth  - 1)
+    tileY = (int)floorY & (texHeight - 1)
+    color = floorTexture[tileX][tileY]
+
+    // ceiling: same formula, mirror y around screenHeight/2
+
+  Context of use:
+    Run after wall rendering. rowDirX_left/right are computed once per frame
+    (not per row). floorStepX/Y are computed once per row. The inner x loop
+    just does two additions and two bitwise ANDs per pixel.
+
+  Why it works:
+    rowDist is the perpendicular distance to the floor plane at screen row y.
+    The left/right ray directions define the span of the floor row at that
+    depth. floorStep advances the world-space sample point by one screen pixel
+    worth of floor. The & trick is the same power-of-2 modulo from section 4.4.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  SECTION 5 — MOVEMENT & ROTATION (per frame, per input event)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+────────────────────────────────────────────────────────────────────────────────
+5.1  FRAME-RATE INDEPENDENT SPEED  (set this up first, everything uses it)
+────────────────────────────────────────────────────────────────────────────────
+
+  Formula:
+    double frameTime = currentTime - lastTime    // seconds elapsed
+    lastTime = currentTime
+
+    double moveSpeed = frameTime * 5.0    // 5 tiles/second
+    double rotSpeed  = frameTime * 3.0    // 3 radians/second
+
+  Context of use:
+    Computed at the top of the game loop, before input handling. moveSpeed
+    and rotSpeed are then used in 5.2, 5.3, and 5.4.
+
+  Why it works:
+    Without frame-rate independence, the game runs fast on powerful machines
+    and slow on weak ones. frameTime is seconds elapsed since last frame
+    (typically ~0.016s at 60fps, ~0.033s at 30fps). Multiplying by a
+    tiles/second rate gives a per-frame distance that's consistent regardless
+    of hardware. 5.0 tiles/sec is a reasonable walking speed.
+
+
+────────────────────────────────────────────────────────────────────────────────
+5.2  ROTATION  (2D rotation matrix — MUST rotate dir AND plane together)
+────────────────────────────────────────────────────────────────────────────────
+
+  Formula:
+    // save original dirX BEFORE overwriting it:
+    double oldDirX   = dirX
+    dirX   =  dirX   * cos(rotSpeed) - dirY   * sin(rotSpeed)
+    dirY   =  oldDirX * sin(rotSpeed) + dirY   * cos(rotSpeed)
+
+    // same matrix applied to plane — NEVER skip this:
+    double oldPlaneX = planeX
+    planeX =  planeX  * cos(rotSpeed) - planeY  * sin(rotSpeed)
+    planeY =  oldPlaneX * sin(rotSpeed) + planeY  * cos(rotSpeed)
+
+    // for left turn: pass negative rotSpeed
+    // for right turn: pass positive rotSpeed
+
+  Context of use:
+    Called in the input handler, once per frame if the rotate key is held.
+    rotSpeed comes from section 5.1.
+
+  Why it works:
+    Standard 2D rotation matrix. The old* temporaries are critical: the Y
+    formula needs the original dirX, but the X formula has already
+    overwritten it. Missing the temporary causes your player to spiral
+    inward over time as the vector length shrinks. dir and plane MUST
+    always rotate together — they are a rigid perpendicular pair. Rotating
+    only dir while leaving plane fixed destroys the perpendicularity
+    invariant and shears the image.
+
+
+────────────────────────────────────────────────────────────────────────────────
+5.3  MOVE FORWARD / BACKWARD (split-axis collision)
+────────────────────────────────────────────────────────────────────────────────
+
+  Formula:
+    // forward (W key):
+    if (map[(int)(posX + dirX * moveSpeed)][(int)posY] == 0)
+        posX += dirX * moveSpeed
+    if (map[(int)posX][(int)(posY + dirY * moveSpeed)] == 0)
+        posY += dirY * moveSpeed
+
+    // backward (S key): subtract instead of add
+    if (map[(int)(posX - dirX * moveSpeed)][(int)posY] == 0)
+        posX -= dirX * moveSpeed
+    if (map[(int)posX][(int)(posY - dirY * moveSpeed)] == 0)
+        posY -= dirY * moveSpeed
+
+  Context of use:
+    Called when movement keys are pressed. moveSpeed from section 5.1.
+
+  Why it works:
+    Moving along dirX/Y scales the direction vector by moveSpeed.
+    The collision check is split into X and Y independently: this allows
+    "wall sliding" — if the player walks diagonally into a wall, they slide
+    along it instead of stopping dead. Always check BEFORE applying the move.
+    map[][] uses integer indices because tiles are whole numbers.
+
+
+────────────────────────────────────────────────────────────────────────────────
+5.4  STRAFE LEFT / RIGHT
+────────────────────────────────────────────────────────────────────────────────
+
+  Formula:
+    // strafe right (D key) — move along the plane vector:
+    if (map[(int)(posX + planeX * moveSpeed)][(int)posY] == 0)
+        posX += planeX * moveSpeed
+    if (map[(int)posX][(int)(posY + planeY * moveSpeed)] == 0)
+        posY += planeY * moveSpeed
+
+    // strafe left (A key): subtract instead of add
+
+  Context of use:
+    Called when strafe keys are pressed. Same moveSpeed as forward movement.
+
+  Why it works:
+    Strafing means moving perpendicular to the viewing direction. The plane
+    vector IS the perpendicular direction (it was set up as perpendicular to
+    dir in section 1.2). Using plane directly avoids any extra trig.
+    The planeLen of 0.66 makes the strafe speed slightly slower than forward
+    movement — you can compensate by scaling: planeX/planeLen * moveSpeed.
+    Same split-axis collision as forward movement.
+
+
+────────────────────────────────────────────────────────────────────────────────
+5.5  MOUSE LOOK (horizontal)
+────────────────────────────────────────────────────────────────────────────────
+
+  Formula:
+    double mouseSpeed = (mouseX - screenWidth / 2) * sensitivity
+    // then apply the rotation matrix (5.2) with angle = mouseSpeed
+    // reset cursor to window centre each frame:
+    // SDL_WarpMouseInWindow(window, screenWidth/2, screenHeight/2)
+
+    // typical sensitivity range: 0.001 to 0.003
+
+  Context of use:
+    Called each frame after reading mouse position. mouseX is current
+    cursor X position. Sensitivity is a tuneable constant.
+
+  Why it works:
+    mouseSpeed is the mouse delta from screen center, scaled to radians.
+    Feeding it into the rotation matrix gives proportional camera turn.
+    Warping the cursor back to center each frame prevents it from hitting
+    the window edge and capping input. Low sensitivity (0.001) = slow
+    precise turning; high (0.003) = fast snappy turning.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  SECTION 6 — SPRITES / BILLBOARDS (bonus — rendered after all walls)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+────────────────────────────────────────────────────────────────────────────────
+6.1  SORT SPRITES BY DISTANCE (farthest first)
+────────────────────────────────────────────────────────────────────────────────
+
+  Formula:
+    // compute squared distance for each sprite (no sqrt needed for sorting):
+    for each sprite i:
+        spriteDistances[i] = (posX - sprite[i].x)² + (posY - sprite[i].y)²
+
+    // sort descending (farthest first):
+    sort sprites by spriteDistances, descending
+
+  Context of use:
+    Once per frame, before drawing any sprite. Painter's algorithm: draw
+    farthest sprites first, closer sprites on top.
+
+  Why it works:
+    We use squared distance for sorting to avoid unnecessary sqrt calls.
+    Sorted order ensures closer sprites overwrite farther ones during
+    drawing. The z-buffer (section 6.4) then handles per-pixel occlusion
+    against walls.
+
+
+────────────────────────────────────────────────────────────────────────────────
+6.2  SPRITE POSITION IN CAMERA SPACE
+────────────────────────────────────────────────────────────────────────────────
+
+  Formula:
+    // world-space offset from player to sprite:
+    spriteX = sprite.x - posX
+    spriteY = sprite.y - posY
+
+    // inverse of the camera matrix [planeX dirX / planeY dirY]:
+    double invDet = 1.0 / (planeX * dirY - dirX * planeY)
+
+    transformX = invDet * ( dirY  * spriteX - dirX  * spriteY)
+    transformY = invDet * (-planeY * spriteX + planeX * spriteY)
+    // transformY = depth (like perpWallDist — perpendicular distance)
+    // transformX = lateral position along camera plane
+
+    // only render if transformY > 0 (sprite is in front of the camera)
+
+  Context of use:
+    Computed for each sprite, after sorting. transformY and transformX
+    feed all subsequent sprite projection formulas.
+
+  Why it works:
+    The camera matrix maps world-space into camera-space. invDet is
+    the inverse determinant of the 2x2 matrix formed by the plane and
+    direction vectors. transformY gives the perpendicular depth (same
+    coordinate space as perpWallDist, so z-buffer comparison works
+    directly). transformX is the horizontal position: negative = left
+    of center, positive = right of center. Negative transformY means
+    behind the camera — skip those sprites.
+
+
+────────────────────────────────────────────────────────────────────────────────
+6.3  SPRITE SCREEN POSITION AND SIZE
+────────────────────────────────────────────────────────────────────────────────
+
+  Formula:
+    // screen column of sprite center:
+    spriteScreenX = (int)((screenWidth / 2) * (1 + transformX / transformY))
+
+    // height and width on screen (same value — sprites are square):
+    spriteHeight = abs((int)(screenHeight / transformY))
+    spriteWidth  = abs((int)(screenHeight / transformY))
+
+    // pixel ranges to draw:
+    drawStartY = -spriteHeight / 2 + screenHeight / 2
+    if (drawStartY < 0) drawStartY = 0
+    drawEndY = spriteHeight / 2 + screenHeight / 2
+    if (drawEndY >= screenHeight) drawEndY = screenHeight - 1
+
+    drawStartX = -spriteWidth / 2 + spriteScreenX
+    if (drawStartX < 0) drawStartX = 0
+    drawEndX = spriteWidth / 2 + spriteScreenX
+    if (drawEndX >= screenWidth) drawEndX = screenWidth - 1
+
+  Context of use:
+    Computed after camera-space transform. drawStartX/EndX defines which
+    screen columns to loop over for this sprite.
+
+  Why it works:
+    Same perspective formula as wall strips: size = screenHeight / depth.
+    The sprite is centred horizontally at spriteScreenX, derived from
+    transformX/transformY (the lateral camera-space position normalised
+    by depth). Clamping prevents out-of-bounds writes exactly as with walls.
+
+
+────────────────────────────────────────────────────────────────────────────────
+6.4  Z-BUFFER — WALL VS SPRITE OCCLUSION
+────────────────────────────────────────────────────────────────────────────────
+
+  Formula:
+    // --- during wall rendering, fill per column: ---
+    zBuffer[x] = perpWallDist    // for every screen column x
+
+    // --- during sprite rendering, per column stripe: ---
+    if (transformY > 0 && transformY < zBuffer[x])
+        // sprite pixel is closer than wall — draw it
+        pixel[x][y] = spriteTexture[texX][texY]
+
+  Context of use:
+    zBuffer is a double[screenWidth] array. Filled during the wall pass,
+    consulted during the sprite pass.
+
+  Why it works:
+    Without a z-buffer, sprites always draw over walls even when a wall
+    should be in front. zBuffer stores the wall distance for each column.
+    A sprite pixel is only drawn if its depth (transformY) is less than the
+    stored wall distance — i.e., the sprite is closer than the wall at
+    that column. The comparison is direct because transformY and
+    perpWallDist are in the same coordinate space (perpendicular distance
+    from the camera plane).
+
+
+────────────────────────────────────────────────────────────────────────────────
+6.5  SPRITE TEXTURE COORDINATES
+────────────────────────────────────────────────────────────────────────────────
+
+  Formula:
+    // texture X (computed per column stripe, before inner y loop):
+    texX = (int)(256 * (stripe - drawStartX) * texWidth / spriteWidth) / 256
+
+    // texture Y (computed per pixel inside y loop):
+    d    = y * 256 - screenHeight * 128 + spriteHeight * 128
+    texY = ((d * texHeight) / spriteHeight) / 256
+
+  Context of use:
+    Inside the sprite column/pixel draw loops. stripe is the current
+    screen column x.
+
+  Why it works:
+    The *256 and /256 are fixed-point arithmetic to avoid float division
+    in the inner loop. texX maps the column's position within the sprite's
+    screen footprint to a texture column. texY maps the pixel's vertical
+    position to a texture row — the d formula centres the texture correctly
+    within the strip, matching how drawStart/End were clamped.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  EXECUTION ORDER — ONE COMPLETE FRAME
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  [frame start]
+  1.  Compute frameTime, moveSpeed, rotSpeed           (5.1)
+  2.  Handle input → apply rotation matrix             (5.2)
+  3.  Handle input → apply movement / strafe           (5.3, 5.4)
+  4.  Handle input → apply mouse look                  (5.5)
+
+  [main render loop — for x = 0 to screenWidth-1]
+  5.  cameraX = 2*x/screenWidth - 1                   (2.1)
+  6.  rayDirX/Y = dir + plane * cameraX               (2.2)
+  7.  mapX/Y = (int)pos, fracX/Y = pos - map          (2.3)
+  8.  deltaDistX/Y = |1/rayDir|                        (2.4)
+  9.  stepX/Y and sideDistX/Y (first crossing)        (1.3, 2.5)
+  10. DDA loop until wall hit                          (3.1)
+  11. perpWallDist = sideDist - deltaDist              (3.2)
+  12. zBuffer[x] = perpWallDist                        (6.4)
+  13. lineHeight = screenHeight / perpWallDist         (4.1)
+  14. drawStart, drawEnd (clamped)                     (4.2)
+  15. wallX = hit position along face                  (3.3)
+  16. texX = (int)(wallX * texWidth) + flip            (3.4)
+  17. step, texPos (texture Y init)                    (4.3)
+  18. draw loop: texY, color, side shading, write      (4.4, 4.5)
+  19. fill floor and ceiling above/below strip         (4.6)
+
+  [sprite pass]
+  20. Compute sprite distances, sort farthest first    (6.1)
+  21. For each sprite:
+      a. Camera-space transform (transformX/Y)         (6.2)
+      b. Skip if transformY <= 0
+      c. Screen position, size, draw bounds            (6.3)
+      d. For each column stripe: texX, z-buffer check  (6.4, 6.5)
+      e. For each pixel: texY, draw                    (6.5)
+
+  [frame end]
+  22. Present buffer to screen
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  THE THREE FORMULAS MOST LIKELY TO BREAK YOUR PROJECT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  1. perpWallDist = sideDistX - deltaDistX   (section 3.2)
+     Getting the side check backwards, or using sideDistX directly
+     (without subtracting delta), places walls at wrong distances.
+     All rendering is downstream of this. Check first if walls look wrong.
+
+  2. Rotation matrix — save oldDirX BEFORE overwriting dirX   (section 5.2)
+     Missing the temporary causes the direction vector to shrink each frame
+     and the player slowly spirals inward. Also: ALWAYS rotate plane
+     alongside dir, or the camera plane becomes non-perpendicular.
+
+  3. zBuffer[x] = perpWallDist during wall render   (section 6.4)
+     Easy to forget when adding sprites late. Without it, sprites clip
+     through walls in front of them. Fill it during the wall pass,
+     check it during the sprite pass.
+
+  NEVER normalise rayDirX/Y   (section 2.2)
+     This is the silent killer. Everything compiles and runs, but the
+     image has fisheye barrel distortion. The non-unit ray length IS the
+     fisheye correction. Do not touch it.
+
+
+================================================================================
+  END OF REFERENCE
+  Based on Lode's Raycasting Tutorial + cub3d project requirements
+================================================================================

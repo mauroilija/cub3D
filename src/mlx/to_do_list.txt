@@ -1,6 +1,6 @@
 Cub3D – To-Do List (Player → Rendering)
 
-PLAYER
+PLAYER (done)
 
 * Get the player’s position from the map
 * Store player direction as a vector (based on N/S/E/W)

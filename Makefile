@@ -39,6 +39,7 @@ SRCS = \
 	  parser/parse_utils.c \
 	  parser/parse_texture.c \
 	  mlx/player.c \
+	  mlx/grid.c \
 	  
 
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
