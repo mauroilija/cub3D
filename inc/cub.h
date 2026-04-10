@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/04/10 13:22:30 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/10 16:24:21 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,6 +218,6 @@ void		free_split(char **split);
 /* ************************************************************************** */
 
 void	init_player(t_player *player, t_line *map);
-void	draw_player(t_data *data, t_player *player);
+void	render_frame(t_data *data, t_player *player, char **map);
 
 #endif

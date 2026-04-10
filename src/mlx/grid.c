@@ -6,13 +6,13 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 12:52:18 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/10 15:00:03 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/10 16:26:52 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-void	draw_square(t_data *data, float position_x, float position_y,
+static void	draw_square(t_data *data, float position_x, float position_y,
 					size_t tile_size, int color)
 {
 	size_t	x;
@@ -35,7 +35,7 @@ void	draw_square(t_data *data, float position_x, float position_y,
 	}
 }
 
-void	draw_map(t_data *data, t_player *player, char **map)
+static void	draw_map(t_data *data, char **map)
 {
 	size_t	y;
 	size_t	x;
@@ -51,27 +51,39 @@ void	draw_map(t_data *data, t_player *player, char **map)
 			c = map[y][x];
 			if (c == '1')
 				color = 0x00FF00;
-			else if(c == '0')
+			else
 				color = 0xFFFFFF;
-			player->x_position = x * TILE_SIZE;
-			player->y_position = y * TILE_SIZE;
-			draw_square(data, player->x_position, player->y_position, TILE_SIZE, color);
+
+			draw_square(data, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, color);
 			x++;
 		}
 		y++;
 	}
 }
 
-void	draw_player(t_data *data, t_player *player)
+static void	draw_player(t_data *data, t_player *player, int tile_size)
 {
-	for (int dx=-1; dx<=1; dx++)
+	int	px;
+	int	py;
+	int	dx;
+	int	dy;
+
+	px = (int)(player->x_position * tile_size);
+	py = (int)(player->y_position * tile_size);
+	dx = -1;
+	while (dx <= 1)
 	{
-    	for (int dy=-1; dy<=1; dy++)
-        	my_pixel_put(data->img, player->x_position + dx, player->y_position + dy, 0xFF0000);
+		dy = -1;
+		while (dy <= 1)
+		{
+			my_pixel_put(data->img, px + dx, py + dy, 0xFF0000);
+			dy++;
+		}
+		dx++;
 	}
 }
 
-void	draw_player_direction(t_data *data, t_player *player, int tile_size)
+static void	draw_player_direction(t_data *data, t_player *player, int tile_size)
 {
 	float	step;
 	float	max_length;
@@ -82,15 +94,22 @@ void	draw_player_direction(t_data *data, t_player *player, int tile_size)
 
 	step = 0.1f;
 	max_length = 2.0f;
-	cur_x = player->x_position;
-	cur_y = player->y_position;
 	while (step < max_length)
 	{
 		cur_x = player->x_position + player->x_direction * step;
 		cur_y = player->y_position + player->y_direction * step;
 		screen_x = (int)(cur_x * tile_size);
 		screen_y = (int)(cur_y * tile_size);
-		my_pixel_put(data->img, screen_x, screen_y, 0xFF0000); // red
+		my_pixel_put(data->img, screen_x, screen_y, 0x000000);
 		step += 0.1f;
 	}
+}
+
+void	render_frame(t_data *data, t_player *player, char **map)
+{
+	draw_map(data, map);
+	draw_player(data, player, TILE_SIZE);
+	draw_player_direction(data, player, TILE_SIZE);
+	mlx_put_image_to_window(data->mlx, data->win, data->img.img,
+		0, 0);
 }

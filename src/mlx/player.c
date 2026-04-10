@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 18:00:28 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/10 12:42:00 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/10 16:23:53 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,4 @@ void	init_player(t_player *player, t_line *map)
 	player->key_left = false;
 	player->key_right = false;
 	player->key_up = false;
-}
-
-void	draw_player(t_data *data, t_player *player)
-{
-	for (int dx=-1; dx<=1; dx++)
-	{
-    	for (int dy=-1; dy<=1; dy++)
-        	my_pixel_put(data->img, player->x_position + dx, player->y_position + dy, 0xFF0000);
-	}
 }
