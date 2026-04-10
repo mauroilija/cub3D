@@ -7,7 +7,7 @@ PLAYER (done)
 * Initialize camera plane (for field of view)
 * Draw player as a point/small square on the 2D map
 
-2D DEBUG VIEW (VERY IMPORTANT)
+2D DEBUG VIEW (VERY IMPORTANT) (done)
 
 * Draw the map as a grid (top-down view)
 * Draw walls (green)

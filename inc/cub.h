@@ -31,7 +31,7 @@
 // scaling
 # define WIDTH 400
 # define HEIGHT 400
-# define TILE_SIZE 20
+# define TILE_SIZE 80
 
 // arrow keys
 # define LEFT 65361
