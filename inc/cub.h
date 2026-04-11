@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/04/10 16:24:21 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/11 21:58:08 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,18 +89,33 @@ typedef struct s_player
 {
 	float	x_position; // position in the x-axis
 	float	y_position; // position in the y-axis
-	float	x_direction;
-	float	y_direction;
-	float	plane_x;
-	float	plane_y;
-	float	fov;
-	float	plane_len;
-	float	dot_product;
+	float	x_direction; //where player initally looks
+	float	y_direction; //
+	float	plane_x; //x_axis point in the fov
+	float	plane_y; //y axis point in the fov
+	float	fov; //field of view of the player
+	float	plane_len; // distance between plane x and planey
+	float	dot_product; //checks if plane_x and plane_y are perpendicular
+	int		step_x;  // len of the step in the x axis at a given point
+	int		step_y; //  len of the step in the y axis at a given point
+	float	side_distance_x; //distance to the cell in the x axis
+	float	side_ditance_y; //distance to the cell in the y axis
+	float	camera_x; //position in the fov
+	float	ray_direction_x; //where the ray in the x axis is
+	float	ray_direction_y; //wheere the ray in the y axis is
+	float	decimal_x; //decimal part of x/y position
+	float	decimal_y;
+	int		map_position_x; //which tile position(index x,y) the player is 
+	int		map_position_y;
+	float	d_next_tile_x; //distance on a ray to the next tile
+	float	d_next_tile_y;
+	float	side_dist_x; //side distance to next tile
+	float	side_dist_y;
 	bool	key_up;
 	bool	key_down;
 	bool	key_right;
 	bool	key_left;
-}				t_player;
+}			t_player;
 
 ////////////////////////////////////////////////////////////////////////////////
 /* ************************************************************************** */
@@ -137,10 +152,9 @@ typedef struct s_line
 	char	*tmp;
 	int		player_count;
 	int		map_started;
-	int player_x;
-	int player_y;
+	int		player_x;
+	int		player_y;
 }			t_line;
-
 
 /* ************************************************************************** */
 /*                                   Color Struct                             */
@@ -151,7 +165,6 @@ typedef struct s_color_data
 	int		floor_color;
 	int		ceiling_color;
 }			t_color_data;
-
 
 /* ************************************************************************** */
 /*                                   Texture Struct	                          */
@@ -165,7 +178,6 @@ typedef struct s_texture_data
 	int ea;
 	int fd;
 }			t_texture_data;
-
 
 ////////////////////////////////////////////////////////////////////////////////
 /* ************************************************************************** */
@@ -187,13 +199,13 @@ void		print_error(const char *msg);
 int			is_all_ones(char *last_map_line);
 int			is_player(char line);
 int			is_valid_input(char line);
-void	print_pass(const char *msg); // might remove later
+void		print_pass(const char *msg); // might remove later
 
 /* ************************************************************************** */
 /*                                  Parser                                    */
 /* ************************************************************************** */
 
-int	parser(char *path, t_line *map, t_color_data *c_data, t_texture_data *t_data);
+int			parser(char *path, t_line *map, t_color_data *c_data, t_texture_data *t_data);
 
 // map //
 int			parse_map_line(char *line, t_line *map);
@@ -201,7 +213,7 @@ int			is_valid_row(char *line, t_line *map);
 int			is_valid_map(char *line, t_line *map);
 
 // textures //
-int	parse_texture(char *line, t_texture_data *t_data);
+int			parse_texture(char *line, t_texture_data *t_data);
 
 // color //
 int			parse_color(char *line, t_color_data *c_data);
@@ -219,5 +231,10 @@ void		free_split(char **split);
 
 void	init_player(t_player *player, t_line *map);
 void	render_frame(t_data *data, t_player *player, char **map);
+void	define_step_len(t_player *player);
+void	define_step_len(t_player *player);
+void	camera_position(t_player *player, int x);
+void	exact_position_in_cell(t_player *player);
+void	distance_to_next_tile(t_player *player);
 
 #endif
