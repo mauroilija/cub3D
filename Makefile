@@ -6,7 +6,7 @@
 #    By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/11 14:58:16 by abita             #+#    #+#              #
-#    Updated: 2026/04/11 18:53:55 by milija-h         ###   ########.fr        #
+#    Updated: 2026/04/12 12:26:27 by milija-h         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ SRCS = \
 	  mlx/player.c \
 	  mlx/grid.c \
 	  mlx/dda_utils.c \
+	  mlx/dda_loop.c  \
 	  
 
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))

@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 12:52:18 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/10 16:26:52 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/12 13:48:57 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ static void	draw_player(t_data *data, t_player *player, int tile_size)
 	int	dx;
 	int	dy;
 
-	px = (int)(player->x_position * tile_size);
-	py = (int)(player->y_position * tile_size);
+	px = (int)(player->pos_x * tile_size);
+	py = (int)(player->pos_y * tile_size);
 	dx = -1;
 	while (dx <= 1)
 	{
@@ -96,8 +96,8 @@ static void	draw_player_direction(t_data *data, t_player *player, int tile_size)
 	max_length = 2.0f;
 	while (step < max_length)
 	{
-		cur_x = player->x_position + player->x_direction * step;
-		cur_y = player->y_position + player->y_direction * step;
+		cur_x = player->pos_x + player->dir_x * step;
+		cur_y = player->pos_y + player->dir_y * step;
 		screen_x = (int)(cur_x * tile_size);
 		screen_y = (int)(cur_y * tile_size);
 		my_pixel_put(data->img, screen_x, screen_y, 0x000000);

@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/11 18:53:46 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/11 22:04:36 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/12 13:52:07 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
 void	camera_position(t_player *player, int x)
 {
 	player->camera_x = 2.0f * x / (float)WIDTH - 1.0f;
-	player->ray_direction_x = player->x_direction + player->plane_x *
+	player->ray_dir_x = player->dir_x + player->plane_x *
 		player->camera_x;
-	player->ray_direction_y = player->y_direction + player->plane_y *
+	player->ray_dir_y = player->dir_y + player->plane_y *
 		player->camera_x;
 }
 // we we will compute the exact position of our player within the given
@@ -34,22 +34,20 @@ void	camera_position(t_player *player, int x)
 // we 1 - 0.12
 void	exact_position_in_cell(t_player *player)
 {
-	player->map_position_x = (int)player->x_position;
-	player->map_position_y = (int)player->y_position;
-	player->decimal_x = player->x_position - player->map_position_x;
-	player->decimal_y = player->y_position - player->map_position_y;
+	player->map_x = (int)player->pos_x;
+	player->map_y = (int)player->pos_y;
 }
 //further check where the formula comes from
 void	distance_to_next_tile(t_player *player)
 {
-	if (player->ray_direction_x == 0)
-		player->d_next_tile_x = 1e30;
+	if (player->ray_dir_x == 0)
+		player->delta_dist_x = 1e30;
 	else
-		player->d_next_tile_x = fabs(1.0 / player->ray_direction_x);
-	if (player->ray_direction_y == 0)
-		player->d_next_tile_y = 1e30;
+		player->delta_dist_x = fabs(1.0 / player->ray_dir_x);
+	if (player->ray_dir_y == 0)
+		player->delta_dist_y = 1e30;
 	else
-		player->d_next_tile_y = fabs(1 / player->ray_direction_y);
+		player->delta_dist_y = fabs(1 / player->ray_dir_y);
 }
 
 //distance of a step is by default 1 or -1
@@ -57,29 +55,29 @@ void	distance_to_next_tile(t_player *player)
 //affected
 void	define_step_len(t_player *player)
 {
-	if (player->x_direction >= 0)
+	if (player->dir_x >= 0)
 	{
 		player->step_x = 1;
-		player->side_dist_x = (player->x_position - player->map_position_x)
-		* player->d_next_tile_x;
+		player->side_dist_x = (player->pos_x - player->map_x)
+		* player->delta_dist_x;
 	}
 	else
 	{
 		player->step_x = -1;
-		player->side_dist_x = (player->map_position_x + 1 - player->x_position) *
-		player->d_next_tile_x;
+		player->side_dist_x = (player->map_x + 1 - player->pos_x) *
+		player->delta_dist_x;
 	}
-	if (player->y_direction >= 0)
+	if (player->dir_y >= 0)
 	{
 		player->step_y = 1;
-		player->side_dist_y = (player->y_position - player->map_position_y)
-		* player->d_next_tile_y;
+		player->side_dist_y = (player->pos_y - player->map_y)
+		* player->delta_dist_y;
 	}
 	else
 	{
 		player->step_y = -1;
-		player->side_dist_y = (player->map_position_y + 1 - player->y_position) *
-		player->d_next_tile_y;
+		player->side_dist_y = (player->map_y + 1 - player->pos_y) *
+		player->delta_dist_y;
 	}
 }
 

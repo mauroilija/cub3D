@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/04/11 21:58:08 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/12 13:50:21 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,35 +87,30 @@ typedef enum e_color_type
 /* ************************************************************************** */
 typedef struct s_player
 {
-	float	x_position; // position in the x-axis
-	float	y_position; // position in the y-axis
-	float	x_direction; //where player initally looks
-	float	y_direction; //
-	float	plane_x; //x_axis point in the fov
-	float	plane_y; //y axis point in the fov
-	float	fov; //field of view of the player
-	float	plane_len; // distance between plane x and planey
-	float	dot_product; //checks if plane_x and plane_y are perpendicular
-	int		step_x;  // len of the step in the x axis at a given point
-	int		step_y; //  len of the step in the y axis at a given point
-	float	side_distance_x; //distance to the cell in the x axis
-	float	side_ditance_y; //distance to the cell in the y axis
-	float	camera_x; //position in the fov
-	float	ray_direction_x; //where the ray in the x axis is
-	float	ray_direction_y; //wheere the ray in the y axis is
-	float	decimal_x; //decimal part of x/y position
-	float	decimal_y;
-	int		map_position_x; //which tile position(index x,y) the player is 
-	int		map_position_y;
-	float	d_next_tile_x; //distance on a ray to the next tile
-	float	d_next_tile_y;
-	float	side_dist_x; //side distance to next tile
+	float	pos_x; //position in the world space
+	float	pos_y;
+	float	dir_x; //direction vectoor (where the player looks)
+	float	dir_y;
+	float	plane_x; //camera plane (perpendicular to FOV)
+	float	plane_y;
+	float	camera_x; //raycasting per column
+	float	ray_dir_x;
+	float	ray_dir_y;
+	int		map_x; // current map tile
+	int		map_y;
+	int		step_x; //dda step direction
+	int		step_y;
+	float	delta_dist_x; //distance between grid crossings
+	float	delta_dist_y;
+	float	side_dist_x; //distance to next grid crossing
 	float	side_dist_y;
+	int		side; // wal info (1 = wall, 0 = space)
 	bool	key_up;
 	bool	key_down;
 	bool	key_right;
 	bool	key_left;
-}			t_player;
+
+}	t_player;
 
 ////////////////////////////////////////////////////////////////////////////////
 /* ************************************************************************** */
