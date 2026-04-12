@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/11 18:53:46 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/12 13:52:07 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/12 19:25:53 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,12 @@
 void	camera_position(t_player *player, int x)
 {
 	player->camera_x = 2.0f * x / (float)WIDTH - 1.0f;
-	player->ray_dir_x = player->dir_x + player->plane_x *
-		player->camera_x;
-	player->ray_dir_y = player->dir_y + player->plane_y *
-		player->camera_x;
+	player->ray_dir_x = player->dir_x + player->plane_x
+		* player->camera_x;
+	player->ray_dir_y = player->dir_y + player->plane_y
+		* player->camera_x;
 }
+
 // we we will compute the exact position of our player within the given
 //cell, as we know our map is a combination of cell, each with a x and y
 //axis position
@@ -37,6 +38,7 @@ void	exact_position_in_cell(t_player *player)
 	player->map_x = (int)player->pos_x;
 	player->map_y = (int)player->pos_y;
 }
+
 //further check where the formula comes from
 void	distance_to_next_tile(t_player *player)
 {
@@ -59,25 +61,24 @@ void	define_step_len(t_player *player)
 	{
 		player->step_x = 1;
 		player->side_dist_x = (player->pos_x - player->map_x)
-		* player->delta_dist_x;
+			* player->delta_dist_x;
 	}
 	else
 	{
 		player->step_x = -1;
-		player->side_dist_x = (player->map_x + 1 - player->pos_x) *
-		player->delta_dist_x;
+		player->side_dist_x = (player->map_x + 1 - player->pos_x)
+			* player->delta_dist_x;
 	}
 	if (player->dir_y >= 0)
 	{
 		player->step_y = 1;
 		player->side_dist_y = (player->pos_y - player->map_y)
-		* player->delta_dist_y;
+			* player->delta_dist_y;
 	}
 	else
 	{
 		player->step_y = -1;
-		player->side_dist_y = (player->map_y + 1 - player->pos_y) *
-		player->delta_dist_y;
+		player->side_dist_y = (player->map_y + 1 - player->pos_y)
+			* player->delta_dist_y;
 	}
 }
-

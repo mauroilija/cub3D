@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/04/12 13:50:21 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/12 19:23:09 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,10 @@ typedef struct s_player
 	float	delta_dist_y;
 	float	side_dist_x; //distance to next grid crossing
 	float	side_dist_y;
+	float	perp_wall_dist;
+	float	wall_x; //exact coordinate where the ray hits the wall
 	int		side; // wal info (1 = wall, 0 = space)
+	int		texture_x;
 	bool	key_up;
 	bool	key_down;
 	bool	key_right;
@@ -231,5 +234,9 @@ void	define_step_len(t_player *player);
 void	camera_position(t_player *player, int x);
 void	exact_position_in_cell(t_player *player);
 void	distance_to_next_tile(t_player *player);
+void	advance_to_next_grid(t_player *player, char **map);
+void	perpendicular_wall_distance(t_player *player);
+void	contact_position(t_player *player);
+void	texture_column(t_player *player, int tex_width);
 
 #endif

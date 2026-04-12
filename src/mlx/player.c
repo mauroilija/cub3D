@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 18:00:28 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/12 13:50:18 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/12 19:16:59 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,9 @@ void	init_player(t_player *player, t_line *map)
 	player->side_dist_y = 0.0;
 	player->map_x = 0;
 	player->map_y = 0;
+	player->perp_wall_dist = 0.0;
+	player->wall_x = 0.0;
+	player->texture_x = 0;
 	player->key_down = false;
 	player->key_left = false;
 	player->key_right = false;

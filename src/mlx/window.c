@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
+/*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:28:55 by abita             #+#    #+#             */
-/*   Updated: 2026/02/20 21:08:23 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/12 19:29:53 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ void	init_window_and_display(t_data *data)
 	data->mlx = NULL;
 	data->win = NULL;
 	data->img.img = NULL;
-
 	data->mlx = mlx_init();
 	// data->mlx  = NULL;
 	if (!data->mlx)
