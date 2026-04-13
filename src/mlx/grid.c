@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/10 12:52:18 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/12 13:48:57 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/13 20:12:24 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ static void	draw_player_direction(t_data *data, t_player *player, int tile_size)
 	}
 }
 
-void	render_frame(t_data *data, t_player *player, char **map)
+void	render_grid(t_data *data, t_player *player, char **map)
 {
 	draw_map(data, map);
 	draw_player(data, player, TILE_SIZE);
