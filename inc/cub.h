@@ -6,7 +6,7 @@
 /*   By: arselabita <arselabita@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/04/08 19:35:48 by arselabita       ###   ########.fr       */
+/*   Updated: 2026/04/13 15:39:17 by arselabita       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <fcntl.h>
 # include <limits.h>
 # include <math.h>
-# include <mlx.h>
+// # include <mlx.h>
 # include <stdbool.h>
 # include <stdio.h>
 # include <sys/time.h>

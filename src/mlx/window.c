@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arselabita <arselabita@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:28:55 by abita             #+#    #+#             */
-/*   Updated: 2026/02/20 21:08:23 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/13 15:38:59 by arselabita       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub.h"
+#include "../../inc/cub.h"
 
 int	ft_exit_error(t_data *data)
 {
