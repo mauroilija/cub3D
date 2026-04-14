@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/04/14 18:42:00 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/14 19:49:29 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,6 +236,7 @@ void	define_step_len(t_player *player);
 void	camera_position(t_player *player, int x);
 void	exact_position_in_cell(t_player *player);
 void	distance_to_next_tile(t_player *player);
+void	get_all_inputs(t_player *player);
 void	advance_to_next_grid(t_player *player, char **map);
 void	perpendicular_wall_distance(t_player *player);
 void	contact_position(t_player *player);

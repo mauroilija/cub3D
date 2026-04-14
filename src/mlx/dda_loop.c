@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 12:26:01 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/12 19:26:14 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/14 20:42:57 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@ void	advance_to_next_grid(t_player *player, char **map)
 {
 	int	hit;
 
+	if (player->map_y < 0 || !map[player->map_y])
+		return;
+	if (player->map_x < 0 || !map[player->map_y][player->map_x])
+		return;
 	hit = 0;
 	while (hit == 0)
 	{
@@ -31,6 +35,8 @@ void	advance_to_next_grid(t_player *player, char **map)
 			player->map_y += player->step_y;
 			player->side = 1;
 		}
+		//invalid read
+		//SIGSEGV
 		if (map[player->map_y][player->map_x] == '1')
 			hit = 1;
 	}
