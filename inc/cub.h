@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arselabita <arselabita@student.42.fr>      +#+  +:+       +#+        */
+/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/04/13 15:39:17 by arselabita       ###   ########.fr       */
+/*   Updated: 2026/04/14 20:35:40 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <fcntl.h>
 # include <limits.h>
 # include <math.h>
-// # include <mlx.h>
+# include <mlx.h>
 # include <stdbool.h>
 # include <stdio.h>
 # include <sys/time.h>
@@ -106,7 +106,7 @@ typedef struct s_data
 /* ************************************************************************** */
 /*                                   FD_line Struct							  */
 /* ************************************************************************** */
-typedef struct s_line
+typedef struct s_map
 {
 	char	**grid;
 	int		height;
@@ -117,8 +117,8 @@ typedef struct s_line
 	char	*tmp;
 	int		player_count;
 	int		map_started;
-	int player_x;
-	int player_y;
+	int		player_x;
+	int		player_y;
 }			t_line;
 
 
@@ -168,6 +168,10 @@ int			is_all_ones(char *last_map_line);
 int			is_player(char line);
 int			is_valid_input(char line);
 void	print_pass(const char *msg); // might remove later
+int	is_valid(char line);
+int	is_map_line(char *line);
+char **creating_2d_map(char **old, char *line);
+
 
 /* ************************************************************************** */
 /*                                  Parser                                    */
@@ -176,7 +180,7 @@ void	print_pass(const char *msg); // might remove later
 int	parser(char *path, t_line *map, t_color_data *c_data, t_texture_data *t_data);
 
 // map //
-int			parse_map_line(char *line, t_line *map);
+int			map_parsing(char *line, t_line *map);
 int			is_valid_row(char *line, t_line *map);
 int			is_valid_map(char *line, t_line *map);
 
