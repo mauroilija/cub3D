@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 18:00:28 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/12 19:16:59 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/14 18:40:39 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ static void	get_init_positions(t_player *player, char **map)
 				player->pos_x = (float)x + 0.5f;
 				player->pos_y = (float)y + 0.5f;
 				get_direction(cell, player);
+				return ;
 			}
 			x++;
 		}
@@ -63,11 +64,13 @@ static void	get_init_positions(t_player *player, char **map)
 
 void	init_player(t_player *player, t_line *map)
 {
+	ft_bzero(player, sizeof(t_player));
 	get_init_positions(player, map->grid);
 	//The camera plane (planeX, planeY) is a vector perpendicular to direction,
 	//and its length determines the FOV.
 	player->plane_x = -player->dir_y * 0.66;
 	player->plane_y = player->dir_x * 0.66;
+	player->camera_x = 0.0;
 	// The camera plane must be perpendicular to the direction vector (hence why the dot)
 	player->step_x = 0;
 	player->step_y = 0;

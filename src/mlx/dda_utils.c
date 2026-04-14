@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/11 18:53:46 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/12 19:25:53 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/14 18:43:02 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ void	camera_position(t_player *player, int x)
 //what we do here is we try to find the fractional part of the x/y position
 // we do that by taking the integer part of the float position and subtracting
 //it by its decimal part
-// so if position is 1.12
-// we 1 - 0.12
 void	exact_position_in_cell(t_player *player)
 {
 	player->map_x = (int)player->pos_x;
@@ -49,7 +47,7 @@ void	distance_to_next_tile(t_player *player)
 	if (player->ray_dir_y == 0)
 		player->delta_dist_y = 1e30;
 	else
-		player->delta_dist_y = fabs(1 / player->ray_dir_y);
+		player->delta_dist_y = fabs(1.0 / player->ray_dir_y);
 }
 
 //distance of a step is by default 1 or -1
@@ -57,28 +55,28 @@ void	distance_to_next_tile(t_player *player)
 //affected
 void	define_step_len(t_player *player)
 {
-	if (player->dir_x >= 0)
+	if (player->ray_dir_x < 0)
 	{
-		player->step_x = 1;
+		player->step_x = -1;
 		player->side_dist_x = (player->pos_x - player->map_x)
 			* player->delta_dist_x;
 	}
 	else
 	{
-		player->step_x = -1;
-		player->side_dist_x = (player->map_x + 1 - player->pos_x)
+		player->step_x = 1;
+		player->side_dist_x = (player->map_x + 1.0 - player->pos_x)
 			* player->delta_dist_x;
-	}
-	if (player->dir_y >= 0)
+	} 
+	if (player->ray_dir_y < 0)
 	{
-		player->step_y = 1;
+		player->step_y = -1;
 		player->side_dist_y = (player->pos_y - player->map_y)
 			* player->delta_dist_y;
 	}
 	else
 	{
-		player->step_y = -1;
-		player->side_dist_y = (player->map_y + 1 - player->pos_y)
+		player->step_y = 1;
+		player->side_dist_y = (player->map_y + 1.0 - player->pos_y)
 			* player->delta_dist_y;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/04/13 20:12:34 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/14 18:42:00 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@
 # define RESET_COLOR "\033[0m"
 
 // scaling
-# define WIDTH 400
-# define HEIGHT 400
-# define TILE_SIZE 80
+# define WIDTH 900
+# define HEIGHT 900
+# define TILE_SIZE 40
 
 // arrow keys
 # define LEFT 65361
@@ -115,27 +115,6 @@ typedef struct s_player
 
 }	t_player;
 
-////////////////////////////////////////////////////////////////////////////////
-/* ************************************************************************** */
-/*                                   MLX Struct                               */
-/* ************************************************************************** */
-typedef struct s_img
-{
-	void	*img;
-	char	*addr;
-	int		linelen;
-	int		bpp;
-	int		endian;
-}			t_img;
-
-typedef struct s_data
-{
-	t_img	img;
-	void	*mlx;
-	void	*win;
-	int		i;
-}			t_data;
-
 /* ************************************************************************** */
 /*                                   FD_line Struct							  */
 /* ************************************************************************** */
@@ -153,6 +132,29 @@ typedef struct s_line
 	int		player_x;
 	int		player_y;
 }			t_line;
+
+////////////////////////////////////////////////////////////////////////////////
+/* ************************************************************************** */
+/*                                   MLX Struct                               */
+/* ************************************************************************** */
+typedef struct s_img
+{
+	void	*img;
+	char	*addr;
+	int		linelen;
+	int		bpp;
+	int		endian;
+}			t_img;
+
+typedef struct s_data
+{
+	t_img		img;
+	t_player	*player;
+	t_line		*line;
+	void		*mlx;
+	void		*win;
+	int			i;
+}			t_data;
 
 /* ************************************************************************** */
 /*                                   Color Struct                             */
@@ -240,5 +242,6 @@ void	contact_position(t_player *player);
 void	texture_column(t_player *player, int tex_width);
 void	draw_wall_strip(t_data *data, t_player *player, int x);
 void	render_frame(t_data *data, t_line *map, t_player *player);
+int		render_loop(void *param);
 
 #endif

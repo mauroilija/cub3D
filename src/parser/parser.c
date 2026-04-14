@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:02:56 by abita             #+#    #+#             */
-/*   Updated: 2026/04/09 20:15:19 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/14 17:47:50 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int	is_map_line(char *line)
 {
 	int	i;
 
-	printf("I GO HERE\n");
+	//printf("I GO HERE\n");
 
 	if (!line)
 		return (0);
@@ -76,7 +76,7 @@ static int	parse_line(char *line, t_line *map, t_color_data *c_data, t_texture_d
 	if (line[i] == '\0' || line[i] == '\n')
 		return (1);
 	//////////////////////////////////////////////////////////
-	printf("map_started: %d\n", map->map_started);
+	//printf("map_started: %d\n", map->map_started);
 	
 	// printf("Checking line: [%s]\n", &line[i]);
 	// printf("is_map_line: %d\n", is_map_line(&line[i]));
@@ -88,22 +88,22 @@ static int	parse_line(char *line, t_line *map, t_color_data *c_data, t_texture_d
 	{
 		if (is_texture_line(&line[i]))
 		{
-			printf("TEXTURE STARTS HERE\n");
+			//printf("TEXTURE STARTS HERE\n");
 			ret = parse_texture(&line[i], t_data);
 			if (ret != EXIT_SUCCESS)
 				return (EXIT_FAILURE);
-			printf("parse_texture returned: %d\n", ret);
+			//printf("parse_texture returned: %d\n", ret);
 			return (ret);
 		}
 		if (is_color_line(&line[i]))
 		{
-			printf("COLOR STARTS HERE\n");
+			//printf("COLOR STARTS HERE\n");
 			return (parse_color(&line[i], c_data));
 		}
 		if (is_map_line(&line[i]))
 		{
 			map->map_started = 1;
-			printf("MAP STARTS HERE\n");
+			//printf("MAP STARTS HERE\n");
 			// return(parse_map_line(&line[i], map));
 		}
 		// return (print_error("Error: invalid line before map.\n"), EXIT_FAILURE);

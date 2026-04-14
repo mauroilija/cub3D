@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 13:55:41 by abita             #+#    #+#             */
-/*   Updated: 2026/04/09 16:56:34 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/14 17:45:51 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ char **copy_grid(char **old, int height)
 }
 char **map_add_line(char **old, char *line)
 {
-	int i;
-	char **new;
+	int		i;
+	char	**new;
 
 	i = 0;
 	while (old && old[i])
@@ -215,12 +215,18 @@ int	parse_map_line(char *line, t_line *map)
 	 char **grid_copy = copy_grid(map->grid, map->height);
     grid_copy[map->player_y][map->player_x] = '0';
     if (!flood_fill(grid_copy, map->player_y, map->player_x, map->height))
-        return (1);
-    else
     {
-        printf("PASSED: map is valid and closed\n");
-    }
+		return (1);
+	}
+		//else
+    //{
+    //    printf("PASSED: map is valid and closed\n");
+    //}
 	// printf("line: %s\n", line);
 	// printf("each line len: %lu\n", ft_strlen(line));
-	return (free(clean), EXIT_SUCCESS);
+	free(clean);
+	clean = NULL;
+	free_split(grid_copy);
+	grid_copy = NULL;
+	return (EXIT_SUCCESS);
 }

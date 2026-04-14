@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 15:54:05 by abita             #+#    #+#             */
-/*   Updated: 2026/04/13 20:18:07 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/14 17:32:57 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	init_window_and_display(&data);
 	init_player(&player, &line);
+	data.player = &player;
+	data.line = &line;
 	render_grid(&data, &player, line.grid);
 	mlx_loop_helper(&data);
 	return (EXIT_SUCCESS);

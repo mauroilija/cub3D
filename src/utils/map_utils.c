@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 13:56:33 by abita             #+#    #+#             */
-/*   Updated: 2026/04/09 16:39:06 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/14 17:43:04 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_valid_input(char line)
 {
-	printf("current char: %c\n", line);
+	//printf("current char: %c\n", line);
 	return (line == SPACE || line == WALL || line == NORTH || line == SOUTH
 		|| line == EAST || line == WEST || line == ' ' || line == '\t');
 }

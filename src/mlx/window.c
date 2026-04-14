@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:28:55 by abita             #+#    #+#             */
-/*   Updated: 2026/04/12 19:29:53 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/14 18:42:27 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	mlx_loop_helper(t_data *data)
 {
 	mlx_hook(data->win, 2, 1L << 0, keyhandler, data);
 	mlx_hook(data->win, 17, 1L << 2, ft_exit, data);
+	mlx_loop_hook(data->mlx, render_loop, data);
 	mlx_loop(data->mlx);
 }
 
