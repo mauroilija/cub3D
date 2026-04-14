@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 15:41:07 by abita             #+#    #+#             */
-/*   Updated: 2026/04/14 20:04:15 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/14 20:06:00 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,16 @@
 	2. The first and last position in a row should be 1.
 	3. A zero should be surrounded by: 1, 0, N, S, W, E
 */
+
+int	is_valid(char line)
+{
+	return (line == 'N' || line == 'S' || line == 'E' || line == 'W' || line == '1' || line == '0');
+}
+
+int	is_player(char line)
+{
+	return (line == 'N' || line == 'S' || line == 'E' || line == 'W');
+}
 
 static int grid_validation(char **grid, int height, t_map *map)
 {
