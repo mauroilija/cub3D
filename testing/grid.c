@@ -196,8 +196,10 @@ int main()
         height++;
         free (line);
     }
-    get_validation(grid, height);
-    return (0);
+    int ret = get_validation(grid, height);
+    if (ret != 0)
+		printf("error\n");
+	return (0);
 }
 
 

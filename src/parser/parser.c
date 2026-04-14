@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:02:56 by abita             #+#    #+#             */
-/*   Updated: 2026/04/14 20:40:47 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/14 21:24:51 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,31 @@ static int	parse_input(char *line, t_line *map, t_color_data *c_data, t_texture_
 	while (line[i] == ' ' || line[i] == '\t')
 		i++;
 	if (line[i] == '\0' || line[i] == '\n')
-		return (1);
+	{
+		if (map->map_started)
+			return (printf("ERROR: empty line in map\n"), EXIT_FAILURE);
+		return (EXIT_SUCCESS);
+	}	
 	if (!map->map_started)
 	{
 		if (is_texture_line(&line[i]))
-			return (parse_texture(&line[i], t_data));
+		{
+			if (parse_texture(&line[i], t_data) != EXIT_SUCCESS)
+			return (EXIT_FAILURE);
+		}
 		if (is_color_line(&line[i]))
-			return (parse_color(&line[i], c_data));
+		{
+			if (parse_color(&line[i], c_data) != EXIT_SUCCESS)
+				return (EXIT_FAILURE);
+		}
 		if (is_map_line(&line[i]))
 			map->map_started = 1;
+		else
+			return(print_error("ERROR: invalid config line\n"), EXIT_FAILURE);
 	}
-	return (map_parsing(&line[i], map));
+	if (map_parsing(&line[i], map) != EXIT_SUCCESS)
+		return (printf("ERROR: invalid line after map\n"), EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
 int	parser(char *path, t_line *map, t_color_data *c_data, t_texture_data *t_data)
@@ -54,8 +68,10 @@ int	parser(char *path, t_line *map, t_color_data *c_data, t_texture_data *t_data
 		if (parse_input(line, map, c_data, t_data) != EXIT_SUCCESS)
 		{
 			free(line);
-			line = NULL;
-			continue;
+			get_next_line(-1);
+			close(fd);
+			// free_all(map, c_data, t_data); // add this funct
+			return (EXIT_FAILURE);
 		}
 		free(line);
 	}
@@ -63,5 +79,7 @@ int	parser(char *path, t_line *map, t_color_data *c_data, t_texture_data *t_data
 	close(fd);
 	if (!map->map_started)
 		return (print_error("ERROR: No map found.\n"), EXIT_FAILURE);
+	if (grid_validation(map->grid, map->height, map) != EXIT_SUCCESS)
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/04/14 20:49:21 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/14 21:21:22 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,7 @@ void		free_split(char **split);
 /* ************************************************************************** */
 
 int	parser(char *path, t_line *map, t_color_data *c_data, t_texture_data *t_data);
+int grid_validation(char **grid, int height, t_line *map);
 
 // map //
 int			map_parsing(char *line, t_line *map);
