@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:06:52 by abita             #+#    #+#             */
-/*   Updated: 2026/04/14 20:23:31 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/14 20:41:23 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,7 @@
 
 void	init_line(t_line *map)
 {
-	map->first_map_line = NULL;
-	map->last_map_line = NULL;
-	map->is_first_line = 1;
-	map->error = 0;
 	map->player_count = 0;
-	map->map_started = 0;
 	map->height = 0;
 }
 

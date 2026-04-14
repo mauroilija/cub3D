@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/04/14 20:35:40 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/14 20:49:21 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,15 +110,8 @@ typedef struct s_map
 {
 	char	**grid;
 	int		height;
-	char	*first_map_line;
-	char	*last_map_line;
-	int		is_first_line;
-	int		error;
-	char	*tmp;
 	int		player_count;
 	int		map_started;
-	int		player_x;
-	int		player_y;
 }			t_line;
 
 
@@ -164,14 +157,15 @@ int			ft_exit_error(t_data *data);
 /* ************************************************************************** */
 
 void		print_error(const char *msg);
-int			is_all_ones(char *last_map_line);
 int			is_player(char line);
-int			is_valid_input(char line);
-void	print_pass(const char *msg); // might remove later
-int	is_valid(char line);
-int	is_map_line(char *line);
-char **creating_2d_map(char **old, char *line);
-
+int			is_valid(char line);
+int			is_map_line(char *line);
+char		**creating_2d_map(char **old, char *line);
+void		init_line(t_line *line);
+int			skip_whitespace(char *line);
+int			is_texture_line(char *line);
+int			is_color_line(char *line);
+void		free_split(char **split);
 
 /* ************************************************************************** */
 /*                                  Parser                                    */
@@ -181,20 +175,11 @@ int	parser(char *path, t_line *map, t_color_data *c_data, t_texture_data *t_data
 
 // map //
 int			map_parsing(char *line, t_line *map);
-int			is_valid_row(char *line, t_line *map);
-int			is_valid_map(char *line, t_line *map);
 
 // textures //
-int	parse_texture(char *line, t_texture_data *t_data);
+int			parse_texture(char *line, t_texture_data *t_data);
 
 // color //
 int			parse_color(char *line, t_color_data *c_data);
-
-// utils //
-void		init_line(t_line *line);
-int			skip_whitespace(char *line);
-int			is_texture_line(char *line);
-int			is_color_line(char *line);
-void		free_split(char **split);
 
 #endif

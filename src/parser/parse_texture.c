@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 11:56:47 by abita             #+#    #+#             */
-/*   Updated: 2026/02/20 20:52:37 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/14 20:50:41 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,25 +55,16 @@ int	parse_texture(char *line, t_texture_data *t_data)
 	char *dot;
 	char *slash;
 
-	// texture type if it is NO, SO, WE, EA
 	id = get_id_type(line);
-	// printf("the texture type: %i\n", id);
-	// check if it is a path
 	path = get_path(line);
 	if (!path)
 		return (-1);
 	slash = ft_strrchr(path, '/');
-	// printf("backslash: %s\n", slash);
 	if (slash && slash[1] == '.')
-	{
-		printf("error: this is a hidden path\n");
-		return (EXIT_FAILURE);
-	}
+		return (printf("error: this is a hidden path\n"), EXIT_FAILURE);
 	dot = ft_strrchr(path, '.');
-	// printf("dot: %s\n", dot);
 	if (!dot || ft_strcmp(dot, ".xpm") != 0)
 		return (printf("error: .xpm exe\n"), EXIT_FAILURE);
-	// printf("the path is: %s\n", path);
 	t_data->fd = open(path, O_RDONLY);
 	if (id == -1)
 		return (-1);

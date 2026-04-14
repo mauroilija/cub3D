@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:00:00 by abita             #+#    #+#             */
-/*   Updated: 2026/02/24 11:47:05 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/14 20:51:42 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static int	get_color_range(char *line)
 
 	char *trim = ft_strtrim(&line[i], "\n \t");
 	if (!trim)
-		return (-1);
+		return (EXIT_FAILURE);
 	comma = 0;
 	while (line[i])
 	{
@@ -71,22 +71,22 @@ static int	get_color_range(char *line)
 		i++;
 	}
 	if (comma >= 3)
-		return (-1);
+		return (EXIT_FAILURE);
 	split = ft_split(trim, ',');
 	if (!split)
-		return (free(trim), free_split(split), -1);
+		return (free(trim), free_split(split), EXIT_FAILURE);
 	j = 0;
 	while (j < 3)
 	{
 		if (!split[j] || !is_number(split[j]))
-			return (free(trim), free_split(split), -1);
+			return (free(trim), free_split(split), EXIT_FAILURE);
 		rgb[j] = ft_atoi(split[j]);
 		if (rgb[j] < 0 || rgb[j] > 255)
-			return (free(trim), free_split(split), -1);
+			return (free(trim), free_split(split), EXIT_FAILURE);
 		j++;
 	}
 	if (split[3])
-		return (free(trim), free_split(split), -1);
+		return (free(trim), free_split(split), EXIT_FAILURE);
 	color = (rgb[0] << 16) | (rgb[1] << 8) | rgb[2];
 	return (free(trim), free_split(split), color); // passing the rgb bit shifting
 }
@@ -98,10 +98,10 @@ int	parse_color(char *line, t_color_data *c_data)
 
 	id = get_id_type(line);
 	if (id == ERROR)
-		return (-1); // error
+		return (EXIT_FAILURE); // error
 	color = get_color_range(line);
 	if (color == ERROR)
-		return (-1); // error
+		return (EXIT_FAILURE); // error
 	if (id == F)
 		c_data->floor_color = color;
 	if (id == C)
