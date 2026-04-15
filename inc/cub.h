@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/04/14 19:49:29 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/15 17:59:52 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,12 +172,13 @@ typedef struct s_color_data
 
 typedef struct s_texture_data
 {
-	int no;
-	int so;
-	int we;
-	int ea;
-	int fd;
-}			t_texture_data;
+	char *no;
+	char *so;
+	char *we;
+	char *ea;
+	char *fd;
+} t_texture_data;
+
 
 ////////////////////////////////////////////////////////////////////////////////
 /* ************************************************************************** */
