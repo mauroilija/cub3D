@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arselabita <arselabita@student.42.fr>      +#+  +:+       +#+        */
+/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/04/08 19:35:48 by arselabita       ###   ########.fr       */
+/*   Updated: 2026/04/15 17:26:20 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,11 +139,11 @@ typedef struct s_color_data
 
 typedef struct s_texture_data
 {
-	int no;
-	int so;
-	int we;
-	int ea;
-	int fd;
+	char *no;
+	char *so;
+	char *we;
+	char *ea;
+	char *fd;
 } t_texture_data;
 
 

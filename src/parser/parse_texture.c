@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 11:56:47 by abita             #+#    #+#             */
-/*   Updated: 2026/02/20 20:52:37 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/15 17:28:29 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,36 +55,29 @@ int	parse_texture(char *line, t_texture_data *t_data)
 	char *dot;
 	char *slash;
 
-	// texture type if it is NO, SO, WE, EA
 	id = get_id_type(line);
-	// printf("the texture type: %i\n", id);
-	// check if it is a path
 	path = get_path(line);
 	if (!path)
 		return (-1);
 	slash = ft_strrchr(path, '/');
-	// printf("backslash: %s\n", slash);
 	if (slash && slash[1] == '.')
 	{
 		printf("error: this is a hidden path\n");
 		return (EXIT_FAILURE);
 	}
 	dot = ft_strrchr(path, '.');
-	// printf("dot: %s\n", dot);
 	if (!dot || ft_strcmp(dot, ".xpm") != 0)
 		return (printf("error: .xpm exe\n"), EXIT_FAILURE);
-	// printf("the path is: %s\n", path);
-	t_data->fd = open(path, O_RDONLY);
 	if (id == -1)
 		return (-1);
 	if (id == NO)
-		t_data->no = t_data->fd;
+		t_data->no = path;
 	if (id == SO)
-		t_data->so = t_data->fd;
+		t_data->so = path;
 	if (id == WE)
-		t_data->we = t_data->fd;
+		t_data->we = path;
 	if (id == EA)
-		t_data->ea = t_data->fd;
+		t_data->ea = path;
 	free(path);
 	return (EXIT_SUCCESS);
 }
