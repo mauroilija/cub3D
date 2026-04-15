@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/04/15 17:59:52 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/15 21:36:00 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,18 @@ typedef struct s_img
 	int		endian;
 }			t_img;
 
+typedef struct s_texture
+{
+	void	*img;
+	char	*addr;
+	int		width;
+	int		height;
+	int		bpp;
+	int		line_len;
+	int		endian;
+}	t_texture;
+
+
 typedef struct s_data
 {
 	t_img		img;
@@ -154,7 +166,12 @@ typedef struct s_data
 	void		*mlx;
 	void		*win;
 	int			i;
-}			t_data;
+
+	t_texture		no;
+	t_texture		so;
+	t_texture		we;
+	t_texture		ea;
+}				t_data;
 
 /* ************************************************************************** */
 /*                                   Color Struct                             */
@@ -172,13 +189,12 @@ typedef struct s_color_data
 
 typedef struct s_texture_data
 {
-	char *no;
-	char *so;
-	char *we;
-	char *ea;
-	char *fd;
-} t_texture_data;
-
+	char	*no;
+	char	*so;
+	char	*we;
+	char	*ea;
+	char	*fd;
+}	t_texture_data;
 
 ////////////////////////////////////////////////////////////////////////////////
 /* ************************************************************************** */
@@ -188,7 +204,7 @@ typedef struct s_texture_data
 void		init_window_and_display(t_data *data);
 void		my_pixel_put(t_img img, int x, int y, int color);
 void		mlx_loop_helper(t_data *data);
-int			keyhandler(int key, t_data *data);
+int			keyhandler(int key, t_data *data, t_player *player);
 int			ft_exit(t_data *data);
 int			ft_exit_error(t_data *data);
 
@@ -237,7 +253,6 @@ void	define_step_len(t_player *player);
 void	camera_position(t_player *player, int x);
 void	exact_position_in_cell(t_player *player);
 void	distance_to_next_tile(t_player *player);
-void	get_all_inputs(t_player *player);
 void	advance_to_next_grid(t_player *player, char **map);
 void	perpendicular_wall_distance(t_player *player);
 void	contact_position(t_player *player);
@@ -245,5 +260,8 @@ void	texture_column(t_player *player, int tex_width);
 void	draw_wall_strip(t_data *data, t_player *player, int x);
 void	render_frame(t_data *data, t_line *map, t_player *player);
 int		render_loop(void *param);
+void	texture_file(t_data *data, t_texture_data *texture, void **image);
+void	handle_movement(t_player *p, char **map, double frame_time);
+int		key_release(int key, t_player *player);
 
 #endif
