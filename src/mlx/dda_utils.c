@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/11 18:53:46 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/14 20:46:31 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/15 17:09:26 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ void	define_step_len(t_player *player)
 		player->side_dist_y = (player->map_y + 1.0 - player->pos_y)
 			* player->delta_dist_y;
 	}
-
 	//printf("player->side_dist_x = %f\n", player->side_dist_x);
 	//printf("player->side_dist_y = %f\n", player->side_dist_y);
 }
