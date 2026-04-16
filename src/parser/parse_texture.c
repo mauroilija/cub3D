@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 11:56:47 by abita             #+#    #+#             */
-/*   Updated: 2026/04/15 18:43:32 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/16 22:16:12 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,15 @@ static char	*get_path(char *line)
 
 int	parse_texture(char *line, t_texture_data *t_data)
 {
-	int id;
-	char *path;
-	char *dot;
-	char *slash;
+	int		id;
+	char	*path;
+	char	*dot;
+	char	*slash;
 
 	id = get_id_type(line);
 	path = get_path(line);
 	if (!path)
-		return (EXIT_FAILURE);
+		return (-1);
 	slash = ft_strrchr(path, '/');
 	if (slash && slash[1] == '.')
 	{
@@ -69,16 +69,15 @@ int	parse_texture(char *line, t_texture_data *t_data)
 	if (!dot || ft_strcmp(dot, ".xpm") != 0)
 		return (printf("error: .xpm exe\n"), EXIT_FAILURE);
 	if (id == -1)
-		return (EXIT_FAILURE);
+		return (-1);
 	if (id == NO)
-		t_data->no = ft_strdup(path);
+		t_data->no = path;
 	if (id == SO)
-		t_data->so = ft_strdup(path);
+		t_data->so = path;
 	if (id == WE)
-		t_data->we = ft_strdup(path);
+		t_data->we = path;
 	if (id == EA)
-		t_data->ea = ft_strdup(path);
-	if(!t_data->ea || !t_data->no || !t_data->so || !t_data->we)
-		return (free(path), EXIT_FAILURE);
+		t_data->ea = path;
+	free(path);
 	return (EXIT_SUCCESS);
 }

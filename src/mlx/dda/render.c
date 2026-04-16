@@ -6,17 +6,24 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 20:00:57 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/16 12:37:04 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/16 22:21:08 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
+double	get_time_in_ms(void)
+{
+	struct timeval	time;
+
+	gettimeofday(&time, NULL);
+	return ((time.tv_sec * 1000.0) + (time.tv_usec / 1000.0));
+}
+
 void	render_frame(t_data *data, t_line *map, t_player *player)
 {
 	int	x;
 
-	move_player(player);
 	x = 0;
 	while (x < WIDTH)
 	{
@@ -36,18 +43,18 @@ void	render_frame(t_data *data, t_line *map, t_player *player)
 
 int	render_loop(void *param)
 {
+	printf("loop running\n");
 	t_data			*data;
-	//static			double	time; //new time
-	//static			double	old_time; //previous time
-	//struct			timeval	tv;
-	//double			frame_time; //time to draw the frame
+	static			double	old_time = 0;
+	double			time;
+	double			frame_time;
 
 	data = (t_data *)param;
-	//gettimeofday(&tv, NULL);
-	//old_time = time;
-	//time = (tv.tv_sec * 1000.0 + tv.tv_usec / 1000.0);
-	//frame_time = (time - old_time) / 1000.0;
-	//handle_movement(data->player, data->line->grid, frame_time);
+	time = get_time_in_ms(); 
+	frame_time = (time - old_time) / 1000.0;
+	printf("frame_time = %f\n", frame_time);
+	old_time = time;
+	update_player(data->player, data->line->grid, frame_time);
 	render_frame(data, data->line, data->player);
 	return (0);
 }

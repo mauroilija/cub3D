@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/04/16 13:01:10 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/16 22:29:41 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,13 @@ typedef enum e_color_type
 /* ************************************************************************** */
 /*                                   PLAYER                                   */
 /* ************************************************************************** */
+
 typedef struct s_player
 {
 	float	pos_x; //position in the world space
 	float	pos_y;
+	float	m_pos_x;; // updated position in the world space
+	float	m_pos_y;
 	float	dir_x; //direction vectoor (where the player looks)
 	float	dir_y;
 	float	plane_x; //camera plane (perpendicular to FOV)
@@ -108,6 +111,10 @@ typedef struct s_player
 	float	perp_wall_dist;
 	float	wall_x; //exact coordinate where the ray hits the wall
 	int		side; // wal info (1 = wall, 0 = space)
+	double		move_speed;
+	double		rot_speed;
+	float	new_dir_x;
+	float	new_dir_y;
 	int		texture_x;
 	bool	key_up;
 	bool	key_down;
@@ -157,7 +164,6 @@ typedef struct s_texture
 	int		endian;
 }	t_texture;
 
-
 typedef struct s_data
 {
 	t_img			img;
@@ -204,7 +210,8 @@ typedef struct s_texture_data
 void		init_window_and_display(t_data *data);
 void		my_pixel_put(t_img img, int x, int y, int color);
 void		mlx_loop_helper(t_data *data);
-int			keyhandler(int key, t_data *data, t_player *player);
+int			keyhandler(int keycode, void *param);
+int			key_release(int keycode, void *param);
 int			ft_exit(t_data *data);
 int			ft_exit_error(t_data *data);
 
@@ -261,8 +268,10 @@ void	draw_wall_strip(t_data *data, t_player *player, int x);
 void	render_frame(t_data *data, t_line *map, t_player *player);
 int		render_loop(void *param);
 void	texture_file(t_data *data, t_texture_data *texture, void **image);
-//void	handle_movement(t_player *p, char **map, double frame_time);
-int		key_release(int key, t_player *player);
-void	move_player(t_player *player);
+void	update_player(t_player *p, char **map, double frame_time);
+void	rotate_player(t_player *p, double rot_speed, int dir);
+void	move_forward_backward(t_player *p, double move_speed, char **map, int dir);
+void	compute_speed(t_player *p, double frame_time);
+double	get_time_in_ms(void);
 
 #endif

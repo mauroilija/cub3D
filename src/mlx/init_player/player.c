@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 18:00:28 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/14 18:40:39 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/16 18:13:49 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,17 +66,14 @@ void	init_player(t_player *player, t_line *map)
 {
 	ft_bzero(player, sizeof(t_player));
 	get_init_positions(player, map->grid);
-	//The camera plane (planeX, planeY) is a vector perpendicular to direction,
-	//and its length determines the FOV.
 	player->plane_x = -player->dir_y * 0.66;
 	player->plane_y = player->dir_x * 0.66;
 	player->camera_x = 0.0;
-	// The camera plane must be perpendicular to the direction vector (hence why the dot)
 	player->step_x = 0;
 	player->step_y = 0;
 	player->ray_dir_x = 0.0;
 	player->ray_dir_y = 0.0;
-	player->delta_dist_x = 0.0; //distance on a ray to the next tile
+	player->delta_dist_x = 0.0;
 	player->delta_dist_y = 0.0;
 	player->side_dist_x = 0.0;
 	player->side_dist_y = 0.0;
@@ -85,6 +82,8 @@ void	init_player(t_player *player, t_line *map)
 	player->perp_wall_dist = 0.0;
 	player->wall_x = 0.0;
 	player->texture_x = 0;
+	player->move_speed = 0;
+	player->rot_speed = 0;
 	player->key_down = false;
 	player->key_left = false;
 	player->key_right = false;
