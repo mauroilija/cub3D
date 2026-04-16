@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:33:15 by abita             #+#    #+#             */
-/*   Updated: 2026/04/15 21:34:46 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/16 12:39:30 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	keyhandler(int key, t_data *data, t_player *player)
 {
+	printf("a\n");
 	if (key == ESC)
 		ft_exit(data);
 	if (key == UP)

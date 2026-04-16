@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:28:55 by abita             #+#    #+#             */
-/*   Updated: 2026/04/15 21:36:35 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/16 12:46:58 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	my_pixel_put(t_img img, int x, int y, int color)
 void	mlx_loop_helper(t_data *data)
 {
 	mlx_hook(data->win, 2, 1L << 0, keyhandler, data);
-	//mlx_hook(data->win, 2, 1L << 0, key_release, data);
+	mlx_hook(data->win, 3, 1L << 1, key_release, data);
 	mlx_hook(data->win, 17, 1L << 2, ft_exit, data);
 	mlx_loop_hook(data->mlx, render_loop, data);
 	mlx_loop(data->mlx);

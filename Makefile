@@ -6,7 +6,7 @@
 #    By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/11 14:58:16 by abita             #+#    #+#              #
-#    Updated: 2026/04/15 21:22:31 by milija-h         ###   ########.fr        #
+#    Updated: 2026/04/16 14:20:04 by milija-h         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,8 +29,8 @@ RESET = \033[0m
 
 SRCS = \
 	  main.c \
-	  mlx/keys.c \
-	  mlx/window.c \
+	  mlx/key/keys.c \
+	  mlx/window/window.c \
 	  utils/map_utils.c \
 	  utils/return_utils.c \
 	  parser/parser.c \
@@ -38,14 +38,14 @@ SRCS = \
 	  parser/parse_color.c \
 	  parser/parse_utils.c \
 	  parser/parse_texture.c \
-	  mlx/player.c \
+	  mlx/init_player/player.c \
 	  mlx/grid.c \
-	  mlx/dda_utils.c \
-	  mlx/dda_loop.c  \
-	  mlx/render.c \
-	  mlx/render_utils.c \
-	  mlx/textures.c \
-	  mlx/movement.c \
+	  mlx/dda/dda_utils.c \
+	  mlx/dda/dda_loop.c  \
+	  mlx/dda/render.c \
+	  mlx/dda/render_utils.c \
+	  mlx/textures/textures.c \
+	  mlx/movement/movement.c \
 	  
 
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))

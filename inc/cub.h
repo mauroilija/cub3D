@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/04/15 21:36:00 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/16 13:01:10 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@
 /* ************************************************************************** */
 /*                                   ENUM Error FD                            */
 /* ************************************************************************** */
+
 typedef enum e_return_values
 {
 	ERROR = -1,
@@ -112,7 +113,6 @@ typedef struct s_player
 	bool	key_down;
 	bool	key_right;
 	bool	key_left;
-
 }	t_player;
 
 /* ************************************************************************** */
@@ -160,12 +160,12 @@ typedef struct s_texture
 
 typedef struct s_data
 {
-	t_img		img;
-	t_player	*player;
-	t_line		*line;
-	void		*mlx;
-	void		*win;
-	int			i;
+	t_img			img;
+	t_player		*player;
+	t_line			*line;
+	void			*mlx;
+	void			*win;
+	int				i;
 
 	t_texture		no;
 	t_texture		so;
@@ -261,7 +261,8 @@ void	draw_wall_strip(t_data *data, t_player *player, int x);
 void	render_frame(t_data *data, t_line *map, t_player *player);
 int		render_loop(void *param);
 void	texture_file(t_data *data, t_texture_data *texture, void **image);
-void	handle_movement(t_player *p, char **map, double frame_time);
+//void	handle_movement(t_player *p, char **map, double frame_time);
 int		key_release(int key, t_player *player);
+void	move_player(t_player *player);
 
 #endif
