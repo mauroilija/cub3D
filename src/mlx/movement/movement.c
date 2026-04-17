@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 21:19:46 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/16 22:21:43 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/17 13:22:44 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,20 +56,13 @@ void	rotate_player(t_player *p, double rot_speed, int dir)
 
 void	update_player(t_player *p, char **map, double frame_time)
 {
-	printf("update_player running\n");
-	printf("KEYS: W=%d S=%d L=%d R=%d\n",
-		p->key_up, p->key_down, p->key_left, p->key_right);
-	printf("move_speed = %f\n", p->move_speed);
 	compute_speed(p, frame_time);
 	if (p->key_up)
-	{
-		printf("moving forward\n");
-		move_forward_backward(p, p->move_speed, map, +1);
-	}
+		move_forward_backward(p, p->move_speed, map, 1);
 	if (p->key_down)
 		move_forward_backward(p, p->move_speed, map, -1);
 	if (p->key_left)
-		rotate_player(p, p->rot_speed, +1);
-	if (p->key_right)
 		rotate_player(p, p->rot_speed, -1);
+	if (p->key_right)
+		rotate_player(p, p->rot_speed, +1);
 }
