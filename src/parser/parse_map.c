@@ -6,11 +6,11 @@
 /*   By: arselabita <arselabita@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 15:41:07 by abita             #+#    #+#             */
-/*   Updated: 2026/04/15 20:51:13 by arselabita       ###   ########.fr       */
+/*   Updated: 2026/04/18 17:14:25 by arselabita       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub.h"
+#include "../../inc/cub.h"
 
 /*
 	1. The top and bottom row should be only 1's
@@ -23,7 +23,7 @@ int grid_validation(char **grid, int height, t_line *map)
     int x;
     int y;
 
-	map->map_player = 0;
+	map->player_count = 0;
     y = 0;
     while (y < height)
     {
@@ -38,7 +38,8 @@ int grid_validation(char **grid, int height, t_line *map)
 					if (map->player_count != 1)
 						return (printf("ERROR: more than one player\n"), 1);
 				}
-				if (y == 0 || x == 0 || y == height -1 || x == (int)ft_strlen(grid[y]) - 1)
+				if (y == 0 || x == 0 || y == height -1 || 
+					x == (int)ft_strlen(grid[y]) - 1)
         			return (printf("ERROR: map is open at the borders\n"), 1);
 				if (x >= (int)ft_strlen(grid[y - 1]) || x >= (int)ft_strlen(grid[y + 1]))
 					return (printf("ERROR: map is opened(ragged rows)\n"), 1);
@@ -57,10 +58,8 @@ int map_parsing(char *line, t_line *map)
 {
 	int i;
 	char  *clean_line;
-	int return_value;
 
 	i = 0;
-	return_value = 0;
 	while(ft_isspace(line[i]))
 		i++;
 	if (line[i] == '\0')
@@ -73,5 +72,5 @@ int map_parsing(char *line, t_line *map)
 	if (!map->grid)
 		return (EXIT_FAILURE);
 	map->height++;
-	return (, EXIT_SUCCESS);
+	return (EXIT_SUCCESS);
 }
