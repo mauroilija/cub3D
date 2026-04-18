@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
+/*   By: arselabita <arselabita@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 15:41:07 by abita             #+#    #+#             */
-/*   Updated: 2026/04/18 17:34:31 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/18 17:40:14 by arselabita       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,6 @@
 	2. The first and last position in a row should be 1.
 	3. A zero should be surrounded by: 1, 0, N, S, W, E
 */
-
-static char **copy_grid(char **old, int height)
-{
-	int i;
-	char **new_grid;
-
-	new_grid = (char **)ft_calloc((height + 1), sizeof(char *));
-	if (!new_grid)
-		return (NULL);
-	i = 0;
-	while (i < height)
-	{
-		new_grid[i] = ft_strdup(old[i]);
-		i++;
-	}
-	new_grid[height] = NULL;
-	return (new_grid);
-}
 
 int grid_validation(char **grid, int height, t_line *map)
 {
@@ -53,9 +35,7 @@ int grid_validation(char **grid, int height, t_line *map)
 				map->player.x = x;
 				map->player.y = y;
 			}
-			char **grid_copy = copy_grid(map->grid, map->height);
-    		grid_copy[map->player.y][map->player.x] = '0';
-            if (grid_copy)
+            if (grid[y][x] == '0')
             {
 				if (is_player(grid[y][x]))
 				{
