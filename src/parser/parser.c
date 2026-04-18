@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arselabita <arselabita@student.42.fr>      +#+  +:+       +#+        */
+/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:02:56 by abita             #+#    #+#             */
-/*   Updated: 2026/04/17 20:23:09 by arselabita       ###   ########.fr       */
+/*   Updated: 2026/04/18 17:34:40 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,13 @@ static int	parse_input(char *line, t_line *map, t_color_data *c_data, t_texture_
 		{
 			if (parse_texture(&line[i], t_data) != EXIT_SUCCESS)
 			return (EXIT_FAILURE);
+		return (EXIT_SUCCESS);
 		}
 		else if (is_color_line(&line[i]))
 		{
 			if (parse_color(&line[i], c_data) != EXIT_SUCCESS)
 				return (EXIT_FAILURE);
+			return (EXIT_SUCCESS);
 		}
 		else if (is_map_line(&line[i]))
 			map->map_started = 1;

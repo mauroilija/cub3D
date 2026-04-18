@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arselabita <arselabita@student.42.fr>      +#+  +:+       +#+        */
+/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/04/17 20:21:42 by arselabita       ###   ########.fr       */
+/*   Updated: 2026/04/18 17:27:42 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <fcntl.h>
 # include <limits.h>
 # include <math.h>
-// # include <mlx.h>
+# include <mlx.h>
 # include <stdbool.h>
 # include <stdio.h>
 # include <sys/time.h>
@@ -100,18 +100,26 @@ typedef struct s_data
 	void	*mlx;
 	void	*win;
 	int		i;
-
 }			t_data;
+
+
+typedef struct s_player
+{
+	int y;
+	int x;
+	
+} t_player;
 
 /* ************************************************************************** */
 /*                                   FD_line Struct							  */
 /* ************************************************************************** */
-typedef struct s_map
+typedef struct s_line
 {
-	char	**grid;
-	int		height;
-	int		player_count;
-	int		map_started;
+	char		**grid;
+	int			height;
+	int			player_count;
+	int			map_started;
+	t_player	player;
 }			t_line;
 
 
