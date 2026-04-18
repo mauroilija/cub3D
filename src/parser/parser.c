@@ -6,7 +6,7 @@
 /*   By: arselabita <arselabita@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:02:56 by abita             #+#    #+#             */
-/*   Updated: 2026/04/18 17:41:20 by arselabita       ###   ########.fr       */
+/*   Updated: 2026/04/18 17:44:29 by arselabita       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	parse_input(char *line, t_line *map, t_color_data *c_data, t_texture_
 		i++;
 	if (line[i] == '\0' || line[i] == '\n')
 	{
-		if (map->map_started)
+		if (map->map_started == 0)
 			return (printf("ERROR: empty line in map\n"), EXIT_FAILURE);
 		return (EXIT_SUCCESS);
 	}
