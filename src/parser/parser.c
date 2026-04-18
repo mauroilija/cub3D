@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:02:56 by abita             #+#    #+#             */
-/*   Updated: 2026/04/18 20:16:57 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/18 21:23:54 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ int	parser(char *path, t_line *map, t_color_data *c_data, t_texture_data *t_data
 	if (!map->map_started)
 		return (print_error("ERROR: No map found.\n"), EXIT_FAILURE);
 	if (grid_validation(map->grid, map->height, map) != EXIT_SUCCESS)
-		return (EXIT_FAILURE);
+		return (free_split(map->grid), EXIT_FAILURE);
+	free_split(map->grid);
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 15:41:07 by abita             #+#    #+#             */
-/*   Updated: 2026/04/18 20:23:34 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/18 20:40:22 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,6 @@ int map_parsing(char *line, t_line *map)
 	char  *clean_line;
 
 	i = 0;
-	// while(ft_isspace(line[i]))
-	// 	i++;
 	if (line[i] == '\0')
 		return (EXIT_FAILURE);
 	clean_line = ft_strtrim(&line[i], "\n");
