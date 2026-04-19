@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:02:56 by abita             #+#    #+#             */
-/*   Updated: 2026/04/19 14:30:59 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/19 17:50:34 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int	parser(char *path, t_line *map, t_color_data *c_data, t_texture_data *t_data
 			free(line);
 			get_next_line(-1);
 			close(fd);
+			free_split(map->grid);
 			return (EXIT_FAILURE);
 		}
 		free(line);

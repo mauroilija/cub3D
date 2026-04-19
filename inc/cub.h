@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/04/19 13:56:54 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/19 19:30:07 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@
 # define SOUTH 'S'
 # define EAST 'E'
 # define WEST 'W'
-////////////////////////////////////////////////////////////////////////////////
+
 /* ************************************************************************** */
 /*                                   ENUM Error FD                            */
 /* ************************************************************************** */
@@ -89,43 +89,45 @@ typedef enum e_color_type
 
 typedef struct s_player
 {
-	float	pos_x; //position in the world space
-	float	pos_y;
-	float	m_pos_x;; // updated position in the world space
-	float	m_pos_y;
-	float	dir_x; //direction vectoor (where the player looks)
-	float	dir_y;
-	float	plane_x; //camera plane (perpendicular to FOV)
-	float	plane_y;
-	float	camera_x; //raycasting per column
-	float	ray_dir_x;
-	float	ray_dir_y;
-	int		map_x; // current map tile
-	int		map_y;
-	int		step_x; //dda step direction
-	int		step_y;
-	float	delta_dist_x; //distance between grid crossings
-	float	delta_dist_y;
-	float	side_dist_x; //distance to next grid crossing
-	float	side_dist_y;
-	float	perp_wall_dist;
-	float	wall_x; //exact coordinate where the ray hits the wall
-	int		side; // wal info (1 = wall, 0 = space)
+	float		pos_x; //position in the world space
+	float		pos_y;
+	float		m_pos_x;; // updated position in the world space
+	float		m_pos_y;
+	float		dir_x; //direction vectoor (where the player looks)
+	float		dir_y;
+	float		plane_x; //camera plane (perpendicular to FOV)
+	float		plane_y;
+	float		camera_x; //raycasting per column
+	float		ray_dir_x;
+	float		ray_dir_y;
+	int			map_x; // current map tile
+	int			map_y;
+	int			step_x; //dda step direction
+	int			step_y;
+	float		delta_dist_x; //distance between grid crossings
+	float		delta_dist_y;
+	float		side_dist_x; //distance to next grid crossing
+	float		side_dist_y;
+	float		perp_wall_dist;
+	float		wall_x; //exact coordinate where the ray hits the wall
+	int			side; // wal info (1 = wall, 0 = space)
 	double		move_speed;
 	double		rot_speed;
-	float	new_dir_x;
-	float	new_dir_y;
-	int		texture_x;
-	bool	key_up;
-	bool	key_down;
-	bool	key_right;
-	bool	key_left;
-}	t_player;
+	float		new_dir_x;
+	float		new_dir_y;
+	
+	int			texture_y;
+	int			textture_x;
+	bool		key_up;
+	bool		key_down;
+	bool		key_right;
+	bool		key_left;
+}				t_player;
 
-////////////////////////////////////////////////////////////////////////////////
 /* ************************************************************************** */
 /*                                   MLX Struct                               */
 /* ************************************************************************** */
+
 typedef struct s_img
 {
 	void	*img;
@@ -135,16 +137,30 @@ typedef struct s_img
 	int		endian;
 }			t_img;
 
+/* ************************************************************************** */
+/*                                   Texture Struct	                          */
+/* ************************************************************************** */
+
+typedef struct s_texture_data
+{
+	char	*no; //stores path to texture path of the given direction
+	char	*so;
+	char	*we;
+	char	*ea;
+	char	*fd;
+}			t_texture_data;
+
 typedef struct s_texture
 {
-	void	*img;
-	char	*addr;
-	int		width;
-	int		height;
-	int		bpp;
-	int		line_len;
-	int		endian;
-}	t_texture;
+	void		*img;
+	char		*addr;
+	int			width;
+	int			height;
+	int			bpp;
+	int			line_len;
+	int			endian;
+	t_player	*texture_data;
+}				t_texture;
 
 /* ************************************************************************** */
 /*                                   FD_line Struct							  */
@@ -156,7 +172,7 @@ typedef struct s_line
 	int			player_count;
 	int			map_started;
 	//t_player	player;
-}			t_line;
+}				t_line;
 
 typedef struct s_data
 {
@@ -177,19 +193,6 @@ typedef struct s_color_data
 	int		floor_color;
 	int		ceiling_color;
 }			t_color_data;
-
-/* ************************************************************************** */
-/*                                   Texture Struct	                          */
-/* ************************************************************************** */
-
-typedef struct s_texture_data
-{
-	char	*no;
-	char	*so;
-	char	*we;
-	char	*ea;
-	char	*fd;
-}	t_texture_data;
 
 ////////////////////////////////////////////////////////////////////////////////
 /* ************************************************************************** */
@@ -223,33 +226,33 @@ void		free_split(char **split);
 /*                                  Executor                                  */
 /* ************************************************************************** */
 
-void	init_player(t_player *player, t_line *map);
-void	render_grid(t_data *data, t_player *player, char **map);
-void	define_step_len(t_player *player);
-void	define_step_len(t_player *player);
-void	camera_position(t_player *player, int x);
-void	exact_position_in_cell(t_player *player);
-void	distance_to_next_tile(t_player *player);
-void	advance_to_next_grid(t_player *player, char **map);
-void	perpendicular_wall_distance(t_player *player);
-void	contact_position(t_player *player);
-void	texture_column(t_player *player, int tex_width);
-void	draw_wall_strip(t_data *data, t_player *player, int x);
-void	render_frame(t_data *data, t_line *map, t_player *player);
-int		render_loop(void *param);
-void	texture_file(t_data *data, t_texture_data *texture, void **image);
-void	update_player(t_player *p, char **map, double frame_time);
-void	rotate_player(t_player *p, double rot_speed, int dir);
-void	move_forward_backward(t_player *p, double move_speed, char **map, int dir);
-void	compute_speed(t_player *p, double frame_time);
-double	get_time_in_ms(void);
+void		init_player(t_player *player, t_line *map);
+void		render_grid(t_data *data, t_player *player, char **map);
+void		define_step_len(t_player *player);
+void		define_step_len(t_player *player);
+void		camera_position(t_player *player, int x);
+void		exact_position_in_cell(t_player *player);
+void		distance_to_next_tile(t_player *player);
+void		advance_to_next_grid(t_player *player, char **map);
+void		perpendicular_wall_distance(t_player *player);
+void		contact_position(t_player *player);
+void		texture_column(t_player *player, int tex_width);
+void		draw_wall_strip(t_data *data, t_player *player, int x);
+void		render_frame(t_data *data, t_line *map, t_player *player);
+int			render_loop(void *param);
+//void		texture_file(t_data *data, t_texture_data *texture, void **image);
+void		update_player(t_player *p, char **map, double frame_time);
+void		rotate_player(t_player *p, double rot_speed, int dir);
+void		move_forward_backward(t_player *p, double move_speed, char **map, int dir);
+void		compute_speed(t_player *p, double frame_time);
+double		get_time_in_ms(void);
 
 /* ************************************************************************** */
 /*                                  Parser                                    */
 /* ************************************************************************** */
 
-int	parser(char *path, t_line *map, t_color_data *c_data, t_texture_data *t_data);
-int grid_validation(char **grid, int height, t_line *map);
+int			parser(char *path, t_line *map, t_color_data *c_data, t_texture_data *t_data);
+int 		grid_validation(char **grid, int height, t_line *map);
 
 // map //
 int			map_parsing(char *line, t_line *map);
