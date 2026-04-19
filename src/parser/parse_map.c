@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 15:41:07 by abita             #+#    #+#             */
-/*   Updated: 2026/04/19 13:55:28 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/19 14:06:52 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int grid_validation(char **grid, int height, t_line *map)
         y++;
     }
 	if (map->player_count != 1)
-		return (EXIT_FAILURE);
+		return (printf("ERROR: more than or less than one player\n"), EXIT_FAILURE);
     return (EXIT_SUCCESS);
 }
 
