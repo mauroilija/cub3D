@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 12:26:01 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/17 18:27:08 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/19 13:32:47 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,25 @@ void	advance_to_next_grid(t_player *player, char **map)
 		}
 		//invalid read
 		//SIGSEGV
+		if (map[player->map_y][player->map_x] == '1')
+		{
+			/*printf("")
+			if (!map)
+				printf("map is invalid\n");*/
+			printf("map map_y is: %d\n", player->map_y);
+			printf("map map_x is: %d\n", player->map_x);
+			printf("map dir_x is: %f\n", player->dir_x);
+			printf("map dir_y is: %f\n", player->dir_y);
+			printf("map ray_dir_x is: %f\n", player->ray_dir_x);
+			printf("map ray_dir_y: %f\n", player->ray_dir_y);
+			printf("map plane_x is: %f\n", player->plane_x);
+			printf("map plane_y is: %f\n", player->plane_y);
+			printf("map pos_x is : %f\n", player->pos_x);
+			printf("map pos_y is: %f\n", player->pos_y);
+			printf("map camera_x: %f\n", player->camera_x);
+			//exit(1);
+			//printf("map_dir is: %f\n", player->p);
+		}
 		if (map[player->map_y][player->map_x] == '1')
 			hit = 1;
 	}
