@@ -6,11 +6,11 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:28:55 by abita             #+#    #+#             */
-/*   Updated: 2026/04/16 22:25:36 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/19 13:34:25 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub.h"
+#include "../../inc/cub.h"
 
 int	ft_exit_error(t_data *data)
 {

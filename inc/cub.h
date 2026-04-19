@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/04/16 22:29:41 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/19 13:35:30 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,19 +125,12 @@ typedef struct s_player
 /* ************************************************************************** */
 /*                                   FD_line Struct							  */
 /* ************************************************************************** */
-typedef struct s_line
+typedef struct s_map
 {
 	char	**grid;
 	int		height;
-	char	*first_map_line;
-	char	*last_map_line;
-	int		is_first_line;
-	int		error;
-	char	*tmp;
 	int		player_count;
 	int		map_started;
-	int		player_x;
-	int		player_y;
 }			t_line;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -220,29 +213,10 @@ int			ft_exit_error(t_data *data);
 /* ************************************************************************** */
 
 void		print_error(const char *msg);
-int			is_all_ones(char *last_map_line);
 int			is_player(char line);
-int			is_valid_input(char line);
-void		print_pass(const char *msg); // might remove later
-
-/* ************************************************************************** */
-/*                                  Parser                                    */
-/* ************************************************************************** */
-
-int			parser(char *path, t_line *map, t_color_data *c_data, t_texture_data *t_data);
-
-// map //
-int			parse_map_line(char *line, t_line *map);
-int			is_valid_row(char *line, t_line *map);
-int			is_valid_map(char *line, t_line *map);
-
-// textures //
-int			parse_texture(char *line, t_texture_data *t_data);
-
-// color //
-int			parse_color(char *line, t_color_data *c_data);
-
-// utils //
+int			is_valid(char line);
+int			is_map_line(char *line);
+char		**creating_2d_map(char **old, char *line);
 void		init_line(t_line *line);
 int			skip_whitespace(char *line);
 int			is_texture_line(char *line);
@@ -273,5 +247,21 @@ void	rotate_player(t_player *p, double rot_speed, int dir);
 void	move_forward_backward(t_player *p, double move_speed, char **map, int dir);
 void	compute_speed(t_player *p, double frame_time);
 double	get_time_in_ms(void);
+
+#endif
+/*                                  Parser                                    */
+/* ************************************************************************** */
+
+int	parser(char *path, t_line *map, t_color_data *c_data, t_texture_data *t_data);
+int grid_validation(char **grid, int height, t_line *map);
+
+// map //
+int			map_parsing(char *line, t_line *map);
+
+// textures //
+int			parse_texture(char *line, t_texture_data *t_data);
+
+// color //
+int			parse_color(char *line, t_color_data *c_data);
 
 #endif

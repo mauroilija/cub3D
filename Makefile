@@ -6,7 +6,7 @@
 #    By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/11 14:58:16 by abita             #+#    #+#              #
-#    Updated: 2026/04/16 14:20:04 by milija-h         ###   ########.fr        #
+#    Updated: 2026/04/19 13:36:20 by milija-h         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,11 +32,11 @@ SRCS = \
 	  mlx/key/keys.c \
 	  mlx/window/window.c \
 	  utils/map_utils.c \
+	  utils/parse_utils.c \
 	  utils/return_utils.c \
 	  parser/parser.c \
 	  parser/parse_map.c \
 	  parser/parse_color.c \
-	  parser/parse_utils.c \
 	  parser/parse_texture.c \
 	  mlx/init_player/player.c \
 	  mlx/grid.c \
