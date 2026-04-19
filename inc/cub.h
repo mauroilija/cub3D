@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/04/19 13:35:30 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/19 13:56:54 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,17 +122,6 @@ typedef struct s_player
 	bool	key_left;
 }	t_player;
 
-/* ************************************************************************** */
-/*                                   FD_line Struct							  */
-/* ************************************************************************** */
-typedef struct s_map
-{
-	char	**grid;
-	int		height;
-	int		player_count;
-	int		map_started;
-}			t_line;
-
 ////////////////////////////////////////////////////////////////////////////////
 /* ************************************************************************** */
 /*                                   MLX Struct                               */
@@ -157,19 +146,26 @@ typedef struct s_texture
 	int		endian;
 }	t_texture;
 
+/* ************************************************************************** */
+/*                                   FD_line Struct							  */
+/* ************************************************************************** */
+typedef struct s_line
+{
+	char		**grid;
+	int			height;
+	int			player_count;
+	int			map_started;
+	//t_player	player;
+}			t_line;
+
 typedef struct s_data
 {
-	t_img			img;
-	t_player		*player;
-	t_line			*line;
-	void			*mlx;
-	void			*win;
-	int				i;
-
-	t_texture		no;
-	t_texture		so;
-	t_texture		we;
-	t_texture		ea;
+	t_img		img;
+	void		*mlx;
+	void		*win;
+	int			i;
+	t_line		*line;
+	t_player	*player;
 }				t_data;
 
 /* ************************************************************************** */
@@ -248,7 +244,7 @@ void	move_forward_backward(t_player *p, double move_speed, char **map, int dir);
 void	compute_speed(t_player *p, double frame_time);
 double	get_time_in_ms(void);
 
-#endif
+/* ************************************************************************** */
 /*                                  Parser                                    */
 /* ************************************************************************** */
 

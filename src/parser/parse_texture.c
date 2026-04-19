@@ -6,11 +6,13 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 11:56:47 by abita             #+#    #+#             */
-/*   Updated: 2026/04/19 13:36:57 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/19 13:51:14 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub.h"
+#include "../../inc/cub.h"
+
+
 
 static int	get_id_type(char *line)
 {
@@ -61,11 +63,13 @@ int	parse_texture(char *line, t_texture_data *t_data)
 		return (-1);
 	slash = ft_strrchr(path, '/');
 	if (slash && slash[1] == '.')
-		return (printf("error: this is a hidden path\n"), EXIT_FAILURE);
+	{
+		printf("error: this is a hidden path\n");
+		return (EXIT_FAILURE);
+	}
 	dot = ft_strrchr(path, '.');
 	if (!dot || ft_strcmp(dot, ".xpm") != 0)
 		return (printf("error: .xpm exe\n"), EXIT_FAILURE);
-	t_data->fd = open(path, O_RDONLY);
 	if (id == -1)
 		return (-1);
 	if (id == NO)

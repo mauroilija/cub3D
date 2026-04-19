@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 13:56:33 by abita             #+#    #+#             */
-/*   Updated: 2026/04/19 13:36:10 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/19 13:52:25 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,16 @@ int	is_valid_input(char line)
 	return (line == SPACE || line == WALL || line == NORTH || line == SOUTH
 		|| line == EAST || line == WEST || line == ' ' || line == '\t');
 }
-int	is_player(char line)
+int is_player(char type)
 {
-	return (line == NORTH || line == SOUTH || line == EAST || line == WEST);
+	int i;
+
+	i = 0;
+	if (type == WEST || type == EAST || type == NORTH || type == SOUTH)
+		i = 1;
+	else
+		i = 0;
+	return (i);
 }
 int	is_valid(char line)
 {
@@ -33,17 +40,15 @@ int	is_map_line(char *line)
 	if (!line)
 		return (EXIT_FAILURE);
 	i = 0;
-	while (line[i] == ' ' || line[i] == '\t')
-		i++;
-	if (line[i] == '\0' || line[i] == '\n')
-		return (EXIT_FAILURE);
 	while (line[i] && line[i] != '\n')
 	{
-		if (!is_valid_input(line[i]))
-			return (EXIT_FAILURE);
+		if (line[i] != '1' && line[i] != '0' && line[i] != ' ' && !is_player(line[i]))
+			return (0);
 		i++;
 	}
-	return (EXIT_SUCCESS);
+	if (i == 0)
+		return (0);
+	return (1);
 }
 char **creating_2d_map(char **old, char *line)
 {
