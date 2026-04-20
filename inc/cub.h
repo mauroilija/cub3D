@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/04/19 19:30:07 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/20 15:22:48 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ typedef struct s_player
 	float		new_dir_y;
 	
 	int			texture_y;
-	int			textture_x;
+	int			texture_x;
 	bool		key_up;
 	bool		key_down;
 	bool		key_right;

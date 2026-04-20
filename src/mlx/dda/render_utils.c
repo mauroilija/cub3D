@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 20:00:49 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/14 20:11:01 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/20 15:26:18 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ void	draw_wall_strip(t_data *data, t_player *player, int x)
 	if (draw_end >= HEIGHT)
 		draw_end = HEIGHT - 1;
 	if (player->side == 0)
-		color = 0x00FF00;
+		color = 0xA9A9A9;
 	else 
-		color = 0x007700;
+		color = 0xFFFFFF;
 	y = draw_start;
 	//my_pixel_put(data->img, x, HEIGHT / 2, 0xFF0000);
 	while (y < draw_end)
