@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/04/20 15:22:48 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/20 17:02:52 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ typedef struct s_player
 	float		side_dist_y;
 	float		perp_wall_dist;
 	float		wall_x; //exact coordinate where the ray hits the wall
-	int			side; // wal info (1 = wall, 0 = space)
+	int			side; // wal info (1 = wall in x-axis, 0 = wall in y-axis)
 	double		move_speed;
 	double		rot_speed;
 	float		new_dir_x;
@@ -163,28 +163,6 @@ typedef struct s_texture
 }				t_texture;
 
 /* ************************************************************************** */
-/*                                   FD_line Struct							  */
-/* ************************************************************************** */
-typedef struct s_line
-{
-	char		**grid;
-	int			height;
-	int			player_count;
-	int			map_started;
-	//t_player	player;
-}				t_line;
-
-typedef struct s_data
-{
-	t_img		img;
-	void		*mlx;
-	void		*win;
-	int			i;
-	t_line		*line;
-	t_player	*player;
-}				t_data;
-
-/* ************************************************************************** */
 /*                                   Color Struct                             */
 /* ************************************************************************** */
 
@@ -193,6 +171,30 @@ typedef struct s_color_data
 	int		floor_color;
 	int		ceiling_color;
 }			t_color_data;
+
+/* ************************************************************************** */
+/*                                   FD_line Struct							  */
+/* ************************************************************************** */
+typedef struct s_line
+{
+	char		**grid;
+	int			height;
+	int			player_count;
+	int			map_started;
+}				t_line;
+
+typedef struct s_data
+{
+	t_img			img;
+	void			*mlx;
+	void			*win;
+	int				i;
+	t_line			*line;
+	t_player		*player;
+	t_texture_data	*t_data; //holds parsed path
+	t_color_data	*c_data; //hols parsed color
+	t_texture		texture[4]; //each represents one direction texture
+}					t_data;
 
 ////////////////////////////////////////////////////////////////////////////////
 /* ************************************************************************** */
@@ -246,7 +248,9 @@ void		rotate_player(t_player *p, double rot_speed, int dir);
 void		move_forward_backward(t_player *p, double move_speed, char **map, int dir);
 void		compute_speed(t_player *p, double frame_time);
 double		get_time_in_ms(void);
-
+void		load_textures(t_data *data);
+int			pixel_from_texture(t_texture *texture, int tex_x, int tex_y);
+t_texture	*get_texture(t_data *data);
 /* ************************************************************************** */
 /*                                  Parser                                    */
 /* ************************************************************************** */
