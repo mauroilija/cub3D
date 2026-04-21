@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/04/21 12:08:38 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/21 21:27:24 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,8 @@ typedef struct s_line
 	int			height;
 	int			player_count;
 	int			map_started;
+	t_color_data c_data;
+	t_texture_data t_data;
 }				t_line;
 
 typedef struct s_data
@@ -262,7 +264,7 @@ void		draw_textured_column(t_texture_column *texture_c, t_data *data,
 /*                                  Parser                                    */
 /* ************************************************************************** */
 
-int			parser(char *path, t_line *map, t_color_data *c_data, t_texture_data *t_data);
+int			parser(char *path, t_line *map);
 int 		grid_validation(char **grid, int height, t_line *map);
 
 // map //

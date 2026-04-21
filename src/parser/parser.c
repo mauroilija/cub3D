@@ -3,23 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:02:56 by abita             #+#    #+#             */
-/*   Updated: 2026/04/21 14:40:08 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/21 21:29:03 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cub.h"
 
-////////////////
-// here i validate the first and last rows to check if it
-// contains 1 or also spaces,
-// if it contains smth else than it frees and displays error,
-//	that the map is not valid
-////////////////
+static int checker(int i, char *line, t_line *map)
+{
+	if (is_texture_line(&line[i]))
+	{
+		if (parse_texture(&line[i], &map->t_data) != EXIT_SUCCESS)
+			return (EXIT_FAILURE);
+		return (EXIT_SUCCESS);
+	}
+	else if (is_color_line(&line[i]))
+	{
+		if (parse_color(&line[i], &map->c_data) != EXIT_SUCCESS)
+			return (EXIT_FAILURE);
+		return (EXIT_SUCCESS);
+	}
+	else if (is_map_line(&line[i]))
+		map->map_started = 1;
+	else
+		return(print_error("ERROR: invalid config line\n"), EXIT_FAILURE);
+	return (EXIT_SUCCESS);
+}
 
-static int	parse_input(char *line, t_line *map, t_color_data *c_data, t_texture_data *t_data)
+static int	parse_input(char *line, t_line *map)
 {
 	int		i;
 
@@ -30,30 +44,8 @@ static int	parse_input(char *line, t_line *map, t_color_data *c_data, t_texture_
 			return (printf("ERROR: empty line in map\n"), EXIT_FAILURE);
 		return (EXIT_SUCCESS);
 	}
-	//printf("DEBUG line: [%s]\n", &line[i]);
-	//printf("DEBUG is_texture: %d\n", is_texture_line(&line[i]));
-	//printf("DEBUG map_started: %d\n", map->map_started);
-	//printf("DEBUG is_color: %d\n", is_color_line(&line[i]));
-	//printf("DEBUG is_map: %d\n", is_map_line(&line[i]));
-	//if (!map->map_started)
-	{
-		if (is_texture_line(&line[i]))
-		{
-			if (parse_texture(&line[i], t_data) != EXIT_SUCCESS)
-			return (EXIT_FAILURE);
-		return (EXIT_SUCCESS);
-		}
-		else if (is_color_line(&line[i]))
-		{
-			if (parse_color(&line[i], c_data) != EXIT_SUCCESS)
-				return (EXIT_FAILURE);
-			return (EXIT_SUCCESS);
-		}
-		else if (is_map_line(&line[i]))
-			map->map_started = 1;
-		else
-			return(print_error("ERROR: invalid config line\n"), EXIT_FAILURE);
-	}
+	if (!map->map_started)
+		checker(i, line, map);
 	if (map->map_started)
 	{
 		if (map_parsing(&line[i], map) != EXIT_SUCCESS)
@@ -62,23 +54,22 @@ static int	parse_input(char *line, t_line *map, t_color_data *c_data, t_texture_
 	return (EXIT_SUCCESS);
 }
 
-int	parser(char *path, t_line *map, t_color_data *c_data, t_texture_data *t_data)
+int	parser(char *path, t_line *map)
 {
 	int		fd;
 	char	*line;
 
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
-		return (perror(NULL), print_error("Error: opening the file\n"), ERROR_FD);
+		return (print_error("Error: opening the file\n"), ERROR_FD);
 	init_line(map);
 	while ((line = get_next_line(fd)))
 	{
-		if (parse_input(line, map, c_data, t_data) != EXIT_SUCCESS)
+		if (parse_input(line, map) != EXIT_SUCCESS)
 		{
 			free(line);
 			get_next_line(-1);
 			close(fd);
-			free_split(map->grid);
 			return (EXIT_FAILURE);
 		}
 		free(line);

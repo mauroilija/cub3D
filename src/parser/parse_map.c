@@ -3,21 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 15:41:07 by abita             #+#    #+#             */
-/*   Updated: 2026/04/21 12:54:51 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/21 21:41:25 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cub.h"
 
-/*
-	1. The top and bottom row should be only 1's
-	2. The first and last position in a row should be 1.
-	3. A zero should be surrounded by: 1, 0, N, S, W, E
-*/
-
+int check_surroundings(int y, int x, int height, char ** grid)
+{
+	if (y == 0 || x == 0 || y == height -1 || x == (int)ft_strlen(grid[y]) - 1)
+	{
+		printf("ERROR: map is open at the borders\n");
+		return (EXIT_FAILURE);
+	}
+	if (x >= (int)ft_strlen(grid[y - 1]) || x >= (int)ft_strlen(grid[y + 1]))
+	{
+		printf("ERROR: map is opened(ragged rows)\n");
+		return (EXIT_FAILURE);
+	}
+    if (!is_valid(grid[y][x - 1]) || !is_valid(grid[y][x + 1]) || 
+		!is_valid(grid[y - 1][x]) || !is_valid(grid[y + 1][x]))
+		{
+			printf("ERROR: map is not closed\n");
+			return (EXIT_FAILURE);
+		}
+	return (EXIT_SUCCESS);
+}
 int grid_validation(char **grid, int height, t_line *map)
 {
     int x;
@@ -31,31 +45,9 @@ int grid_validation(char **grid, int height, t_line *map)
         while (grid[y][x])
         {
 			if (is_player(grid[y][x]))
-			{
 				map->player_count++;
-				if (map->player_count != 1)
-					return (printf("ERROR: more than one player\n"), EXIT_FAILURE);
-			}
             if (grid[y][x] == '0' || is_player(grid[y][x]))
-            {
-				if (y == 0 || x == 0 || y == height -1 || 
-					x == (int)ft_strlen(grid[y]) - 1)
-					{
-						printf("ERROR: map is open at the borders\n");
-						return (EXIT_FAILURE);
-					}
-				if (x >= (int)ft_strlen(grid[y - 1]) || x >= (int)ft_strlen(grid[y + 1]))
-				{
-					printf("ERROR: map is opened(ragged rows)\n");
-					return (EXIT_FAILURE);
-				}
-                if (!is_valid(grid[y][x - 1]) || !is_valid(grid[y][x + 1]) || 
-					!is_valid(grid[y - 1][x]) || !is_valid(grid[y + 1][x]))
-					{
-						printf("ERROR: map is not closed\n");
-						return (EXIT_FAILURE);
-					}
-			}
+				check_surroundings(y, x, height, grid);
             x++;
         }
         y++;
