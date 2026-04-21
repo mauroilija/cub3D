@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
+/*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:28:55 by abita             #+#    #+#             */
-/*   Updated: 2026/02/20 21:08:23 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/21 14:38:20 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub.h"
+#include "../../inc/cub.h"
 
 int	ft_exit_error(t_data *data)
 {
@@ -34,6 +34,8 @@ int	ft_exit(t_data *data)
 	mlx_destroy_window(data->mlx, data->win);
 	mlx_destroy_display(data->mlx);
 	free(data->mlx);
+	if (data->line->grid)
+		free_split(data->line->grid);
 	exit(0);
 }
 
@@ -50,7 +52,9 @@ void	my_pixel_put(t_img img, int x, int y, int color)
 void	mlx_loop_helper(t_data *data)
 {
 	mlx_hook(data->win, 2, 1L << 0, keyhandler, data);
+	mlx_hook(data->win, 3, 1L << 1, key_release, data);
 	mlx_hook(data->win, 17, 1L << 2, ft_exit, data);
+	mlx_loop_hook(data->mlx, render_loop, data);
 	mlx_loop(data->mlx);
 }
 
@@ -59,9 +63,7 @@ void	init_window_and_display(t_data *data)
 	data->mlx = NULL;
 	data->win = NULL;
 	data->img.img = NULL;
-
 	data->mlx = mlx_init();
-	// data->mlx  = NULL;
 	if (!data->mlx)
 		exit (EXIT_FAILURE);
 	data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "Cub3D");
@@ -69,8 +71,8 @@ void	init_window_and_display(t_data *data)
 		return (mlx_destroy_display(data->mlx), free(data->mlx));
 	data->img.img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
 	if (!data->img.img)
-		return (mlx_destroy_window(data->mlx, data->win), \
+		return (mlx_destroy_window(data->mlx, data->win),
 			mlx_destroy_display(data->mlx), free(data->mlx));
-	data->img.addr = mlx_get_data_addr(data->img.img, &data->img.bpp, \
-		&data->img.linelen, &data->img.endian);
+	data->img.addr = mlx_get_data_addr(data->img.img, &data->img.bpp,
+			&data->img.linelen, &data->img.endian);
 }

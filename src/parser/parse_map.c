@@ -3,93 +3,83 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
+/*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/16 13:55:41 by abita             #+#    #+#             */
-/*   Updated: 2026/02/26 18:02:01 by abita            ###   ########.fr       */
+/*   Created: 2026/04/13 15:41:07 by abita             #+#    #+#             */
+/*   Updated: 2026/04/21 12:54:51 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub.h"
+#include "../../inc/cub.h"
 
-////////////////
-// so, literally,
-//	what i do is that i created these 2 variables first and last row,
-// to keep track in case these rows are other than 1s. They should always
-// be 1 nontheless
-// so what i do, i check for each char, and if the first_map_line is empty,
-// then add only the first line
-// in case we have:
-// 		00000000
-// 		00000000
-// 		11111111
-// here our first_map_line will be: 00000000
-// where as the last_map_line will just be overwritten for each iteration
-// until it reaches the end
-// and as a result our last_map_line will be: 11111111
-////////////////
+/*
+	1. The top and bottom row should be only 1's
+	2. The first and last position in a row should be 1.
+	3. A zero should be surrounded by: 1, 0, N, S, W, E
+*/
 
-int	is_valid_map(char *line, t_line *map)
+int grid_validation(char **grid, int height, t_line *map)
 {
-	int	i;
+    int x;
+    int y;
 
-	if (!line)
-		return (0);
-	i = 0;
-	while (line[i] && line[i] != '\n')
-	{
-		if (!is_valid_input(line[i]))
-			return (0);
-		if (is_player(line[i]))
-			map->player_count++;
-		i++;
-	}
-	return (1);
+	map->player_count = 0;
+    y = 0;
+    while (y < height)
+    {
+        x = 0;
+        while (grid[y][x])
+        {
+			if (is_player(grid[y][x]))
+			{
+				map->player_count++;
+				if (map->player_count != 1)
+					return (printf("ERROR: more than one player\n"), EXIT_FAILURE);
+			}
+            if (grid[y][x] == '0' || is_player(grid[y][x]))
+            {
+				if (y == 0 || x == 0 || y == height -1 || 
+					x == (int)ft_strlen(grid[y]) - 1)
+					{
+						printf("ERROR: map is open at the borders\n");
+						return (EXIT_FAILURE);
+					}
+				if (x >= (int)ft_strlen(grid[y - 1]) || x >= (int)ft_strlen(grid[y + 1]))
+				{
+					printf("ERROR: map is opened(ragged rows)\n");
+					return (EXIT_FAILURE);
+				}
+                if (!is_valid(grid[y][x - 1]) || !is_valid(grid[y][x + 1]) || 
+					!is_valid(grid[y - 1][x]) || !is_valid(grid[y + 1][x]))
+					{
+						printf("ERROR: map is not closed\n");
+						return (EXIT_FAILURE);
+					}
+			}
+            x++;
+        }
+        y++;
+    }
+	if (map->player_count != 1)
+		return (printf("ERROR: more than or less than one player\n"), EXIT_FAILURE);
+    return (EXIT_SUCCESS);
 }
 
-int	is_valid_row(char *line, t_line *map)
+int map_parsing(char *line, t_line *map)
 {
-	int	len;
-
-	(void)map;
-	if (!line)
-		return (0);
-	len = 0;
-	while (line[len] && line[len] != '\n')
-		len++;
-	// printf("len: %i\n", len);
-	printf("line[%i]: %s\n", len, line);
-	if (line[0] != WALL)
-		return (0);
-	if (line[len - 1] != WALL)
-		return (0);
-	// printf("last row: %s", map->last_map_line);
-	return (1);
-}
-
-int	parse_map_line(char *line, t_line *map)
-{
-	int		i;
-	char	*clean;
+	int i;
+	char  *clean_line;
 
 	i = 0;
-	while (ft_isspace(line[i]))
-		i++;
 	if (line[i] == '\0')
-		return (EXIT_SUCCESS);
-	clean = ft_strtrim(&line[i], "\n");
-	if (!clean)
+		return (EXIT_FAILURE);
+	clean_line = ft_strtrim(&line[i], "\n");
+	if (!clean_line)
 		return (ERROR_MALLOC);
-	if (!is_valid_map(clean, map))
-		map->error = 1;
-	if (map->is_first_line)
-	{
-		map->first_map_line = ft_strdup(clean);
-		map->is_first_line = 0;
-	}
-	free(map->last_map_line);
-	map->last_map_line = ft_strdup(clean);
-	if (!is_valid_row(clean, map))
-		map->error = 1;
-	return (free(clean), EXIT_SUCCESS);
+	map->grid = creating_2d_map(map->grid, clean_line);
+	free(clean_line);
+	if (!map->grid)
+		return (EXIT_FAILURE);
+	map->height++;
+	return (EXIT_SUCCESS);
 }
