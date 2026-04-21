@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/04/20 17:02:52 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/21 12:08:38 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ typedef enum e_color_type
 /* ************************************************************************** */
 /*                                   PLAYER                                   */
 /* ************************************************************************** */
-
 typedef struct s_player
 {
 	float		pos_x; //position in the world space
@@ -115,7 +114,6 @@ typedef struct s_player
 	double		rot_speed;
 	float		new_dir_x;
 	float		new_dir_y;
-	
 	int			texture_y;
 	int			texture_x;
 	bool		key_up;
@@ -127,7 +125,6 @@ typedef struct s_player
 /* ************************************************************************** */
 /*                                   MLX Struct                               */
 /* ************************************************************************** */
-
 typedef struct s_img
 {
 	void	*img;
@@ -140,7 +137,6 @@ typedef struct s_img
 /* ************************************************************************** */
 /*                                   Texture Struct	                          */
 /* ************************************************************************** */
-
 typedef struct s_texture_data
 {
 	char	*no; //stores path to texture path of the given direction
@@ -165,7 +161,6 @@ typedef struct s_texture
 /* ************************************************************************** */
 /*                                   Color Struct                             */
 /* ************************************************************************** */
-
 typedef struct s_color_data
 {
 	int		floor_color;
@@ -196,7 +191,19 @@ typedef struct s_data
 	t_texture		texture[4]; //each represents one direction texture
 }					t_data;
 
-////////////////////////////////////////////////////////////////////////////////
+/* ************************************************************************** */
+/*                                 Texture drawing						      */
+/* ************************************************************************** */
+typedef struct s_column_texture
+{
+	int			draw_start;
+	int 		draw_end;
+	int			texture_x;
+	float		step;
+	float		texture_position;
+	t_texture	*texture;
+}				t_texture_column;
+
 /* ************************************************************************** */
 /*                                   MLX Window                               */
 /* ************************************************************************** */
@@ -227,7 +234,6 @@ void		free_split(char **split);
 /* ************************************************************************** */
 /*                                  Executor                                  */
 /* ************************************************************************** */
-
 void		init_player(t_player *player, t_line *map);
 void		render_grid(t_data *data, t_player *player, char **map);
 void		define_step_len(t_player *player);
@@ -237,20 +243,21 @@ void		exact_position_in_cell(t_player *player);
 void		distance_to_next_tile(t_player *player);
 void		advance_to_next_grid(t_player *player, char **map);
 void		perpendicular_wall_distance(t_player *player);
-void		contact_position(t_player *player);
+void		contact_position(t_player *player, t_texture *texture);
 void		texture_column(t_player *player, int tex_width);
 void		draw_wall_strip(t_data *data, t_player *player, int x);
-void		render_frame(t_data *data, t_line *map, t_player *player);
-int			render_loop(void *param);
-//void		texture_file(t_data *data, t_texture_data *texture, void **image);
+void		render_frame(t_data *data, t_line *map, t_player *player,
+			t_texture *texture);
+int			render_loop(void *param, t_texture *texture);
 void		update_player(t_player *p, char **map, double frame_time);
 void		rotate_player(t_player *p, double rot_speed, int dir);
 void		move_forward_backward(t_player *p, double move_speed, char **map, int dir);
 void		compute_speed(t_player *p, double frame_time);
 double		get_time_in_ms(void);
 void		load_textures(t_data *data);
-int			pixel_from_texture(t_texture *texture, int tex_x, int tex_y);
-t_texture	*get_texture(t_data *data);
+void		draw_textured_column(t_texture_column *texture_c, t_data *data,
+			int ray_col, int wall_height);
+
 /* ************************************************************************** */
 /*                                  Parser                                    */
 /* ************************************************************************** */

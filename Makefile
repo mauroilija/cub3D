@@ -6,11 +6,11 @@
 #    By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/11 14:58:16 by abita             #+#    #+#              #
-#    Updated: 2026/04/19 13:51:23 by milija-h         ###   ########.fr        #
+#    Updated: 2026/04/21 12:10:20 by milija-h         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = cub
+NAME = cub3D
 
 CC = cc 
 CFLAGS = -Wall -Werror -Wextra -g
@@ -39,11 +39,9 @@ SRCS = \
 	  parser/parse_color.c \
 	  parser/parse_texture.c \
 	  mlx/init_player/player.c \
-	  mlx/grid.c \
 	  mlx/dda/dda_utils.c \
 	  mlx/dda/dda_loop.c  \
 	  mlx/dda/render.c \
-	  mlx/dda/render_utils.c \
 	  mlx/textures/textures.c \
 	  mlx/movement/movement.c \
 	  

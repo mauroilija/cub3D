@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 21:19:46 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/17 13:22:44 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/21 11:01:06 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 // to compute the time it takes for each frame to be drawn.
 // 
 // So each frame: movement_this_frame = speed_per_second * frame_time
-//it also helps us with the rotation, we will rotate movement_this_frame each time
+//it also helps us with the rotation, we will rotate movement_this_frame each
+//time
 
 void	compute_speed(t_player *p, double frame_time)
 {
@@ -25,7 +26,8 @@ void	compute_speed(t_player *p, double frame_time)
 	p->rot_speed = frame_time * 3.0;
 }
 
-void	move_forward_backward(t_player *p, double move_speed, char **map, int dir)
+void	move_forward_backward(t_player *p, double move_speed, char **map,
+			int dir)
 {
 	double	new_x;
 	double	new_y;

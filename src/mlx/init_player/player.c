@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 18:00:28 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/19 19:23:47 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/21 11:11:11 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	get_direction(char cell, t_player *player)
 {
 	if (cell == 'N')
 	{
-		player->dir_x = 0.0f; 
+		player->dir_x = 0.0f;
 		player->dir_y = -1.0f;
 	}
 	if (cell == 'S')
@@ -42,6 +42,7 @@ static void	get_init_positions(t_player *player, char **map)
 	size_t	x;
 	size_t	y;
 	char	cell;
+
 	y = 0;
 	while (map[y])
 	{

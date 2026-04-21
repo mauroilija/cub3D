@@ -1,0 +1,44 @@
+{
+   mlx_init_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:malloc
+   ...
+   obj:*/libmlx*.so*
+}
+
+{
+   mlx_x11_init
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:XOpenDisplay
+   ...
+}
+
+{
+   mlx_png_load
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:png_create_read_struct
+   ...
+}
+
+{
+   x11_internal_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/libX11.so*
+}
+
+{
+   xpm_file_to_image
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:XpmReadFileToImage
+   ...
+}

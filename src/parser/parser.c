@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:02:56 by abita             #+#    #+#             */
-/*   Updated: 2026/04/19 17:50:34 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/21 14:40:08 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,5 @@ int	parser(char *path, t_line *map, t_color_data *c_data, t_texture_data *t_data
 		return (print_error("ERROR: No map found.\n"), EXIT_FAILURE);
 	if (grid_validation(map->grid, map->height, map) != EXIT_SUCCESS)
 		return (free_split(map->grid), EXIT_FAILURE);
-	//free_split(map->grid);
 	return (EXIT_SUCCESS);
 }

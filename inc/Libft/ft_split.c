@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
+/*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 15:48:25 by abita             #+#    #+#             */
-/*   Updated: 2026/02/20 21:07:57 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/21 12:26:32 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ static void	check(char const *s, char c, int *i, int *start)
 	while (s[*i] && s[*i] != c)
 		(*i)++;
 }
+
 void	free_split1(char **split)
 {
 	size_t	i;
