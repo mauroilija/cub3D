@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_color.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arselabita <arselabita@student.42.fr>      +#+  +:+       +#+        */
+/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:00:00 by abita             #+#    #+#             */
-/*   Updated: 2026/04/17 20:22:05 by arselabita       ###   ########.fr       */
+/*   Updated: 2026/04/22 17:13:22 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,34 @@ static int	get_id_type(char *line)
 		return (C);
 	return (ERROR);
 }
+static int checker(char *trim, char **split, int *rgb)
+{
+	int		j;
+	
+	j = 0;
+	while (j < 3)
+	{
+		if (!split[j] || !is_number(split[j]))
+			return (free(trim), free_split(split), EXIT_FAILURE);
+		rgb[j] = ft_atoi(split[j]);
+		if (rgb[j] < 0 || rgb[j] > 255)
+			return (free(trim), free_split(split), EXIT_FAILURE);
+		j++;
+	}
+	if (split[3])
+		return (free(trim), free_split(split), EXIT_FAILURE);
+	return (EXIT_SUCCESS);
+}
 
 static int	get_color_range(char *line)
 {
 	int		i;
-	int		j;
 	char	**split;
 	int		rgb[3];
 	int		color;
 	int		comma;
+
+	char *trim;
 
 	i = 0;
 	while (line[i] == ' ' || line[i] == '\t')
@@ -59,8 +78,7 @@ static int	get_color_range(char *line)
 	i += 1;
 	while (line[i] == ' ' || line[i] == '\t')
 		i++;
-
-	char *trim = ft_strtrim(&line[i], "\n \t");
+	trim = ft_strtrim(&line[i], "\n \t");
 	if (!trim)
 		return (EXIT_FAILURE);
 	comma = 0;
@@ -75,20 +93,9 @@ static int	get_color_range(char *line)
 	split = ft_split(trim, ',');
 	if (!split)
 		return (free(trim), free_split(split), EXIT_FAILURE);
-	j = 0;
-	while (j < 3)
-	{
-		if (!split[j] || !is_number(split[j]))
-			return (free(trim), free_split(split), EXIT_FAILURE);
-		rgb[j] = ft_atoi(split[j]);
-		if (rgb[j] < 0 || rgb[j] > 255)
-			return (free(trim), free_split(split), EXIT_FAILURE);
-		j++;
-	}
-	if (split[3])
-		return (free(trim), free_split(split), EXIT_FAILURE);
+	checker(trim, split, rgb);
 	color = (rgb[0] << 16) | (rgb[1] << 8) | rgb[2];
-	return (free(trim), free_split(split), color); // passing the rgb bit shifting
+	return (free(trim), free_split(split), color);
 }
 
 int	parse_color(char *line, t_color_data *c_data)
@@ -98,10 +105,10 @@ int	parse_color(char *line, t_color_data *c_data)
 
 	id = get_id_type(line);
 	if (id == ERROR)
-		return (EXIT_FAILURE); // error
+		return (EXIT_FAILURE);
 	color = get_color_range(line);
 	if (color == ERROR)
-		return (EXIT_FAILURE); // error
+		return (EXIT_FAILURE);
 	if (id == F)
 		c_data->floor_color = color;
 	if (id == C)

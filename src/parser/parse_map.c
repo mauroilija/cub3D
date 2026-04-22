@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 15:41:07 by abita             #+#    #+#             */
-/*   Updated: 2026/04/21 21:41:25 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/22 12:45:07 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int check_surroundings(int y, int x, int height, char ** grid)
 		}
 	return (EXIT_SUCCESS);
 }
+
 int grid_validation(char **grid, int height, t_line *map)
 {
     int x;
