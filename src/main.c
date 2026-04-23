@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 15:54:05 by abita             #+#    #+#             */
-/*   Updated: 2026/04/19 17:54:34 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/23 14:06:36 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,19 +48,20 @@ int	input_validity(t_line *line, t_data *data, int argc, char **argv)
 
 int	main(int argc, char **argv)
 {
-	t_data		data;
-	t_line		line;
-	t_player	player;
+	t_data			data;
+	t_line			line;
+	t_player		player;
+	t_texture_data	td;
 
 	ft_bzero(&data, sizeof(t_data));
 	ft_bzero(&line, sizeof(t_line));
+	ft_bzero(&td, sizeof(t_texture_data));
 	if (input_validity(&line, &data, argc, argv) != EXIT_SUCCESS)
 		return (EXIT_FAILURE);
 	init_window_and_display(&data);
 	init_player(&player, &line);
 	data.player = &player;
 	data.line = &line;
-	//render_grid(&data, &player, line.grid);
 	mlx_loop_helper(&data);
 	//free_split(line.grid);
 	return (EXIT_SUCCESS);

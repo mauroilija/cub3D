@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:28:55 by abita             #+#    #+#             */
-/*   Updated: 2026/04/21 14:38:20 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/23 13:28:17 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,5 @@ void	init_window_and_display(t_data *data)
 			mlx_destroy_display(data->mlx), free(data->mlx));
 	data->img.addr = mlx_get_data_addr(data->img.img, &data->img.bpp,
 			&data->img.linelen, &data->img.endian);
+	load_textures(data);
 }

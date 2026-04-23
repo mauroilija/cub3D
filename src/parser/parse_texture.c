@@ -6,13 +6,11 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 11:56:47 by abita             #+#    #+#             */
-/*   Updated: 2026/04/19 13:51:14 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/23 14:08:22 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cub.h"
-
-
 
 static int	get_id_type(char *line)
 {
@@ -73,13 +71,13 @@ int	parse_texture(char *line, t_texture_data *t_data)
 	if (id == -1)
 		return (-1);
 	if (id == NO)
-		t_data->no = path;
+	    t_data->no = ft_strdup(path);
 	if (id == SO)
-		t_data->so = path;
+		t_data->so = ft_strdup(path);
 	if (id == WE)
-		t_data->we = path;
+		t_data->we = ft_strdup(path);
 	if (id == EA)
-		t_data->ea = path;
+		t_data->ea = ft_strdup(path);
 	free(path);
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 20:00:57 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/23 10:29:53 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/23 11:45:56 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	render_frame(t_data *data)
 		perpendicular_wall_distance(data->player);
 		contact_position(data->player, data->texture);
 		wall_height = (int)(HEIGHT / data->player->perp_wall_dist);
+		printf("wall height is: %d\n", wall_height);
 		draw_textured_column(&tc, data, x, wall_height);
 		x++;
 	}

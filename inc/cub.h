@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/04/23 10:30:49 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/23 14:14:16 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,7 +252,7 @@ void		rotate_player(t_player *p, double rot_speed, int dir);
 void		move_forward_backward(t_player *p, double move_speed, char **map, int dir);
 void		compute_speed(t_player *p, double frame_time);
 double		get_time_in_ms(void);
-void		load_textures(t_data *data);
+int			load_textures(t_data *data);
 void		draw_textured_column(t_texture_column *texture_c, t_data *data,
 			int ray_col, int wall_height);
 
@@ -271,5 +271,8 @@ int			parse_texture(char *line, t_texture_data *t_data);
 
 // color //
 int			parse_color(char *line, t_color_data *c_data);
+
+//free_path
+void		free_texture_paths(t_texture_data *td);
 
 #endif

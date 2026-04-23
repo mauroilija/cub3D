@@ -6,17 +6,44 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 18:04:38 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/23 11:32:23 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/23 14:13:57 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-void	load_textures(t_data *data)
+void	free_texture_paths(t_texture_data *td)
+{
+	if (!td->no)
+	{
+		free(td->no);
+		td->no = NULL;
+	}
+	if (!td->so)
+	{
+		free(td->so);
+		td->so = NULL;
+	}
+	if (!td->ea)
+	{
+		free(td->ea);
+		td->ea = NULL;
+	}
+	if (!td->we)
+	{
+		free(td->we);
+		td->we = NULL;
+	}
+}
+
+int	load_textures(t_data *data)
 {
 	char	*path[4];
 	int		i;
 
+	if (!data->t_data->no || !data->t_data->so
+			|| !data->t_data->we || !data->t_data->ea)
+		return (EXIT_FAILURE);
 	path[0] = data->t_data->no;
 	path[1] = data->t_data->so;
 	path[2] = data->t_data->ea;
@@ -36,6 +63,7 @@ void	load_textures(t_data *data)
 				&data->texture[i].endian);
 		i++;
 	}
+	return (EXIT_SUCCESS);
 }
 
 static int	pixel_from_texture(t_texture *texture, int tex_x, int tex_y)
@@ -72,12 +100,17 @@ static void	init_tex_column(t_data *data, int wall_height,
 			t_texture_column *texture_c)
 {
 	texture_c->texture = get_texture(data);
-	texture_c->draw_start = HEIGHT / 2 - wall_height;
+	printf("HEIGHT is: %d\n", HEIGHT);
+	printf("wall height after call is: %d\n", wall_height);
+	texture_c->draw_start = (HEIGHT / 2) - wall_height;
+	printf("texture_c draw start before if statement: %d\n", texture_c->draw_start);
 	if (texture_c->draw_start < 0)
 		texture_c->draw_start = 0;
+	printf("texture_c draw start: %d\n", texture_c->draw_start);
 	texture_c->draw_end = HEIGHT / 2 + wall_height;
 	if (texture_c->draw_end >= HEIGHT)
 		texture_c->draw_end = HEIGHT - 1;
+	printf("texture_c draw end: %d\n", texture_c->draw_end);
 	texture_c->texture_x = (int)(data->player->wall_x
 			* texture_c->texture->width);
 	if ((data->player->side == 0 && data->player->ray_dir_x > 0)
@@ -87,6 +120,7 @@ static void	init_tex_column(t_data *data, int wall_height,
 	texture_c->step = (float)texture_c->texture->height / (wall_height * 2);
 	texture_c->texture_position = (texture_c->draw_start
 			- HEIGHT / 2 + wall_height) * texture_c->step;
+	printf("texture->position is: %f\n", texture_c->texture_position);
 }
 
 void	draw_textured_column(t_texture_column *texture_c, t_data *data,
