@@ -6,13 +6,13 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 18:04:38 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/21 11:49:40 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/23 11:32:23 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-/*void	load_textures(t_data *data)
+void	load_textures(t_data *data)
 {
 	char	*path[4];
 	int		i;
@@ -26,6 +26,11 @@
 	{
 		data->texture[i].img = mlx_xpm_file_to_image(data->mlx, path[i],
 				&data->texture[i].width, &data->texture[i].height);
+		if (!data->texture[i].img)
+		{
+			printf("Error: failed to load texture: %s\n", path[i]);
+			exit(1);
+		}
 		data->texture[i].addr = mlx_get_data_addr(data->texture[i].img,
 				&data->texture[i].bpp, &data->texture[i].line_len,
 				&data->texture[i].endian);
@@ -92,11 +97,19 @@ void	draw_textured_column(t_texture_column *texture_c, t_data *data,
 	init_tex_column(data, wall_height, texture_c);
 	while (texture_c->draw_start < texture_c->draw_end)
 	{
+		printf("texture_position is: %f\n", texture_c->texture_position);
+		printf("texture_height is: %d\n", texture_c->texture->height);
 		tex_y = (int)texture_c->texture_position % texture_c->texture->height;
+		printf("tex_y is: %d\n", tex_y);
+		if (tex_y < 0)
+		{
+			printf("tex_y is not valid\n");
+			exit (1);
+		}
 		texture_c->texture_position += texture_c->step;
 		my_pixel_put(data->img, ray_col, texture_c->draw_start,
 			pixel_from_texture(texture_c->texture, texture_c->texture_x,
 				tex_y));
 		texture_c->draw_start++;
 	}
-}*/
+}

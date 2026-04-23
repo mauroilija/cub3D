@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 12:26:01 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/21 14:52:28 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/23 10:06:24 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,10 @@ void	contact_position(t_player *player, t_texture *texture)
 			* player->ray_dir_x;
 	player->wall_x -= floor(player->wall_x);
 	//causes invalid read
-	/*player->texture_x = (int)(player->wall_x * texture->width);
+	player->texture_x = (int)(player->wall_x * texture->width);
 	if ((player->side == 0 && player->ray_dir_x > 0)
 		|| (player->side == 1 && player->ray_dir_y < 0))
-		player->texture_x = texture->width - player->texture_x - 1;*/
+		player->texture_x = texture->width - player->texture_x - 1;
 }
 
 void	texture_column(t_player *player, int tex_width)
