@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 15:54:05 by abita             #+#    #+#             */
-/*   Updated: 2026/04/23 14:06:36 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/23 15:07:24 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@ int	input_validity(t_line *line, t_data *data, int argc, char **argv)
 	t_color_data	c_data;
 	t_texture_data	t_data;
 
+	ft_bzero(&t_data, sizeof(t_texture_data));
+	ft_bzero(&c_data, sizeof(t_color_data));
+	data->t_data = &t_data;
+	data->c_data = &c_data;
 	if (argc < 2)
 	{
 		print_error("WARNING: pass a map file: '.cub'.\n");

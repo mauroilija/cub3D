@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 18:04:38 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/23 14:13:57 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/23 15:13:47 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,10 @@ int	load_textures(t_data *data)
 			|| !data->t_data->we || !data->t_data->ea)
 		return (EXIT_FAILURE);
 	path[0] = data->t_data->no;
-	path[1] = data->t_data->so;
-	path[2] = data->t_data->ea;
-	path[3] = data->t_data->we;
+	printf("path[0] is: %s\n", path[0]);
+	//path[1] = data->t_data->so;
+	//path[2] = data->t_data->ea;
+	//path[3] = data->t_data->we;
 	i = 0;
 	while (i < 4)
 	{

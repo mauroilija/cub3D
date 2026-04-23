@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 11:56:47 by abita             #+#    #+#             */
-/*   Updated: 2026/04/23 14:08:22 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/23 14:41:37 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,17 @@ int	parse_texture(char *line, t_texture_data *t_data)
 	if (id == -1)
 		return (-1);
 	if (id == NO)
-	    t_data->no = ft_strdup(path);
+	    t_data->no = path;
 	if (id == SO)
-		t_data->so = ft_strdup(path);
+		t_data->so = path;
 	if (id == WE)
-		t_data->we = ft_strdup(path);
+		t_data->we = path;
 	if (id == EA)
-		t_data->ea = ft_strdup(path);
-	free(path);
+		t_data->ea = path;
+	// printf("north is: %s\n", t_data->no);
+	// printf("south is: %s\n", t_data->so);
+	// printf("ea is: %s\n", t_data->ea);
+	// printf("we is: %s\n", t_data->we);
+	//free(path);
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:02:56 by abita             #+#    #+#             */
-/*   Updated: 2026/04/21 14:40:08 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/23 14:22:41 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ static int	parse_input(char *line, t_line *map, t_color_data *c_data, t_texture_
 	//printf("DEBUG map_started: %d\n", map->map_started);
 	//printf("DEBUG is_color: %d\n", is_color_line(&line[i]));
 	//printf("DEBUG is_map: %d\n", is_map_line(&line[i]));
-	//if (!map->map_started)
+	if (!map->map_started)
 	{
 		if (is_texture_line(&line[i]))
 		{
 			if (parse_texture(&line[i], t_data) != EXIT_SUCCESS)
-			return (EXIT_FAILURE);
+			return (free_texture_paths(t_data), EXIT_FAILURE);
 		return (EXIT_SUCCESS);
 		}
 		else if (is_color_line(&line[i]))
