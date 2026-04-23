@@ -6,11 +6,11 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 15:54:05 by abita             #+#    #+#             */
-/*   Updated: 2026/04/21 21:24:50 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/23 11:49:58 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub.h"
+#include "../../inc/cub.h"
 
 int	input_validity(t_line *line, t_data *data, int argc, char **argv)
 {

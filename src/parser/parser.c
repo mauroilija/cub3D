@@ -6,13 +6,13 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:02:56 by abita             #+#    #+#             */
-/*   Updated: 2026/04/22 12:45:22 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/23 11:39:33 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cub.h"
 
-static int checker(int i, char *line, t_line *map)
+static int	checker(int i, char *line, t_line *map)
 {
 	if (is_texture_line(&line[i]))
 	{
@@ -29,7 +29,8 @@ static int checker(int i, char *line, t_line *map)
 	else if (is_map_line(&line[i]))
 		map->map_started = 1;
 	else
-		return(print_error("ERROR: invalid config line\n"), EXIT_FAILURE);
+		return (print_error("ERROR: invalid config line\n"),
+			EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 
@@ -49,7 +50,8 @@ static int	parse_input(char *line, t_line *map)
 	if (map->map_started)
 	{
 		if (map_parsing(&line[i], map) != EXIT_SUCCESS)
-			return (printf("ERROR: invalid line after map\n"), EXIT_FAILURE);		
+			return (printf("ERROR: invalid line after map\n"),
+				EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
 }
@@ -63,14 +65,14 @@ int	parser(char *path, t_line *map)
 	if (fd == -1)
 		return (print_error("Error: opening the file\n"), ERROR_FD);
 	init_line(map);
-	while ((line = get_next_line(fd)))
+	line = get_next_line(fd);
+	while (line)
 	{
 		if (parse_input(line, map) != EXIT_SUCCESS)
 		{
 			free(line);
 			get_next_line(-1);
-			close(fd);
-			return (EXIT_FAILURE);
+			return (close(fd), EXIT_FAILURE);
 		}
 		free(line);
 	}

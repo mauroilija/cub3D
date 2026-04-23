@@ -6,29 +6,11 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:00:00 by abita             #+#    #+#             */
-/*   Updated: 2026/04/22 17:13:22 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/23 11:48:42 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cub.h"
-
-static int	is_number(char *n)
-{
-	int	i;
-
-	if (!n || !n[0])
-		return (0);
-	i = 0;
-	while (n[i] == ' ' || n[i] == '\t')
-		i++;
-	while (n[i])
-	{
-		if (!ft_isdigit(n[i]))
-			return (0);
-		i++;
-	}
-	return (1);
-}
 
 static int	get_id_type(char *line)
 {
@@ -43,10 +25,11 @@ static int	get_id_type(char *line)
 		return (C);
 	return (ERROR);
 }
-static int checker(char *trim, char **split, int *rgb)
+
+static int	checker(char *trim, char **split, int *rgb)
 {
 	int		j;
-	
+
 	j = 0;
 	while (j < 3)
 	{
@@ -62,15 +45,29 @@ static int checker(char *trim, char **split, int *rgb)
 	return (EXIT_SUCCESS);
 }
 
+int	comma(char *line, int i)
+{
+	int		comma;
+
+	comma = 0;
+	while (line[i])
+	{
+		if (line[i] == ',')
+			comma++;
+		i++;
+	}
+	if (comma >= 3)
+		return (EXIT_FAILURE);
+	return (EXIT_FAILURE);
+}
+
 static int	get_color_range(char *line)
 {
 	int		i;
-	char	**split;
-	int		rgb[3];
 	int		color;
-	int		comma;
-
-	char *trim;
+	int		rgb[3];
+	char	**split;
+	char	*trim;
 
 	i = 0;
 	while (line[i] == ' ' || line[i] == '\t')
@@ -81,15 +78,7 @@ static int	get_color_range(char *line)
 	trim = ft_strtrim(&line[i], "\n \t");
 	if (!trim)
 		return (EXIT_FAILURE);
-	comma = 0;
-	while (line[i])
-	{
-		if (line[i] == ',')
-			comma++;
-		i++;
-	}
-	if (comma >= 3)
-		return (EXIT_FAILURE);
+	comma(line, i);
 	split = ft_split(trim, ',');
 	if (!split)
 		return (free(trim), free_split(split), EXIT_FAILURE);
@@ -100,8 +89,8 @@ static int	get_color_range(char *line)
 
 int	parse_color(char *line, t_color_data *c_data)
 {
-	int id;
-	int color;
+	int	id;
+	int	color;
 
 	id = get_id_type(line);
 	if (id == ERROR)

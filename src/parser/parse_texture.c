@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 11:56:47 by abita             #+#    #+#             */
-/*   Updated: 2026/04/22 12:45:43 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/23 11:42:59 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,20 @@ static char	*get_path(char *line)
 	return (path);
 }
 
+static void	pass_path(int id, char *path, t_texture_data *t_data)
+{
+	if (id == -1)
+		return (-1);
+	if (id == NO)
+		t_data->no = path;
+	if (id == SO)
+		t_data->so = path;
+	if (id == WE)
+		t_data->we = path;
+	if (id == EA)
+		t_data->ea = path;
+}
+
 int	parse_texture(char *line, t_texture_data *t_data)
 {
 	int		id;
@@ -68,16 +82,7 @@ int	parse_texture(char *line, t_texture_data *t_data)
 	dot = ft_strrchr(path, '.');
 	if (!dot || ft_strcmp(dot, ".xpm") != 0)
 		return (printf("error: .xpm exe\n"), EXIT_FAILURE);
-	if (id == -1)
-		return (-1);
-	if (id == NO)
-		t_data->no = path;
-	if (id == SO)
-		t_data->so = path;
-	if (id == WE)
-		t_data->we = path;
-	if (id == EA)
-		t_data->ea = path;
+	pass_path(id, path, t_data);
 	free(path);
 	return (EXIT_SUCCESS);
 }
