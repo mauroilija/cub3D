@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:00:00 by abita             #+#    #+#             */
-/*   Updated: 2026/04/23 11:48:42 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/23 18:20:06 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ static int	get_id_type(char *line)
 		return (F);
 	if (line[i] == 'C' && (line[i + 1] == ' ' || line[i + 1] == '\t'))
 		return (C);
-	return (ERROR);
+	return (EXIT_FAILURE);
 }
 
-static int	checker(char *trim, char **split, int *rgb)
+static int	checker(char **split, int *rgb)
 {
 	int		j;
 
@@ -34,14 +34,14 @@ static int	checker(char *trim, char **split, int *rgb)
 	while (j < 3)
 	{
 		if (!split[j] || !is_number(split[j]))
-			return (free(trim), free_split(split), EXIT_FAILURE);
+			return (EXIT_FAILURE);
 		rgb[j] = ft_atoi(split[j]);
 		if (rgb[j] < 0 || rgb[j] > 255)
-			return (free(trim), free_split(split), EXIT_FAILURE);
+			return (EXIT_FAILURE);
 		j++;
 	}
 	if (split[3])
-		return (free(trim), free_split(split), EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 
@@ -58,7 +58,7 @@ int	comma(char *line, int i)
 	}
 	if (comma >= 3)
 		return (EXIT_FAILURE);
-	return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
 static int	get_color_range(char *line)
@@ -78,11 +78,13 @@ static int	get_color_range(char *line)
 	trim = ft_strtrim(&line[i], "\n \t");
 	if (!trim)
 		return (EXIT_FAILURE);
-	comma(line, i);
+	if (comma(line, i) == EXIT_FAILURE)
+		return (print_error("Error\ntoo many commas\n"), free(trim), EXIT_FAILURE);
 	split = ft_split(trim, ',');
 	if (!split)
 		return (free(trim), free_split(split), EXIT_FAILURE);
-	checker(trim, split, rgb);
+	if (checker(split, rgb) == EXIT_FAILURE)
+		return (free(trim), free_split(split), EXIT_FAILURE);
 	color = (rgb[0] << 16) | (rgb[1] << 8) | rgb[2];
 	return (free(trim), free_split(split), color);
 }
@@ -93,11 +95,11 @@ int	parse_color(char *line, t_color_data *c_data)
 	int	color;
 
 	id = get_id_type(line);
-	if (id == ERROR)
+	if (id == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	color = get_color_range(line);
-	if (color == ERROR)
-		return (EXIT_FAILURE);
+	if (color == EXIT_FAILURE)
+		return (print_error("Error\nno color\n"), EXIT_FAILURE);
 	if (id == F)
 		c_data->floor_color = color;
 	if (id == C)

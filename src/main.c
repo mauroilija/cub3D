@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 15:54:05 by abita             #+#    #+#             */
-/*   Updated: 2026/04/23 11:49:58 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/23 20:45:42 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,22 @@ int	input_validity(t_line *line, t_data *data, int argc, char **argv)
 
 	if (argc < 2)
 	{
-		print_error("WARNING: pass a map file: '.cub'.\n");
+		print_error("Error\npass a map file: '.cub'.\n");
 		ft_exit_error(data);
 	}
 	if (argc > 2)
 	{
-		print_error("WARNING: too many arguments.\n");
+		print_error("Error\ntoo many arguments.\n");
 		ft_exit_error(data);
 	}
 	slash = ft_strrchr(argv[1], '/');
 	if (slash && slash[1] == '.')
-		return (printf("ERROR: this is a hidden path\n"), EXIT_FAILURE);
+		return (print_error("Error\nthis is a hidden path\n"), EXIT_FAILURE);
 	dot = ft_strrchr(argv[1], '.');
 	if (!dot || ft_strcmp(dot, ".cub") != 0)
-		return (print_error("ERROR: map must have '.cub' extention.\n"), 1);
+		return (print_error("Error\nmap must have '.cub' extention.\n"), 1);
 	if (parser(argv[1], line) != EXIT_SUCCESS)
-		return (ERROR_OPENING_FILE);
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 

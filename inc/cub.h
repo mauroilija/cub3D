@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/04/21 21:27:24 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/23 20:57:25 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,19 +49,6 @@
 # define SOUTH 'S'
 # define EAST 'E'
 # define WEST 'W'
-
-/* ************************************************************************** */
-/*                                   ENUM Error FD                            */
-/* ************************************************************************** */
-
-typedef enum e_return_values
-{
-	ERROR = -1,
-	ERROR_FD = -2,
-	ERROR_OPENING_FILE = -3,
-	ERROR_INVALID_MAP = -4,
-	ERROR_MALLOC = -5
-}			t_return_values;
 
 /* ************************************************************************** */
 /*                             ENUM Texture Types                             */
@@ -175,9 +162,11 @@ typedef struct s_line
 	char		**grid;
 	int			height;
 	int			player_count;
-	int			map_started;
-	t_color_data c_data;
-	t_texture_data t_data;
+	bool		texture_flag;
+	bool		color_flag;
+	bool			map_flag;
+	t_color_data color_data;
+	t_texture_data texture_data;
 }				t_line;
 
 typedef struct s_data
@@ -229,8 +218,8 @@ int			is_map_line(char *line);
 char		**creating_2d_map(char **old, char *line);
 void		init_line(t_line *line);
 int			skip_whitespace(char *line);
-int			is_texture_line(char *line);
-int			is_color_line(char *line);
+int			is_texture_line(char *line, t_line *map);
+int			is_color_line(char *line, t_line *map);
 void		free_split(char **split);
 
 /* ************************************************************************** */
@@ -272,6 +261,7 @@ int			map_parsing(char *line, t_line *map);
 
 // textures //
 int			parse_texture(char *line, t_texture_data *t_data);
+int			is_number(char *n);
 
 // color //
 int			parse_color(char *line, t_color_data *c_data);
