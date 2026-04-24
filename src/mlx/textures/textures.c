@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 18:04:38 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/24 16:09:40 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/24 16:52:38 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,10 @@ int	load_textures(t_data *data)
 	char	*path[4];
 	int		i;
 
-	//printf("no: %s\n", data->t_data->no);
-	//printf("so: %s\n", data->t_data->so);
-	//printf("we: %s\n", data->t_data->we);
-	//printf("ea: %s\n", data->t_data->ea);
-	//this is line 44
-	//if (!data->t_data->no || !data->t_data->so
-	//		|| !data->t_data->we || !data->t_data->ea)
-	//	return (printf("hello\n"), EXIT_FAILURE);
-	path[0] = data->line->texture_data.no;
-	path[1] = data->line->texture_data.so;
-	path[2] = data->line->texture_data.ea;
-	path[3] = data->line->texture_data.we;
+	path[0] = data->map->texture_data.no;
+	path[1] = data->map->texture_data.so;
+	path[2] = data->map->texture_data.ea;
+	path[3] = data->map->texture_data.we;
 	i = 0;
 	while (i < 4)
 	{
@@ -61,17 +53,15 @@ int	load_textures(t_data *data)
 		if (!data->texture[i].img)
 		{
 			printf("Error: failed to load texture: %s\n", path[i]);
+			free_texture_paths(&data->map->texture_data);
 			exit(1);
 		}
 		data->texture[i].addr = mlx_get_data_addr(data->texture[i].img,
 				&data->texture[i].bpp, &data->texture[i].line_len,
 				&data->texture[i].endian);
-		printf("texture[%d] w:%d h:%d addr:%p\n", i,
-		data->texture[i].width,
-    	data->texture[i].height,
-    	data->texture[i].addr); 
 		i++;
 	}
+	free_texture_paths(&data->map->texture_data);
 	return (EXIT_SUCCESS);
 }
 
@@ -134,7 +124,6 @@ void	draw_textured_column(t_texture_column *texture_c, t_data *data,
 	init_tex_column(data, wall_height, texture_c);
 	while (texture_c->draw_start < texture_c->draw_end)
 	{
-		//SIGFPE HERE
 		tex_y = (int)texture_c->texture_position % texture_c->texture->height;
 		if (tex_y < 0)
 		{

@@ -22,7 +22,7 @@ char	*get_next_line(int fd);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	**ft_split(char const *s, char c);
 
-int init_parse_map(char **mat, t_line *line)
+int init_parse_map(char **mat, t_map *line)
 {
 	line->first_map_line = NULL;
 	line->last_map_line = NULL;

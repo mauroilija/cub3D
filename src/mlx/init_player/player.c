@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 18:00:28 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/21 11:11:11 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/24 16:37:57 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static void	get_init_positions(t_player *player, char **map)
 	}
 }
 
-void	init_player(t_player *player, t_line *map)
+void	init_player(t_player *player, t_map *map)
 {
 	ft_bzero(player, sizeof(t_player));
 	get_init_positions(player, map->grid);

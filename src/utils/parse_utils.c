@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
+/*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:06:52 by abita             #+#    #+#             */
-/*   Updated: 2026/04/23 20:57:14 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/24 16:37:57 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cub.h"
 
-void	init_line(t_line *map)
+void	init_line(t_map *map)
 {
 	map->player_count = 0;
 	map->height = 0;
@@ -31,7 +31,7 @@ int	skip_whitespace(char *line)
 	return (i);
 }
 
-int	is_texture_line(char *line, t_line *map)
+int	is_texture_line(char *line, t_map *map)
 {
 	int	i;
 
@@ -50,7 +50,7 @@ int	is_texture_line(char *line, t_line *map)
 	return (EXIT_FAILURE);
 }
 
-int	is_color_line(char *line, t_line *map)
+int	is_color_line(char *line, t_map *map)
 {
 	int	i;
 

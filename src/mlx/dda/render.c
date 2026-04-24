@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 20:00:57 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/23 11:45:56 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/24 16:41:15 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,10 @@ void	render_frame(t_data *data)
 		exact_position_in_cell(data->player);
 		distance_to_next_tile(data->player);
 		define_step_len(data->player);
-		advance_to_next_grid(data->player, data->line->grid);
+		advance_to_next_grid(data->player, data->map->grid);
 		perpendicular_wall_distance(data->player);
 		contact_position(data->player, data->texture);
 		wall_height = (int)(HEIGHT / data->player->perp_wall_dist);
-		printf("wall height is: %d\n", wall_height);
 		draw_textured_column(&tc, data, x, wall_height);
 		x++;
 	}
@@ -83,7 +82,7 @@ int	render_loop(void *param)
 	time = get_time_in_ms();
 	frame_time = (time - old_time) / 1000.0;
 	old_time = time;
-	update_player(data->player, data->line->grid, frame_time);
+	update_player(data->player, data->map->grid, frame_time);
 	render_frame(data);
 	return (0);
 }

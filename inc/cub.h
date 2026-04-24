@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/04/24 16:12:07 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/24 16:43:06 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,19 +155,19 @@ typedef struct s_color_data
 }			t_color_data;
 
 /* ************************************************************************** */
-/*                                   FD_line Struct							  */
+/*                               		Map data                  		      */
 /* ************************************************************************** */
-typedef struct s_line
+typedef struct s_map
 {
-	char		**grid;
-	int			height;
-	int			player_count;
-	bool		texture_flag;
-	bool		color_flag;
+	char			**grid;
+	int				height;
+	int				player_count;
+	bool			texture_flag;
+	bool			color_flag;
 	bool			map_flag;
-	t_color_data color_data;
-	t_texture_data texture_data;
-}				t_line;
+	t_color_data	color_data;
+	t_texture_data	texture_data;
+}					t_map;
 
 typedef struct s_data
 {
@@ -175,15 +175,13 @@ typedef struct s_data
 	void			*mlx;
 	void			*win;
 	int				i;
-	t_line			*line;
+	t_map			*map;
 	t_player		*player;
-	t_texture_data	*t_data; // delete me PLS
-	t_color_data	*c_data; //hols parsed color
 	t_texture		texture[4]; //each represents one direction texture
 }					t_data;
 
 /* ************************************************************************** */
-/*                                 Texture drawing						      */
+/*                               Texture drawing						          */
 /* ************************************************************************** */
 typedef struct s_texture_column
 {
@@ -216,16 +214,16 @@ int			is_player(char line);
 int			is_valid(char line);
 int			is_map_line(char *line);
 char		**creating_2d_map(char **old, char *line);
-void		init_line(t_line *line);
+void		init_line(t_map *line);
 int			skip_whitespace(char *line);
-int			is_texture_line(char *line, t_line *map);
-int			is_color_line(char *line, t_line *map);
+int			is_texture_line(char *line, t_map *map);
+int			is_color_line(char *line, t_map *map);
 void		free_split(char **split);
 
 /* ************************************************************************** */
-/*                                  Executor                                  */
+/*                                  Graphics                                  */
 /* ************************************************************************** */
-void		init_player(t_player *player, t_line *map);
+void		init_player(t_player *player, t_map *map);
 void		define_step_len(t_player *player);
 void		define_step_len(t_player *player);
 void		camera_position(t_player *player, int x);
@@ -251,11 +249,11 @@ void		draw_textured_column(t_texture_column *texture_c, t_data *data,
 /*                                  Parser                                    */
 /* ************************************************************************** */
 
-int			parser(char *path, t_line *map);
-int 		grid_validation(char **grid, int height, t_line *map);
+int			parser(char *path, t_map *map);
+int 		grid_validation(char **grid, int height, t_map *map);
 
 // map //
-int			map_parsing(char *line, t_line *map);
+int			map_parsing(char *line, t_map *map);
 
 // textures //
 int			parse_texture(char *line, t_texture_data *t_data);

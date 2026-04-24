@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
+/*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 15:41:07 by abita             #+#    #+#             */
-/*   Updated: 2026/04/23 20:54:16 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/24 16:37:57 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	check_surroundings(int y, int x, int height, char **grid)
 	return (EXIT_SUCCESS);
 }
 
-int	grid_validation(char **grid, int height, t_line *map)
+int	grid_validation(char **grid, int height, t_map *map)
 {
 	int	x;
 	int	y;
@@ -60,7 +60,7 @@ int	grid_validation(char **grid, int height, t_line *map)
 	return (EXIT_SUCCESS);
 }
 
-int	map_parsing(char *line, t_line *map)
+int	map_parsing(char *line, t_map *map)
 {
 	int		i;
 	char	*clean_line;

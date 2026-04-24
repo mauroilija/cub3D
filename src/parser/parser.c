@@ -6,13 +6,13 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:02:56 by abita             #+#    #+#             */
-/*   Updated: 2026/04/24 16:04:23 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/24 16:37:57 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cub.h"
 
-static int	checker(int i, char *line, t_line *map)
+static int	checker(int i, char *line, t_map *map)
 {
 	if (is_texture_line(&line[i], map) == EXIT_SUCCESS)
 	{
@@ -40,7 +40,7 @@ static int	checker(int i, char *line, t_line *map)
 	return (EXIT_SUCCESS);
 }
 
-static int	parse_input(char *line, t_line *map)
+static int	parse_input(char *line, t_map *map)
 {
 	int		i;
 
@@ -61,7 +61,7 @@ static int	parse_input(char *line, t_line *map)
 	return (EXIT_SUCCESS);
 }
 
-int	parser(char *path, t_line *map)
+int	parser(char *path, t_map *map)
 {
 	int		fd;
 	char	*line;
