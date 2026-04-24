@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 13:56:33 by abita             #+#    #+#             */
-/*   Updated: 2026/04/24 17:13:03 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/24 20:53:32 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,8 @@ char	**creating_2d_map(char **old, char *line)
 		i++;
 	}
 	new[i++] = ft_strdup(line);
-	//if (!new[i])
-	//{
-	//	free_split(new);
-	//	return (NULL);
-	//}
 	new[i] = NULL;
-	free(old);
+	if (old)
+		free(old);
 	return (new);
 }

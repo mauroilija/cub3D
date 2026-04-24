@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:28:55 by abita             #+#    #+#             */
-/*   Updated: 2026/04/24 16:59:30 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/24 21:09:08 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cub.h"
 
-int	ft_exit_error(t_data *data)
+int	ft_exit(t_data *data)
 {
 	if (!data)
 		exit(EXIT_FAILURE);
@@ -25,19 +25,10 @@ int	ft_exit_error(t_data *data)
 		mlx_destroy_display(data->mlx);
 		free(data->mlx);
 	}
-	exit(EXIT_FAILURE);
-}
-
-int	ft_exit(t_data *data)
-{
-	mlx_destroy_image(data->mlx, data->img.img);
-	mlx_destroy_window(data->mlx, data->win);
-	mlx_destroy_display(data->mlx);
-	free(data->mlx);
 	if (data->map->grid)
 		free_split(data->map->grid);
 	free_texture_paths(&data->map->texture_data);
-	exit(0);
+	exit(EXIT_SUCCESS);
 }
 
 void	my_pixel_put(t_img img, int x, int y, int color)
@@ -59,22 +50,26 @@ void	mlx_loop_helper(t_data *data)
 	mlx_loop(data->mlx);
 }
 
-void	init_window_and_display(t_data *data)
+int	init_window_and_display(t_data *data)
 {
 	data->mlx = NULL;
 	data->win = NULL;
 	data->img.img = NULL;
 	data->mlx = mlx_init();
 	if (!data->mlx)
-		exit (EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "Cub3D");
 	if (!data->win)
-		return (mlx_destroy_display(data->mlx), free(data->mlx));
+		return (mlx_destroy_display(data->mlx), free(data->mlx),
+			EXIT_FAILURE);
 	data->img.img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
 	if (!data->img.img)
 		return (mlx_destroy_window(data->mlx, data->win),
-			mlx_destroy_display(data->mlx), free(data->mlx));
+			mlx_destroy_display(data->mlx), free(data->mlx),
+			EXIT_FAILURE);
 	data->img.addr = mlx_get_data_addr(data->img.img, &data->img.bpp,
 			&data->img.linelen, &data->img.endian);
-	load_textures(data);
+	if (load_textures(data) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }

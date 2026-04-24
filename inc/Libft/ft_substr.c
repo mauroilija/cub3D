@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abita <abita@student.42vienna.com>         +#+  +:+       +#+        */
+/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 10:55:43 by abita             #+#    #+#             */
-/*   Updated: 2025/04/29 10:55:44 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/24 21:16:56 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (sub);
 }
 
-int	main()
+/*int	main()
 {
 	char	str[] = "The substring starts at index ’start’.";
 	char	*substr;
@@ -55,4 +55,4 @@ int	main()
 	else
 		printf("Failed to allocate memory.\n");
 	return (0);
-}
+}*/

@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abita <abita@student.42vienna.com>         +#+  +:+       +#+        */
+/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 09:17:52 by abita             #+#    #+#             */
-/*   Updated: 2025/05/05 19:29:00 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/24 21:15:19 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 //#include <stdio.h>
 
-static void	var(unsigned char **d, unsigned char **s, \
+static void	var(unsigned char **d, unsigned char **s,
 	void *dest, const void *src)
 {
 	*d = (unsigned char *) dest;

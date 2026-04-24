@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:02:56 by abita             #+#    #+#             */
-/*   Updated: 2026/04/24 16:37:57 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/24 21:07:04 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ static int	checker(int i, char *line, t_map *map)
 	else if (is_map_line(&line[i]))
 	{
 		if (map->texture_flag != true || map->color_flag != true)
-			return (print_error("Error\npass texture and\\or color\n"), 
+			return (print_error("Error\npass texture and\\or color\n"),
 				EXIT_FAILURE);
-		else 
+		else
 			map->map_flag = true;
 	}
 	else
@@ -81,7 +81,7 @@ int	parser(char *path, t_map *map)
 	get_next_line(-1);
 	close(fd);
 	if (!map->map_flag)
-		return (print_error("Error\nNo map found.\n"),  EXIT_FAILURE);
+		return (print_error("Error\nNo map found.\n"), EXIT_FAILURE);
 	if (grid_validation(map->grid, map->height, map) != EXIT_SUCCESS)
 		return (free_split(map->grid), free(line), EXIT_FAILURE);
 	return (EXIT_SUCCESS);

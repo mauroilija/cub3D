@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abita <abita@student.42vienna.com>         +#+  +:+       +#+        */
+/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 17:04:40 by abita             #+#    #+#             */
-/*   Updated: 2025/04/30 17:04:42 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/24 21:21:41 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
 
-static char	funct(unsigned int i, char ch)
+/*static char	funct(unsigned int i, char ch)
 {
 	if ((i % 2 == 0) && (ch >= 'a' && ch <= 'z'))
 		return (ch - 32);
@@ -21,7 +20,7 @@ static char	funct(unsigned int i, char ch)
 		return (ch + 32);
 	else
 		return (ch);
-}
+}*/
 
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
@@ -41,7 +40,7 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 	return (new_str);
 }
 
-int	main()
+/*int	main()
 {
 	char	str[] = "Returns NULL if the allocation fails.";
 	char	*value;
@@ -59,4 +58,4 @@ int	main()
 		free(value);
 	}
 	return (0);
-}
+}*/

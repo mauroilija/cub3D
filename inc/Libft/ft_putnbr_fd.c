@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abita <abita@student.42vienna.com>         +#+  +:+       +#+        */
+/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 15:58:44 by abita             #+#    #+#             */
-/*   Updated: 2025/05/01 15:58:45 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/24 21:15:49 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	ft_putnbr_fd(int n, int fd)
 	print = (nb % 10) + '0';
 	write(fd, &print, 1);
 }
-int	main()
+/*int	main()
 {
 	int	fd;
 
@@ -40,4 +40,4 @@ int	main()
 	ft_putnbr_fd(-2147483647, fd);
 	close (fd);
 	return (0);
-}
+}*/

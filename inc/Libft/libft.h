@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:17:50 by abita             #+#    #+#             */
-/*   Updated: 2026/02/11 20:01:20 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/24 21:18:42 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,13 @@
 
 # define BUFFER_SIZE 40962
 
-
 typedef struct s_atof
 {
-    double	result;
+	double	result;
 	double	factor;
 	int		sign;
 	int		i;
-} t_atof;
+}			t_atof;
 
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
@@ -41,8 +40,6 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
 int		ft_atoi(const char *nptr);
 double	ft_atof(const char *nptr);
-
-
 char	*get_next_line(int fd);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);

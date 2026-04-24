@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atof.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abita <abita@student.42vienna.com>         +#+  +:+       +#+        */
+/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 19:00:59 by abita             #+#    #+#             */
-/*   Updated: 2025/08/07 19:01:04 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/24 21:12:26 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void parse_integer_part(const char *nptr, t_atof *a)
+static void	parse_integer_part(const char *nptr, t_atof *a)
 {
 	while ((nptr[a->i] >= '\t' && nptr[a->i] <= '\r') || nptr[a->i] == ' ')
 		a->i++;
@@ -28,9 +28,10 @@ static void parse_integer_part(const char *nptr, t_atof *a)
 		a->i++;
 	}
 }
+
 double	ft_atof(const char *nptr)
 {
-	t_atof a;
+	t_atof	a;
 
 	a.sign = 1;
 	a.result = 0.0;

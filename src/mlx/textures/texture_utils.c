@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/24 16:56:59 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/24 17:25:11 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/24 20:22:04 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 void	free_texture_paths(t_texture_data *td)
 {
+	printf("here\n");
 	if (td->no)
 	{
+		printf("there\n");
 		free(td->no);
 		td->no = NULL;
 	}

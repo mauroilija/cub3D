@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:00:00 by abita             #+#    #+#             */
-/*   Updated: 2026/04/23 18:20:06 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/24 21:07:30 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ static int	get_color_range(char *line)
 	if (!trim)
 		return (EXIT_FAILURE);
 	if (comma(line, i) == EXIT_FAILURE)
-		return (print_error("Error\ntoo many commas\n"), free(trim), EXIT_FAILURE);
+		return (print_error("Error\ntoo many commas\n"),
+			free(trim), EXIT_FAILURE);
 	split = ft_split(trim, ',');
 	if (!split)
 		return (free(trim), free_split(split), EXIT_FAILURE);
