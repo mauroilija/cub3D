@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 15:54:05 by abita             #+#    #+#             */
-/*   Updated: 2026/04/23 15:07:24 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/24 13:47:00 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int	main(int argc, char **argv)
 	ft_bzero(&data, sizeof(t_data));
 	ft_bzero(&line, sizeof(t_line));
 	ft_bzero(&td, sizeof(t_texture_data));
+	data.t_data = &td;
 	if (input_validity(&line, &data, argc, argv) != EXIT_SUCCESS)
 		return (EXIT_FAILURE);
 	init_window_and_display(&data);
@@ -67,6 +68,5 @@ int	main(int argc, char **argv)
 	data.player = &player;
 	data.line = &line;
 	mlx_loop_helper(&data);
-	//free_split(line.grid);
 	return (EXIT_SUCCESS);
 }
