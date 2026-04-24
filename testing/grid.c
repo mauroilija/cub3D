@@ -142,12 +142,12 @@ int get_validation(char **grid, int height)
             {
 				if (y == 0 || x == 0 || y == height -1)
 				{
-					printf("ERROR: map is open at the borders\n");
+					printf("Error\nmap is open at the borders\n");
         			return (1);
 				}
 				if (x >= ft_strlen(grid[y - 1]) || x >= ft_strlen(grid[y + 1]))
 				{
-					printf("ERROR: map is opened(ragged rows)\n");
+					printf("Error\nmap is opened(ragged rows)\n");
 					return (1);
 				}
                 if (!is_valid(grid[y][x - 1]) || 
@@ -155,7 +155,7 @@ int get_validation(char **grid, int height)
 					!is_valid(grid[y - 1][x]) || 
 					!is_valid(grid[y + 1][x]))
                 {
-                        printf("ERROR: map is not closed\n");
+                        printf("Error\nmap is not closed\n");
                         return (1);
                 }
 				
@@ -168,7 +168,7 @@ int get_validation(char **grid, int height)
     // grid_copy = copy_grid(grid, height);
     // grid_copy[player_y][player_x] = '0';
     // if (flood_fill(grid_copy, player_y, player_x, height)){
-    //     printf("ERROR: map is not closed\n");
+    //     printf("Error\nmap is not closed\n");
     //     return (1);
     // }
     // else

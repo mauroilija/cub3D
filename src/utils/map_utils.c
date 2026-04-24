@@ -3,23 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 13:56:33 by abita             #+#    #+#             */
-/*   Updated: 2026/04/21 12:53:27 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/23 11:49:39 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub.h"
+#include "../../inc/cub.h"
 
 int	is_valid_input(char line)
 {
 	return (line == SPACE || line == WALL || line == NORTH || line == SOUTH
 		|| line == EAST || line == WEST || line == ' ' || line == '\t');
 }
-int is_player(char type)
+
+int	is_player(char type)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (type == WEST || type == EAST || type == NORTH || type == SOUTH)
@@ -28,11 +29,13 @@ int is_player(char type)
 		i = 0;
 	return (i);
 }
+
 int	is_valid(char line)
 {
-	return (line == 'N' || line == 'S' || line == 'E' || line == 'W' || 
-		line == '1' || line == '0');
+	return (line == 'N' || line == 'S' || line == 'E' || line == 'W'
+		|| line == '1' || line == '0');
 }
+
 int	is_map_line(char *line)
 {
 	int	i;
@@ -42,7 +45,8 @@ int	is_map_line(char *line)
 	i = 0;
 	while (line[i] && line[i] != '\n')
 	{
-		if (line[i] != '1' && line[i] != '0' && line[i] != ' ' && !is_player(line[i]))
+		if (line[i] != '1' && line[i] != '0' && line[i] != ' '
+			&& !is_player(line[i]))
 			return (0);
 		i++;
 	}
@@ -50,10 +54,11 @@ int	is_map_line(char *line)
 		return (0);
 	return (1);
 }
-char **creating_2d_map(char **old, char *line)
+
+char	**creating_2d_map(char **old, char *line)
 {
-	int i;
-	char **new;
+	int		i;
+	char	**new;
 
 	i = 0;
 	while (old && old[i])

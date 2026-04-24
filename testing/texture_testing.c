@@ -74,7 +74,7 @@ int	main(void)
 	// printf("backslash: %s\n", slash);
 	if (slash && slash[1] == '.')
 	{
-		printf("error: this is a hidden path\n");
+		printf("Error\nthis is a hidden path\n");
 		return (EXIT_FAILURE);
 	}
 	dot = strrchr(path, '.');

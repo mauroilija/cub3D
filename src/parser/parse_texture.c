@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 11:56:47 by abita             #+#    #+#             */
-/*   Updated: 2026/04/24 13:41:24 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/24 15:00:55 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,28 +48,10 @@ static char	*get_path(char *line)
 	return (path);
 }
 
-int	parse_texture(char *line, t_texture_data *t_data)
+static int	pass_path(int id, char *path, t_texture_data *t_data)
 {
-	int		id;
-	char	*path;
-	char	*dot;
-	char	*slash;
-
-	id = get_id_type(line);
-	path = get_path(line);
-	if (!path)
-		return (-1);
-	slash = ft_strrchr(path, '/');
-	if (slash && slash[1] == '.')
-	{
-		printf("error: this is a hidden path\n");
-		return (EXIT_FAILURE);
-	}
-	dot = ft_strrchr(path, '.');
-	if (!dot || ft_strcmp(dot, ".xpm") != 0)
-		return (printf("error: .xpm exe\n"), EXIT_FAILURE);
 	if (id == -1)
-		return (-1);
+		return (EXIT_FAILURE);
 	if (id == NO)
 	    t_data->no = ft_strdup(path);
 	if (id == SO)
@@ -78,10 +60,31 @@ int	parse_texture(char *line, t_texture_data *t_data)
 		t_data->we = ft_strdup(path);
 	if (id == EA)
 		t_data->ea = ft_strdup(path);
-	printf("no: %s\n", t_data->no);
-	printf("so: %s\n", t_data->so);
-	printf("we: %s\n", t_data->we);
-	printf("ea: %s\n", t_data->ea);
-	free(path);
 	return (EXIT_SUCCESS);
+}
+
+int	parse_texture(char *line, t_texture_data *t_data)
+{
+	int		id;
+	char	*path;
+	char	*slash;
+	int fd;
+
+	id = get_id_type(line);
+	path = get_path(line);
+	if (!path)
+		return (-1);
+	slash = ft_strrchr(path, '/');
+	if (slash && slash[1] == '.')
+	{
+		print_error("Error\nthis is a hidden path\n");
+		return (free(path), EXIT_FAILURE);
+	}
+	fd = open (path, O_RDONLY);
+	if (fd == -1)
+		return (print_error("Error\nfile doesn't exist\n"), 
+			free(path), EXIT_FAILURE);
+	if (pass_path(id, path, t_data) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	return (free(path), EXIT_SUCCESS);
 }
