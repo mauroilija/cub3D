@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abita <abita@student.42.fr>                +#+  +:+       +#+         #
+#    By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/11 14:58:16 by abita             #+#    #+#              #
-#    Updated: 2026/04/23 12:45:38 by abita            ###   ########.fr        #
+#    Updated: 2026/04/24 16:58:03 by milija-h         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,7 @@ SRCS = \
 	  mlx/dda/render.c \
 	  mlx/textures/textures.c \
 	  mlx/movement/movement.c \
+	  mlx/textures/texture_utils.c \
 	  
 
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))

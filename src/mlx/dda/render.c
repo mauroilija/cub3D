@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 20:00:57 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/24 16:41:15 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/24 16:56:33 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ double	get_time_in_ms(void)
 void	render_frame(t_data *data)
 {
 	t_texture_column	tc;
-	int			wall_height;
-	int			x;
+	int					wall_height;
+	int					x;
 
 	x = 0;
 	ft_memset(data->img.addr, 0, HEIGHT * data->img.linelen);

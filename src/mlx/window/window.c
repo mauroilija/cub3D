@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:28:55 by abita             #+#    #+#             */
-/*   Updated: 2026/04/24 16:40:36 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/24 16:59:30 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	ft_exit(t_data *data)
 	mlx_destroy_display(data->mlx);
 	free(data->mlx);
 	if (data->map->grid)
-		free_split(data->map->grid);	
+		free_split(data->map->grid);
 	free_texture_paths(&data->map->texture_data);
 	exit(0);
 }
