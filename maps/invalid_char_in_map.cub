@@ -1,0 +1,21 @@
+SO         ./textures/Wall7.xpm   
+NO texture/north_texture.xpm
+WE texture/west_texture.xpm
+EA texture/east_texture.xpm
+
+C                                   0,0,0          
+F 220,100,0        
+
+111
+101
+101
+101
+101
+1N1
+101
+1J1
+101
+101
+101
+111
+

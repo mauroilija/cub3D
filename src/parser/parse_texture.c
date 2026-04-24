@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 11:56:47 by abita             #+#    #+#             */
-/*   Updated: 2026/04/23 18:44:26 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/23 22:19:10 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@ static char	*get_path(char *line)
 	return (path);
 }
 
-static void	pass_path(int id, char *path, t_texture_data *t_data)
+static int	pass_path(int id, char *path, t_texture_data *t_data)
 {
 	if (id == -1)
-		return ;
+		return (EXIT_FAILURE);
 	if (id == NO)
 		t_data->no = path;
 	if (id == SO)
@@ -60,13 +60,13 @@ static void	pass_path(int id, char *path, t_texture_data *t_data)
 		t_data->we = path;
 	if (id == EA)
 		t_data->ea = path;
+	return (EXIT_SUCCESS);
 }
 
 int	parse_texture(char *line, t_texture_data *t_data)
 {
 	int		id;
 	char	*path;
-	char	*dot;
 	char	*slash;
 	int fd;
 
@@ -80,14 +80,11 @@ int	parse_texture(char *line, t_texture_data *t_data)
 		print_error("Error\nthis is a hidden path\n");
 		return (free(path), EXIT_FAILURE);
 	}
-	dot = ft_strrchr(path, '.');
-	if (!dot || ft_strcmp(dot, ".xpm") != 0)
-		return (print_error("Error\n.xpm exe\n"), free(path), EXIT_FAILURE);
-	printf("%s\n", path);
 	fd = open (path, O_RDONLY);
 	if (fd == -1)
-		return (print_error("Error\nfile doesnt exist\n"), free(path), EXIT_FAILURE);
-	pass_path(id, path, t_data);
-	free(path);
-	return (EXIT_SUCCESS);
+		return (print_error("Error\nfile doesn't exist\n"), 
+			free(path), EXIT_FAILURE);
+	if (pass_path(id, path, t_data) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	return (free(path), EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 15:54:05 by abita             #+#    #+#             */
-/*   Updated: 2026/04/23 20:45:42 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/23 22:30:44 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 int	input_validity(t_line *line, t_data *data, int argc, char **argv)
 {
 	char			*dot;
-	char			*slash;
-
+	//char *slash;
 	if (argc < 2)
 	{
 		print_error("Error\npass a map file: '.cub'.\n");
@@ -27,12 +26,16 @@ int	input_validity(t_line *line, t_data *data, int argc, char **argv)
 		print_error("Error\ntoo many arguments.\n");
 		ft_exit_error(data);
 	}
-	slash = ft_strrchr(argv[1], '/');
-	if (slash && slash[1] == '.')
-		return (print_error("Error\nthis is a hidden path\n"), EXIT_FAILURE);
+	// slash = ft_strrchr(argv[1], '/');
+	// if (slash && slash[1] == '.')
+	// {
+	// 	print_error("Error\nthis is a hidden path\n");
+	// 	return (EXIT_FAILURE);
+	// }
 	dot = ft_strrchr(argv[1], '.');
 	if (!dot || ft_strcmp(dot, ".cub") != 0)
-		return (print_error("Error\nmap must have '.cub' extention.\n"), 1);
+		return (print_error("Error\nmap must have '.cub' extension.\n"), 
+			EXIT_FAILURE);
 	if (parser(argv[1], line) != EXIT_SUCCESS)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);

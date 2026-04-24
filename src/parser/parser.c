@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:02:56 by abita             #+#    #+#             */
-/*   Updated: 2026/04/23 20:59:30 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/23 21:43:37 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 static int	checker(int i, char *line, t_line *map)
 {
-	printf("flag for texture: %d\n", map->texture_flag);
-	printf("flag for color: %d\n", map->color_flag);
-
 	if (is_texture_line(&line[i], map) == EXIT_SUCCESS)
 	{
 		if (parse_texture(&line[i], &map->texture_data) != EXIT_SUCCESS)
@@ -32,7 +29,8 @@ static int	checker(int i, char *line, t_line *map)
 	else if (is_map_line(&line[i]))
 	{
 		if (map->texture_flag != true || map->color_flag != true)
-			return (print_error("Error\npass texture and\\or color\n"), EXIT_FAILURE);
+			return (print_error("Error\npass texture and\\or color\n"), 
+				EXIT_FAILURE);
 		else 
 			map->map_flag = true;
 	}
@@ -50,11 +48,7 @@ static int	parse_input(char *line, t_line *map)
 	if (!line)
 		return (EXIT_FAILURE);
 	if (line[i] == '\0' || line[i] == '\n')
-	{
-		if (map->map_flag)
-			return (print_error("Error\nempty line in map\n"), EXIT_FAILURE);
 		return (EXIT_SUCCESS);
-	}
 	if (!map->map_flag)
 		if (checker(i, line, map) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
