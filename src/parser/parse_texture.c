@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 11:56:47 by abita             #+#    #+#             */
-/*   Updated: 2026/04/24 15:00:55 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/24 16:04:11 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,10 @@ static int	pass_path(int id, char *path, t_texture_data *t_data)
 		t_data->we = ft_strdup(path);
 	if (id == EA)
 		t_data->ea = ft_strdup(path);
+	// printf("no: %s\n", t_data->no);
+	// printf("so: %s\n", t_data->so);
+	// printf("we: %s\n", t_data->we);
+	// printf("ea: %s\n", t_data->ea);
 	return (EXIT_SUCCESS);
 }
 

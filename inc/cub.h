@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/04/24 15:01:56 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/24 16:12:07 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,7 @@ typedef struct s_data
 	int				i;
 	t_line			*line;
 	t_player		*player;
-	t_texture_data	*t_data; //holds parsed path
+	t_texture_data	*t_data; // delete me PLS
 	t_color_data	*c_data; //hols parsed color
 	t_texture		texture[4]; //each represents one direction texture
 }					t_data;
@@ -185,7 +185,7 @@ typedef struct s_data
 /* ************************************************************************** */
 /*                                 Texture drawing						      */
 /* ************************************************************************** */
-typedef struct s_column_texture
+typedef struct s_texture_column
 {
 	int			draw_start;
 	int 		draw_end;

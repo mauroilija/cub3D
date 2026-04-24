@@ -1,7 +1,7 @@
-NO texture/north_texture.xpm
-WE texture/west_texture.xpm
-EA texture/east_texture.xpm
-SO texture/south_texture.xpm
+NO texture/simonkraft/cobblestone.xpm
+SO texture/simonkraft/cobblestone_01.xpm
+WE texture/simonkraft/mossy_cobblestone1.xpm
+EA texture/simonkraft/cobblestone_02.xpm
 
 F 220, 100, 00
 C 225, 30, 0

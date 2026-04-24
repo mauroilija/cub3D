@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 18:04:38 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/24 13:37:02 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/24 16:09:40 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,18 @@ int	load_textures(t_data *data)
 	char	*path[4];
 	int		i;
 
-	printf("no: %s\n", data->t_data->no);
-	printf("so: %s\n", data->t_data->so);
-	printf("we: %s\n", data->t_data->we);
-	printf("ea: %s\n", data->t_data->ea);
+	//printf("no: %s\n", data->t_data->no);
+	//printf("so: %s\n", data->t_data->so);
+	//printf("we: %s\n", data->t_data->we);
+	//printf("ea: %s\n", data->t_data->ea);
 	//this is line 44
-	if (!data->t_data->no || !data->t_data->so
-			|| !data->t_data->we || !data->t_data->ea)
-		return (printf("hello\n"), EXIT_FAILURE);
-	path[0] = data->t_data->no;
-	path[1] = data->t_data->so;
-	path[2] = data->t_data->ea;
-	path[3] = data->t_data->we;
+	//if (!data->t_data->no || !data->t_data->so
+	//		|| !data->t_data->we || !data->t_data->ea)
+	//	return (printf("hello\n"), EXIT_FAILURE);
+	path[0] = data->line->texture_data.no;
+	path[1] = data->line->texture_data.so;
+	path[2] = data->line->texture_data.ea;
+	path[3] = data->line->texture_data.we;
 	i = 0;
 	while (i < 4)
 	{
@@ -112,7 +112,7 @@ static void	init_tex_column(t_data *data, int wall_height,
 	texture_c->draw_start = (HEIGHT / 2) - wall_height;
 	if (texture_c->draw_start < 0)
 		texture_c->draw_start = 0;
-	texture_c->draw_end = HEIGHT / 2 + wall_height;
+	texture_c->draw_end = (HEIGHT / 2) + wall_height;
 	if (texture_c->draw_end >= HEIGHT)
 		texture_c->draw_end = HEIGHT - 1;
 	texture_c->texture_x = (int)(data->player->wall_x
