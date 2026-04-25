@@ -1,5 +1,17 @@
 # cub3D
-This project is a team project that is inspired by the world famous eponymous 90's game, which was the first FPS ever. 
+
+*This project has been created as part of the 42 curriculum by abita, milija-h.*
+
+## Introduction
+This project is a team effort inspired by Wolfenstein game, which was the first FPS ever. Our goal is to recreate that experience from scratch, by taking a simple 2D map as
+input and producing a navigable 3D environment rendered in real time. The project is divided into two modules. The **parser**, it is responsible for reading and validating the map file: extracting the grid, scene configuration, and any game parameters, then exposing them through a shared interface. The **graphics** it uses the data and handles everything the player sees, through ray casting, which is used to project a 3D perspective from a 2D grid, here mentioning wall rendering, field view, and player movement.
+The end result is a 3D environment which allows you to move around it and check its boundaries. 
+
+## How to use it?
+
+
+
+
 
 ## Resources
 Useful resources for this project are:
