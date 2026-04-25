@@ -6,11 +6,11 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/11 18:53:46 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/21 11:03:34 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/25 16:04:25 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub.h"
+#include "../../../inc/cub.h"
 
 //exact position in the fov line in a normalized way
 //instead of working with the with for example a 320 pixels wide screen

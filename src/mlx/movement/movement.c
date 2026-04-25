@@ -6,11 +6,11 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 21:19:46 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/21 11:01:06 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/25 16:04:51 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub.h"
+#include "../../../inc/cub.h"
 
 //our game works on a frame per second (image rendered per second) basis, so
 //to enable the movement to be smooth in both slow and fast computers, we have

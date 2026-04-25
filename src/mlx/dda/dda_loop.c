@@ -6,11 +6,11 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 12:26:01 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/23 11:34:15 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/25 16:04:29 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub.h"
+#include "../../../inc/cub.h"
 
 void	advance_to_next_grid(t_player *player, char **map)
 {

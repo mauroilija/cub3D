@@ -6,7 +6,7 @@
 #    By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/11 14:58:16 by abita             #+#    #+#              #
-#    Updated: 2026/04/25 14:17:02 by milija-h         ###   ########.fr        #
+#    Updated: 2026/04/25 16:09:48 by milija-h         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,26 +18,25 @@ CFLAGS = -Wall -Werror -Wextra -g
 LIBS = -lmlx -lX11 -lXext -lm
 
 SRCS = \
-	  main.c \
-	  mlx/key/keys.c \
-	  mlx/window/window.c \
-	  utils/map_utils.c \
-	  utils/parse_utils.c \
-	  utils/return_utils.c \
-	  utils/texture_utils.c \
-	  parser/parser.c \
-	  parser/parse_map.c \
-	  parser/parse_color.c \
-	  parser/parse_texture.c \
-	  mlx/init_player/player.c \
-	  mlx/dda/dda_utils.c \
-	  mlx/dda/dda_loop.c  \
-	  mlx/dda/render.c \
-	  mlx/textures/textures.c \
-	  mlx/movement/movement.c \
-	  mlx/textures/texture_utils.c \
+	  src/main.c \
+	  src/mlx/key/keys.c \
+	  src/mlx/window/window.c \
+	  src/utils/map_utils.c \
+	  src/utils/parse_utils.c \
+	  src/utils/return_utils.c \
+	  src/parser/parser.c \
+	  src/parser/parse_map.c \
+	  src/parser/parse_color.c \
+	  src/parser/parse_texture.c \
+	  src/mlx/init_player/player.c \
+	  src/mlx/dda/dda_utils.c \
+	  src/mlx/dda/dda_loop.c  \
+	  src/mlx/dda/render.c \
+	  src/mlx/textures/textures.c \
+	  src/mlx/movement/movement.c \
+	  src/mlx/textures/texture_utils.c
 
-OBJ = $(SRC:.c=.o)
+OBJ = $(SRCS:.c=.o)
 
 LIBFT_DIR = inc/Libft
 LIBFT = $(LIBFT_DIR)/libft.a
@@ -59,7 +58,7 @@ $(LIBFT):
 
 $(NAME): $(OBJ) $(LIBFT)
 	@if [ "$(SILENT)" = "0" ]; then echo "$(GREEN)compiling...$(RESET)"; fi
-	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(LDLIBS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(LIBS) -o $(NAME)
 	@if [ "$(SILENT)" = "0" ]; then  echo "$(GREEN)ready to execute$(RESET)"; fi
 
 clean:

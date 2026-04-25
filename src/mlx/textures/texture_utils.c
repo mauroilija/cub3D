@@ -3,21 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   texture_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
+/*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/24 16:56:59 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/24 20:22:04 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/25 16:10:36 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub.h"
+#include "../../../inc/cub.h"
 
 void	free_texture_paths(t_texture_data *td)
 {
-	printf("here\n");
 	if (td->no)
 	{
-		printf("there\n");
 		free(td->no);
 		td->no = NULL;
 	}

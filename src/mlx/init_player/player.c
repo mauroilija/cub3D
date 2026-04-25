@@ -6,11 +6,11 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 18:00:28 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/24 16:37:57 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/25 16:06:17 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub.h"
+#include "../../../inc/cub.h"
 
 //tell us where the player initially points to
 static void	get_direction(char cell, t_player *player)

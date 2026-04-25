@@ -6,11 +6,11 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 18:04:38 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/24 16:57:42 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/25 16:05:00 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub.h"
+#include "../../../inc/cub.h"
 
 static int	pixel_from_texture(t_texture *texture, int tex_x, int tex_y)
 {

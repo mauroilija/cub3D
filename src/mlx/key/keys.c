@@ -6,11 +6,11 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:33:15 by abita             #+#    #+#             */
-/*   Updated: 2026/04/21 14:37:33 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/25 16:03:57 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub.h"
+#include "../../../inc/cub.h"
 
 int	keyhandler(int keycode, void *param)
 {
