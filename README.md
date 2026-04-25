@@ -10,16 +10,16 @@ The end result is a 3D environment which allows you to move around it and check 
 ## How to use it?
 To install the project:
 ```
-	git clone git@github.com:arselabita/cub3D.git
+git clone git@github.com:arselabita/cub3D.git
 ```
 After the project is cloned, cd into the directory and at the terminal run: 
 ```
-	make
+make
 ```
 the binary of the project is **./cub3D** right next to it you need to pass another argument: **path** of the map, in this repo included is a directory called maps there you will find different types, you can choose between to see different textures and map styles:
 An example how to run it with a specific map:
 ```
-	./cub3D maps/map7.c
+./cub3D maps/map7.c
 ```
 
 ## Resources
