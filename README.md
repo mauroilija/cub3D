@@ -21,6 +21,11 @@ An example how to run it with a specific map:
 ```
 ./cub3D maps/map7.c
 ```
+To navigate in the GUI use
+```
+The arrow keys and
+the WASD keys
+```
 
 ## Resources
 Useful resources for this project are:
