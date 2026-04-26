@@ -24,6 +24,7 @@ An example how to run it with a specific map:
 ```
 ./cub3D maps/map7.cub
 ```
+
 To navigate in the GUI use
 ```
 The arrow keys and
