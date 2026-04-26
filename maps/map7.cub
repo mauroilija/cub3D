@@ -1,7 +1,7 @@
-NO texture/simonkraft/cobblestone.xpm
-SO texture/simonkraft/cobblestone_01.xpm
-WE texture/simonkraft/mossy_cobblestone1.xpm
-EA texture/simonkraft/cobblestone_02.xpm
+NO texture/new/1.xpm
+SO texture/new/1.xpm
+WE texture/new/aa.xpm
+EA texture/new/lala.xpm
 
 F 255, 100, 0
 C 225, 30, 0000000000001

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_texture.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 11:56:47 by abita             #+#    #+#             */
-/*   Updated: 2026/04/25 16:05:52 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/26 13:17:59 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	get_id_type(char *line)
 		return (WE);
 	if (line[i] == 'E' && line[i + 1] == 'A')
 		return (EA);
-	return (-1);
+	return (EXIT_FAILURE);
 }
 
 static char	*get_path(char *line)
@@ -50,7 +50,7 @@ static char	*get_path(char *line)
 
 static int	pass_path(int id, char *path, t_texture_data *texture_data)
 {
-	if (id == -1)
+	if (id == 1)
 		return (EXIT_FAILURE);
 	if (id == NO)
 		texture_data->no = ft_strdup(path);
@@ -71,9 +71,11 @@ int	parse_texture(char *line, t_texture_data *texture_data)
 	int		fd;
 
 	id = get_id_type(line);
+	if (!id)
+		return (EXIT_FAILURE);
 	path = get_path(line);
 	if (!path)
-		return (-1);
+		return (EXIT_FAILURE);
 	slash = ft_strrchr(path, '/');
 	if (slash && slash[1] == '.')
 	{
