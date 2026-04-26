@@ -47,3 +47,7 @@ Useful resources for this project are:
 - Raycasting: [Raycasting article](https://www.scottsmitelli.com/articles/we-can-fix-your-raycaster/)
 - Raycasting: [Lode's Computer Graphics Tutorial](https://lodev.org/cgtutor/raycasting.html)
 - Raycasting: [3DSage Make Your Own Raycaster](https://www.youtube.com/watch?v=gYRrGTC7GtACub3D)
+
+## Useage of AI
+AI tools were used responsibly during development in accordance with the **42 AI policy**.
+No AI-generated code was integrated, all core logic, parsing, graphics, and math were designed and implemented manually. Peer reviews and manual testing were the primary validation methods.
