@@ -1,7 +1,7 @@
-NO texture/more/new_york.xpm
-SO texture/more/new_york.xpm
-WE texture/more/new_york.xpm
-EA texture/more/monkeylad.xpm
+NO texture/new/1.xpm
+SO texture/new/1.xpm
+WE texture/new/aa.xpm
+EA texture/new/lala.xpm
 
 F 255, 100, 0
 C 225, 30, 0000000000001
