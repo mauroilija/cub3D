@@ -15,10 +15,13 @@ git clone git@github.com:arselabita/cub3D.git
 
 After the project is cloned, cd into the directory and at the terminal run: 
 ```
-make
+make         # to build/compile the project
+make re      # to rebuild/recompile from scratch
+make clean   # to remove the .obj files
+make fclean  # to remove the .obj files and the executable 
 ```
 
-The binary of the project is **./cub3D** right next to it you need to pass another argument: 
+The executable of the project is **./cub3D** right next to it you need to pass another argument: 
 **path** of the map, in this repo included is a directory called maps there you will find different types, you can choose between to see different textures and map styles:
 An example how to run it with a specific map:
 ```
@@ -27,8 +30,14 @@ An example how to run it with a specific map:
 
 To navigate in the GUI use
 ```
-The arrow keys and
-the WASD keys
+The Arrow keys
+The `W/A/S/D` keys
+```
+
+To close the window
+```
+Use `Esc` key
+Click the `X` button on the screen
 ```
 
 ## Resources
