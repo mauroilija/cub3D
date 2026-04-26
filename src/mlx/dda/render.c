@@ -6,38 +6,11 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 20:00:57 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/25 16:04:44 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/26 19:10:41 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../inc/cub.h"
-
-void	draw_wall_strip(t_data *data, t_player *player, int x)
-{
-	int	line_height;
-	int	draw_start;
-	int	draw_end;
-	int	color;
-	int	y;
-
-	line_height = (int)(HEIGHT / player->perp_wall_dist);
-	draw_start = -line_height / 2 + HEIGHT / 2;
-	draw_end = line_height / 2 + HEIGHT / 2;
-	if (draw_start < 0)
-		draw_start = 0;
-	if (draw_end >= HEIGHT)
-		draw_end = HEIGHT - 1;
-	if (player->side == 0)
-		color = 0xA9A9A9;
-	else
-		color = 0xFFFFFF;
-	y = draw_start;
-	while (y < draw_end)
-	{
-		my_pixel_put(data->img, x, y, color);
-		y++;
-	}
-}
 
 double	get_time_in_ms(void)
 {
@@ -49,8 +22,6 @@ double	get_time_in_ms(void)
 
 void	render_frame(t_data *data)
 {
-	t_texture_column	tc;
-	int					wall_height;
 	int					x;
 
 	x = 0;
@@ -64,8 +35,7 @@ void	render_frame(t_data *data)
 		advance_to_next_grid(data->player, data->map->grid);
 		perpendicular_wall_distance(data->player);
 		contact_position(data->player, data->texture);
-		wall_height = (int)(HEIGHT / data->player->perp_wall_dist);
-		draw_textured_column(&tc, data, x, wall_height);
+		draw_floor_ceiling(data, data->player, x);
 		x++;
 	}
 	mlx_put_image_to_window(data->mlx, data->win, data->img.img, 0, 0);

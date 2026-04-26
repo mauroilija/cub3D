@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:00:00 by abita             #+#    #+#             */
-/*   Updated: 2026/04/25 16:05:58 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/26 18:27:39 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static int	get_color_range(char *line)
 	return (free(trim), free_split(split), color);
 }
 
-int	parse_color(char *line, t_color_data *c_data)
+int	parse_color(char *line, t_color_data *color_data)
 {
 	int	id;
 	int	color;
@@ -102,8 +102,8 @@ int	parse_color(char *line, t_color_data *c_data)
 	if (color == EXIT_FAILURE)
 		return (print_error("Error\nno color\n"), EXIT_FAILURE);
 	if (id == F)
-		c_data->floor_color = color;
+		color_data->floor_color = color;
 	if (id == C)
-		c_data->ceiling_color = color;
+		color_data->ceiling_color = color;
 	return (EXIT_SUCCESS);
 }

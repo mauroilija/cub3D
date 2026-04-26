@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/04/26 15:40:02 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/26 19:50:00 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@
 # define RESET_COLOR "\033[0m"
 
 // scaling
-# define WIDTH 900
+# define WIDTH 1000
 # define HEIGHT 900
-# define TILE_SIZE 40
+# define TILE_SIZE 30
 
 // arrow keys
 # define LEFT 65361
@@ -170,21 +170,6 @@ typedef struct s_map
 }					t_map;
 
 /* ************************************************************************** */
-/*                               	Mlx data                    		      */
-/* ************************************************************************** */
-
-typedef struct s_data
-{
-	t_img			img;
-	void			*mlx;
-	void			*win;
-	int				i;
-	t_map			*map;
-	t_player		*player;
-	t_texture		texture[4]; //each represents one direction texture
-}					t_data;
-
-/* ************************************************************************** */
 /*                               Texture drawing						      */
 /* ************************************************************************** */
 typedef struct s_texture_column
@@ -196,6 +181,22 @@ typedef struct s_texture_column
 	float		texture_position;
 	t_texture	*texture;
 }				t_texture_column;
+
+/* ************************************************************************** */
+/*                               	Mlx data                    		      */
+/* ************************************************************************** */
+
+typedef struct s_data
+{
+	t_img				img;
+	void				*mlx;
+	void				*win;
+	int					i;
+	t_map				*map;
+	t_player			*player;
+	t_texture_column	*text_column;
+	t_texture			texture[4]; //each represents one direction texture
+}					t_data;
 
 /* ************************************************************************** */
 /*                                   MLX Window                               */
@@ -236,7 +237,7 @@ void	advance_to_next_grid(t_player *player, char **map);
 void	perpendicular_wall_distance(t_player *player);
 void	contact_position(t_player *player, t_texture *texture);
 void	texture_column(t_player *player, int tex_width);
-void	draw_wall_strip(t_data *data, t_player *player, int x);
+//void	draw_wall_strip(t_data *data, t_player *player, int x);
 void	render_frame(t_data *data);
 int		render_loop(void *param);
 void	update_player(t_player *p, char **map, double frame_time);
@@ -246,8 +247,8 @@ void	move_forward_backward(t_player *p, double move_speed,
 void	compute_speed(t_player *p, double frame_time);
 double	get_time_in_ms(void);
 int		load_textures(t_data *data);
-void	draw_textured_column(t_texture_column *texture_c, t_data *data,
-			int ray_col, int wall_height);
+void	draw_textured_column(t_data *data, int ray_col, int wall_height);
+void	draw_floor_ceiling(t_data *data, t_player *player, int x);
 
 /* ************************************************************************** */
 /*                                  Parser                                    */
@@ -258,7 +259,7 @@ int		grid_validation(char **grid, int height, t_map *map);
 int		map_parsing(char *line, t_map *map);
 int		parse_texture(char *line, t_texture_data *t_data);
 int		is_number(char *n);
-int		parse_color(char *line, t_color_data *c_data);
+int		parse_color(char *line, t_color_data *color_data);
 void	free_texture_paths(t_texture_data *td);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/11 14:58:16 by abita             #+#    #+#              #
-#    Updated: 2026/04/25 14:22:17 by milija-h         ###   ########.fr        #
+#    Updated: 2026/04/26 18:15:10 by milija-h         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,8 @@ SRCS = \
 	  src/mlx/dda/render.c \
 	  src/mlx/textures/textures.c \
 	  src/mlx/movement/movement.c \
-	  src/mlx/textures/texture_utils.c
+	  src/mlx/textures/texture_utils.c \
+	  src/mlx/color/colors.c 
 
 OBJ = $(SRCS:.c=.o)
 

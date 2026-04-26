@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
+/*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 15:54:05 by abita             #+#    #+#             */
-/*   Updated: 2026/04/26 13:16:28 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/26 18:56:22 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,10 @@ int	input_validity(t_map *line, int argc, char **argv)
 
 int	main(int argc, char **argv)
 {
-	t_data			data;
-	t_map			map;
-	t_player		player;
+	t_data				data;
+	t_map				map;
+	t_player			player;
+	t_texture_column	column;
 
 	ft_bzero(&data, sizeof(t_data));
 	ft_bzero(&map, sizeof(t_map));
@@ -52,6 +53,7 @@ int	main(int argc, char **argv)
 			EXIT_FAILURE);
 	init_player(&player, &map);
 	data.player = &player;
+	data.text_column = &column;
 	mlx_loop_helper(&data);
 	return (EXIT_SUCCESS);
 }
