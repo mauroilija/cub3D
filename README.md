@@ -50,4 +50,4 @@ Useful resources for this project are:
 
 ## Useage of AI
 AI tools were used responsibly during development in accordance with the **42 AI policy**.
-No AI-generated code was integrated, all core logic, parsing, graphics, and math were designed and implemented manually. Peer reviews and manual testing were the primary validation methods.
+No AI generated code was integrated, all core logic, parsing, graphics, and math were implemented manually. **Peer reviews** and manual testing were the primary validation methods.
