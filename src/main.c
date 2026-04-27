@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 15:54:05 by abita             #+#    #+#             */
-/*   Updated: 2026/04/26 18:56:22 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/27 17:12:00 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,9 @@ int	input_validity(t_map *line, int argc, char **argv)
 	char	*dot;
 
 	if (argc < 2)
-	{
-		print_error("Error\npass a map file: '.cub'.\n");
-		return (EXIT_FAILURE);
-	}
+		return (print_error("Error\npass a map file: '.cub'.\n"), EXIT_FAILURE);
 	if (argc > 2)
-	{
-		print_error("Error\ntoo many arguments.\n");
-		return (EXIT_FAILURE);
-	}
+		return (print_error("Error\ntoo many arguments.\n"), EXIT_FAILURE);
 	dot = ft_strrchr(argv[1], '.');
 	if (!dot || ft_strcmp(dot, ".cub") != 0)
 		return (print_error("Error\nmap must have '.cub' extension.\n"),
@@ -48,7 +42,7 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	data.map = &map;
 	if (init_window_and_display(&data) == EXIT_FAILURE)
-		return (ft_exit(&data),
+		return (ft_exit(&data, 1),
 			print_error("Error\nfailed initializing the window\n"),
 			EXIT_FAILURE);
 	init_player(&player, &map);

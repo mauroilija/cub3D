@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:28:55 by abita             #+#    #+#             */
-/*   Updated: 2026/04/25 16:05:05 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/27 17:14:44 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../inc/cub.h"
 
-int	ft_exit(t_data *data)
+int	ft_exit(t_data *data, int exit_flag)
 {
 	if (!data)
 		exit(EXIT_FAILURE);
@@ -22,13 +22,23 @@ int	ft_exit(t_data *data)
 			mlx_destroy_image(data->mlx, data->img.img);
 		if (data->win)
 			mlx_destroy_window(data->mlx, data->win);
+		if (data->texture[0].img)
+			mlx_destroy_image(data->mlx, data->texture[0].img);
+		if (data->texture[1].img)
+			mlx_destroy_image(data->mlx, data->texture[1].img);
+		if (data->texture[2].img)
+			mlx_destroy_image(data->mlx, data->texture[2].img);
+		if (data->texture[3].img)
+			mlx_destroy_image(data->mlx, data->texture[3].img);	
 		mlx_destroy_display(data->mlx);
 		free(data->mlx);
 	}
 	if (data->map->grid)
 		free_split(data->map->grid);
 	free_texture_paths(&data->map->texture_data);
-	exit(EXIT_SUCCESS);
+	if (exit_flag == 0)
+		exit(EXIT_SUCCESS);
+	exit(EXIT_FAILURE);
 }
 
 void	my_pixel_put(t_img img, int x, int y, int color)

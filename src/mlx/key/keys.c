@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keys.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:33:15 by abita             #+#    #+#             */
-/*   Updated: 2026/04/25 16:03:57 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/27 17:12:13 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	keyhandler(int keycode, void *param)
 	if (keycode == 65363 || keycode == 100)
 		data->player->key_right = true;
 	if (keycode == 65307)
-		ft_exit(data);
+		ft_exit(data, 0);
 	return (0);
 }
 

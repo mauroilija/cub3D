@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_color.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:00:00 by abita             #+#    #+#             */
-/*   Updated: 2026/04/26 18:27:39 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/27 15:48:13 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,7 @@ static int	get_color_range(char *line)
 	if (!trim)
 		return (EXIT_FAILURE);
 	if (comma(line, i) == EXIT_FAILURE)
-		return (print_error("Error\ntoo many commas\n"),
-			free(trim), EXIT_FAILURE);
+		return (free(trim), EXIT_FAILURE);
 	split = ft_split(trim, ',');
 	if (!split)
 		return (free(trim), free_split(split), EXIT_FAILURE);

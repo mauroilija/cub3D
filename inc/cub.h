@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/04/26 19:50:00 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/27 17:22:20 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,8 +165,15 @@ typedef struct s_map
 	bool			texture_flag;
 	bool			color_flag;
 	bool			map_flag;
+	int 			floor_count;
+	int 			ceiling_count;
+	int				n_count;
+	int				s_count;
+	int				e_count;
+	int				w_count;
 	t_color_data	color_data;
 	t_texture_data	texture_data;
+	
 }					t_map;
 
 /* ************************************************************************** */
@@ -207,7 +214,7 @@ void	my_pixel_put(t_img img, int x, int y, int color);
 void	mlx_loop_helper(t_data *data);
 int		keyhandler(int keycode, void *param);
 int		key_release(int keycode, void *param);
-int		ft_exit(t_data *data);
+int		ft_exit(t_data *data, int exit_flag);
 
 /* ************************************************************************** */
 /*                                  Utils                                     */
