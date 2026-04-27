@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 11:56:47 by abita             #+#    #+#             */
-/*   Updated: 2026/04/26 13:17:59 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/27 20:19:30 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int	parse_texture(char *line, t_texture_data *texture_data)
 	char	*path;
 	char	*slash;
 	int		fd;
+	char 	*path_trimmed;
 
 	id = get_id_type(line);
 	if (!id)
@@ -76,18 +77,23 @@ int	parse_texture(char *line, t_texture_data *texture_data)
 	path = get_path(line);
 	if (!path)
 		return (EXIT_FAILURE);
-	slash = ft_strrchr(path, '/');
+	path_trimmed = ft_strtrim(path, "\n \t");
+	if (!path)
+		return (EXIT_FAILURE);	
+	slash = ft_strrchr(path_trimmed, '/');
 	if (slash && slash[1] == '.')
 	{
 		print_error("Error\nthis is a hidden path\n");
-		return (free(path), EXIT_FAILURE);
+		return (free(path), free(path_trimmed), EXIT_FAILURE);
 	}
-	fd = open (path, O_RDONLY);
+	fd = open(path_trimmed, O_RDONLY);
 	if (fd == -1)
 		return (print_error("Error\nfile doesn't exist\n"),
-			free(path), EXIT_FAILURE);
-	if (pass_path(id, path, texture_data) == EXIT_FAILURE)
+			 free(path), free(path_trimmed), EXIT_FAILURE);
+	if (pass_path(id, path_trimmed, texture_data) == EXIT_FAILURE)
 		return (free_texture_paths(texture_data), free(path),
-			path = NULL, EXIT_FAILURE);
-	return (free(path), path = NULL, EXIT_SUCCESS);
+			path = NULL, free(path_trimmed), path_trimmed = NULL,
+			EXIT_FAILURE);
+	return (free(path), path = NULL, free(path_trimmed), 
+		path_trimmed = NULL, EXIT_SUCCESS);
 }

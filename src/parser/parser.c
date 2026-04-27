@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:02:56 by abita             #+#    #+#             */
-/*   Updated: 2026/04/27 17:33:42 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/27 20:25:02 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,12 @@ static int	parse_input(char *line, t_map *map)
 	if (map->map_flag == true)
 	{
 		if (map->floor_count == 0)
-				return (print_error("Error\nmissing F color\n"), 1);
+				return (print_error("Error\nmissing F color\n"), EXIT_FAILURE);
 		if (map->ceiling_count == 0)
-			return (print_error("Error\nmissing C color"), 1);
-		if (map->n_count == 0 || map->s_count == 0 || map->w_count == 0 || map->e_count == 0)
-			return (print_error("Error\nmissing a texture"), 1);
+			return (print_error("Error\nmissing C color"), EXIT_FAILURE);
+		if (map->n_count == 0 || map->s_count == 0 
+			|| map->w_count == 0 || map->e_count == 0)
+			return (print_error("Error\nmissing a texture"), EXIT_FAILURE);
 		if (map_parsing(&line[i], map) != EXIT_SUCCESS)
 			return (print_error("Error\ninvalid line after map\n"),
 				EXIT_FAILURE);
@@ -80,15 +81,19 @@ int	parser(char *path, t_map *map)
 	while (line)
 	{
 		if (parse_input(line, map) != EXIT_SUCCESS)
-			return (free_texture_paths(&map->texture_data), free(line), get_next_line(-1), close(fd), EXIT_FAILURE);
+			return (free_texture_paths(&map->texture_data),
+			free(line), get_next_line(-1), close(fd), EXIT_FAILURE);
 		free(line);
 		line = get_next_line(fd);
 	}
 	get_next_line(-1);
 	close(fd);
 	if (!map->map_flag)
-		return (print_error("Error\nNo map found.\n"), EXIT_FAILURE);
+		return (print_error("Error\nNo map found.\n"),
+		free_split(map->grid), free_texture_paths(&map->texture_data),
+			free(line), EXIT_FAILURE);
 	if (grid_validation(map->grid, map->height, map) != EXIT_SUCCESS)
-		return (free_split(map->grid), free_texture_paths(&map->texture_data), free(line), EXIT_FAILURE);
+		return (free_split(map->grid), free_texture_paths(&map->texture_data),
+			free(line), EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
