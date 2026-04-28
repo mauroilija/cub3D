@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 18:00:28 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/25 16:06:17 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/28 10:30:04 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,6 @@ void	init_player(t_player *player, t_map *map)
 	player->key_left = false;
 	player->key_right = false;
 	player->key_up = false;
+	player->a_key = false;
+	player->d_key = false;
 }

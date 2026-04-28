@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 12:26:01 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/25 16:04:29 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/28 10:30:29 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	perpendicular_wall_distance(t_player *player)
 //translate it: hit_point = player_pos + ray * distance
 void	contact_position(t_player *player, t_texture *texture)
 {
-	(void)texture;
 	if (player->side == 0)
 		player->wall_x = player->pos_y + player->perp_wall_dist
 			* player->ray_dir_y;
