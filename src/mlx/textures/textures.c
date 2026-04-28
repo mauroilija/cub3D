@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 18:04:38 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/26 18:54:35 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/28 19:59:07 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	draw_textured_column(t_data *data, int ray_col, int wall_height)
 		tex_y = (int)data->text_column->texture_position % data->text_column->texture->height;
 		if (tex_y < 0)
 		{
-			printf("tex_y is not valid\n");
+			print_error(NOT_VALID_TEX_Y);
 			exit (1);
 		}
 		data->text_column->texture_position += data->text_column->step;

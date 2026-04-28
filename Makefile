@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+         #
+#    By: abita <abita@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/11 14:58:16 by abita             #+#    #+#              #
-#    Updated: 2026/04/26 18:15:10 by milija-h         ###   ########.fr        #
+#    Updated: 2026/04/28 19:34:12 by abita            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,9 @@ SRCS = \
 	  src/mlx/window/window.c \
 	  src/utils/map_utils.c \
 	  src/utils/parse_utils.c \
-	  src/utils/return_utils.c \
+	  src/utils/other_utils.c \
+	  src/utils/color_utils.c \
+	  src/utils/texture_utils.c \
 	  src/parser/parser.c \
 	  src/parser/parse_map.c \
 	  src/parser/parse_color.c \

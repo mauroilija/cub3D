@@ -6,17 +6,11 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 13:56:33 by abita             #+#    #+#             */
-/*   Updated: 2026/04/27 14:08:07 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/28 19:57:28 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cub.h"
-
-int	is_valid_input(char line)
-{
-	return (line == SPACE || line == WALL || line == NORTH || line == SOUTH
-		|| line == EAST || line == WEST || line == ' ' || line == '\t');
-}
 
 int	is_player(char type)
 {
@@ -28,12 +22,6 @@ int	is_player(char type)
 	else
 		i = 0;
 	return (i);
-}
-
-int	is_valid(char line)
-{
-	return (line == 'N' || line == 'S' || line == 'E' || line == 'W'
-		|| line == '1' || line == '0');
 }
 
 int	is_map_line(char *line)

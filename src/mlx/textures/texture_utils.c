@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/24 16:56:59 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/27 14:48:04 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/28 19:59:57 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	load_textures(t_data *data)
 				&data->texture[i].width, &data->texture[i].height);
 		if (!data->texture[i].img)
 		{
-			write(2, "Error\nfailed to load texture\n", 31);
+			print_error(FAILED_TO_LOAD_TEXTURE);
 			free_texture_paths(&data->map->texture_data);
 			return(EXIT_FAILURE);
 		}
