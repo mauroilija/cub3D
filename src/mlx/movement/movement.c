@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 21:19:46 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/28 10:45:43 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/28 10:49:04 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	compute_speed(t_player *p, double frame_time)
 	p->rot_speed = frame_time * 3.0;
 }
 
-void	move_forward_backward(t_player *p, double move_speed, char **map,
+static void	move_forward_backward(t_player *p, double move_speed, char **map,
 			int dir)
 {
 	double	new_x;
@@ -40,7 +40,7 @@ void	move_forward_backward(t_player *p, double move_speed, char **map,
 		p->pos_y = new_y;
 }
 
-void	move_left_right(t_player *p, double move_speed, char **map, int dir)
+static void	move_left_right(t_player *p, double move_speed, char **map, int dir)
 {
 	double	new_x;
 	double	new_y;
@@ -53,7 +53,7 @@ void	move_left_right(t_player *p, double move_speed, char **map, int dir)
 		p->pos_y = new_y;
 }
 
-void	rotate_player(t_player *p, double rot_speed, int dir)
+static void	rotate_player(t_player *p, double rot_speed, int dir)
 {
 	double	old_dir_x;
 	double	old_plane_x;

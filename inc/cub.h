@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/04/28 10:29:34 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/28 10:49:16 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,13 +246,9 @@ void	advance_to_next_grid(t_player *player, char **map);
 void	perpendicular_wall_distance(t_player *player);
 void	contact_position(t_player *player, t_texture *texture);
 void	texture_column(t_player *player, int tex_width);
-//void	draw_wall_strip(t_data *data, t_player *player, int x);
 void	render_frame(t_data *data);
 int		render_loop(void *param);
 void	update_player(t_player *p, char **map, double frame_time);
-void	rotate_player(t_player *p, double rot_speed, int dir);
-void	move_forward_backward(t_player *p, double move_speed,
-			char **map, int dir);
 void	compute_speed(t_player *p, double frame_time);
 double	get_time_in_ms(void);
 int		load_textures(t_data *data);
