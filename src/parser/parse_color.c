@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:00:00 by abita             #+#    #+#             */
-/*   Updated: 2026/04/27 15:48:13 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/28 11:44:25 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	checker(char **split, int *rgb)
 	return (EXIT_SUCCESS);
 }
 
-int	comma(char *line, int i)
+static int	comma(char *line, int i)
 {
 	int		comma;
 

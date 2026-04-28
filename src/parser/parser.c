@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:02:56 by abita             #+#    #+#             */
-/*   Updated: 2026/04/27 20:25:02 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/28 11:37:56 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static int	parse_input(char *line, t_map *map)
 	return (EXIT_SUCCESS);
 }
 
-int	parser(char *path, t_map *map)
+static int	parser(char *path, t_map *map)
 {
 	int		fd;
 	char	*line;
@@ -95,5 +95,24 @@ int	parser(char *path, t_map *map)
 	if (grid_validation(map->grid, map->height, map) != EXIT_SUCCESS)
 		return (free_split(map->grid), free_texture_paths(&map->texture_data),
 			free(line), EXIT_FAILURE);
+	return (EXIT_SUCCESS);
+}
+
+int	validate_input(t_map *line, int argc, char **argv)
+{
+	char	*last_dot;
+
+	if (argc < 2)
+		return (print_error("Error\npass a map file: '.cub'.\n"), EXIT_FAILURE);
+	if (argc > 2)
+		return (print_error("Error\ntoo many arguments.\n"), EXIT_FAILURE);
+	if (check_hidden_path(argv[1]) == EXIT_FAILURE)
+		return (print_error("Error\npath is a hidden file\n"), EXIT_FAILURE);
+	last_dot = ft_strrchr(argv[1], '.');
+	if (!last_dot || ft_strcmp(last_dot, ".cub") != 0)
+		return (print_error("Error\nmap must have '.cub' extension.\n"),
+			EXIT_FAILURE);
+	if (parser(argv[1], line) != EXIT_SUCCESS)
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

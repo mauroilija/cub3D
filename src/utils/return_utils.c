@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 17:29:49 by abita             #+#    #+#             */
-/*   Updated: 2026/04/27 14:14:57 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/28 11:34:48 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,14 @@ int	is_number(char *n)
 		i++;
 	}
 	return (1);
+}
+
+int	check_hidden_path(const char *path)
+{
+	char	*slash;
+
+	slash = ft_strrchr(path, '.');
+	if (!slash || slash == &path[0] || *(--slash) == '/')
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }

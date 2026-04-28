@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/04/27 17:22:20 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/28 11:43:21 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,21 +217,6 @@ int		key_release(int keycode, void *param);
 int		ft_exit(t_data *data, int exit_flag);
 
 /* ************************************************************************** */
-/*                                  Utils                                     */
-/* ************************************************************************** */
-
-void	print_error(const char *msg);
-int		is_player(char line);
-int		is_valid(char line);
-int		is_map_line(char *line);
-char	**creating_2d_map(char **old, char *line);
-void	init_line(t_map *line);
-int		skip_whitespace(char *line);
-int		is_texture_line(char *line, t_map *map);
-int		is_color_line(char *line, t_map *map);
-void	free_split(char **split);
-
-/* ************************************************************************** */
 /*                                  Graphics                                  */
 /* ************************************************************************** */
 void	init_player(t_player *player, t_map *map);
@@ -261,12 +246,29 @@ void	draw_floor_ceiling(t_data *data, t_player *player, int x);
 /*                                  Parser                                    */
 /* ************************************************************************** */
 
-int		parser(char *path, t_map *map);
+int		validate_input(t_map *line, int argc, char **argv);
 int		grid_validation(char **grid, int height, t_map *map);
 int		map_parsing(char *line, t_map *map);
 int		parse_texture(char *line, t_texture_data *t_data);
-int		is_number(char *n);
 int		parse_color(char *line, t_color_data *color_data);
 void	free_texture_paths(t_texture_data *td);
+
+/* ************************************************************************** */
+/*                                  Utils                                     */
+/* ************************************************************************** */
+
+void	init_line(t_map *map);
+int		skip_whitespace(char *line);
+int		is_texture_line(char *line, t_map *map);
+int		is_color_line(char *line, t_map *map);
+void	free_split(char **split);
+void	print_error(const char *msg);
+int		is_number(char *n);
+int		check_hidden_path(const char *path);
+char	**creating_2d_map(char **old, char *line);
+int		is_map_line(char *line);
+int		is_valid(char line);
+int		is_player(char type);
+int		is_valid_input(char line);
 
 #endif

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 15:41:07 by abita             #+#    #+#             */
-/*   Updated: 2026/04/25 16:05:55 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/28 11:36:32 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cub.h"
 
-int	check_surroundings(int y, int x, int height, char **grid)
+static int	check_surroundings(int y, int x, int height, char **grid)
 {
 	if (y == 0 || x == 0 || y == height -1 || x == (int)ft_strlen(grid[y]) - 1)
 	{
