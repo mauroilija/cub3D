@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/04/28 20:05:12 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/28 20:34:08 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,9 @@ typedef struct s_color_data
 /* ************************************************************************** */
 typedef struct s_map
 {
+	char			*line;
 	char			**grid;
+	char			*path;
 	int				height;
 	int				player_count;
 	bool			texture_flag;
@@ -289,5 +291,6 @@ int		is_map_line(char *line);
 int		is_valid(char line);
 int		is_player(char type);
 int		is_valid_input(char line);
+void	free_all(t_map *map);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:02:56 by abita             #+#    #+#             */
-/*   Updated: 2026/04/28 20:07:20 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/28 20:36:17 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,29 +67,28 @@ static int	parse_input(char *line, t_map *map)
 static int	parser(char *path, t_map *map)
 {
 	int		fd;
-	char	*line;
 
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 		return (print_error(CANT_OPEN_FILE), EXIT_FAILURE);
 	init_line(map);
-	line = get_next_line(fd);
-	while (line)
+	map->line = get_next_line(fd);
+	while (map->line)
 	{
-		if (parse_input(line, map) != EXIT_SUCCESS)
+		if (parse_input(map->line, map) != EXIT_SUCCESS)
 			return (free_texture_paths(&map->texture_data),
-			free(line), get_next_line(-1), close(fd), EXIT_FAILURE);
-		free(line);
-		line = get_next_line(fd);
+			free(map->line), get_next_line(-1), close(fd), EXIT_FAILURE);
+		free(map->line);
+		map->line = get_next_line(fd);
 	}
 	get_next_line(-1);
 	close(fd);
 	if (!map->map_flag)
 		return (print_error(NO_MAP_FOUND),free_split(map->grid),
-			free_texture_paths(&map->texture_data), free(line), EXIT_FAILURE);
+			free_texture_paths(&map->texture_data), free(map->line), EXIT_FAILURE);
 	if (grid_validation(map->grid, map->height, map) != EXIT_SUCCESS)
 		return (free_split(map->grid), free_texture_paths(&map->texture_data),
-			free(line), EXIT_FAILURE);
+			free(map->line), EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 

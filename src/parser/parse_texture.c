@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 11:56:47 by abita             #+#    #+#             */
-/*   Updated: 2026/04/28 19:55:10 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/28 20:35:10 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,6 @@ int	parse_texture(char *line, t_texture_data *texture_data)
 			free(path_trimmed), EXIT_FAILURE);
 	if (pass_path(id, path_trimmed, texture_data) == EXIT_FAILURE)
 		return (free_texture_paths(texture_data), free(path),
-			path = NULL, free(path_trimmed),EXIT_FAILURE);
+			path = NULL, free(path_trimmed), EXIT_FAILURE);
 	return (free(path), path = NULL, free(path_trimmed), EXIT_SUCCESS);
 }
