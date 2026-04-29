@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:00:00 by abita             #+#    #+#             */
-/*   Updated: 2026/04/28 11:44:25 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/28 19:56:36 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	parse_color(char *line, t_color_data *color_data)
 		return (EXIT_FAILURE);
 	color = get_color_range(line);
 	if (color == EXIT_FAILURE)
-		return (print_error("Error\nno color\n"), EXIT_FAILURE);
+		return (print_error(MISSING_COLOR), EXIT_FAILURE);
 	if (id == F)
 		color_data->floor_color = color;
 	if (id == C)

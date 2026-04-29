@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 15:54:05 by abita             #+#    #+#             */
-/*   Updated: 2026/04/28 11:37:48 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/28 20:06:31 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	data.map = &map;
 	if (init_window_and_display(&data) == EXIT_FAILURE)
-		return (ft_exit(&data, 1),
-			print_error("Error\nfailed initializing the window\n"),
+		return (ft_exit(&data, 1), print_error(FAILED_INIT_WINDOW),
 			EXIT_FAILURE);
 	init_player(&player, &map);
 	data.player = &player;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keys.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:33:15 by abita             #+#    #+#             */
-/*   Updated: 2026/04/28 10:33:01 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/29 12:33:29 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ int	key_release(int keycode, void *param)
 		p->key_up = false;
 	if (keycode == 65364 || keycode == 115)
 		p->key_down = false;
-	if (keycode == 65361 || keycode == 97)
+	if (keycode == 65361)
 		p->key_left = false;
-	if (keycode == 65363 || keycode == 100)
+	if (keycode == 65363)
 		p->key_right = false;
 	if (keycode == 97)
 		data->player->a_key = false;

@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/04/28 14:20:19 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/29 12:32:50 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,32 +23,53 @@
 # include <sys/time.h>
 # include <unistd.h>
 
-// coloring error
-# define RED "\033[31m"
-# define GREEN "\e[0;32m"
-# define RESET_COLOR "\033[0m"
-
 // scaling
-# define WIDTH 1000
-# define HEIGHT 900
-# define TILE_SIZE 30
+# define WIDTH		1000
+# define HEIGHT		900
+# define TILE_SIZE	30
 
 // arrow keys
-# define LEFT 65361
-# define UP 65362
-# define RIGHT 65363
-# define DOWN 65364
+# define LEFT	65361
+# define UP		65362
+# define RIGHT	65363
+# define DOWN	65364
 
 // escape keys
-# define ESC 65307
+# define ESC	65307
 
 // map
-# define WALL '1'
-# define SPACE '0'
-# define NORTH 'N'
-# define SOUTH 'S'
-# define EAST 'E'
-# define WEST 'W'
+# define WALL	'1'
+# define SPACE	'0'
+# define NORTH	'N'
+# define SOUTH	'S'
+# define EAST	'E'
+# define WEST	'W'
+
+// error messages colors
+# define RED			"\033[31m"
+# define GREEN			"\e[0;32m"
+# define RESET_COLOR	"\033[0m"
+
+// return messages
+# define INVALID_LINE 				"Error\nInvalid line.\n"
+# define PASS_TEXTURE_COLOR 		"Error\nMissing a texture or color.\n"
+# define FAILED_INIT_WINDOW 		"Error\nFailed to initialize the window.\n"
+# define NO_MAP_FILE 				"Error\nPass a map file with \
+										an extension: '.cub'.\n"
+# define TOO_MANY_ARGS 				"Error\nToo many arguments.\n"
+# define HIDDEN_PATH 				"Error\nSeems like you passed \
+										a hidden file.\n"
+# define CUB_EXTENSION				"Error\nThe map must have '.cub' \
+										extension.\n"
+# define CANT_OPEN_FILE				"Error\nFailed to open the file.\n"
+# define NO_MAP_FOUND				"Error\nNo map was found in the file.\n"
+# define MISSING_COLOR				"Error\nThere is a missing color.\n"
+# define MISSING_TEXTURE			"Error\nThere is a missing texture.\n"
+# define INVALID_LINE_END			"Error\nInvalid line after the map.\n"
+# define DUPLICATE_TEXTURE			"Error\nDuplicate texture.\n"
+# define DUPLICATE_COLOR			"Error\nDuplicate color.\n"
+# define NOT_VALID_TEX_Y			"Error\ntex_y is not valid.\n"
+# define FAILED_TO_LOAD_TEXTURE 	"Error\nfailed to load texture\n"
 
 /* ************************************************************************** */
 /*                             ENUM Texture Types                             */
@@ -107,8 +128,8 @@ typedef struct s_player
 	bool		key_down;
 	bool		key_right;
 	bool		key_left;
-	bool		d_key;
 	bool		a_key;
+	bool		d_key;
 }				t_player;
 
 /* ************************************************************************** */
@@ -161,21 +182,22 @@ typedef struct s_color_data
 /* ************************************************************************** */
 typedef struct s_map
 {
+	char			*line;
 	char			**grid;
+	char			*path;
 	int				height;
 	int				player_count;
 	bool			texture_flag;
 	bool			color_flag;
 	bool			map_flag;
-	int 			floor_count;
-	int 			ceiling_count;
-	int				n_count;
-	int				s_count;
-	int				e_count;
-	int				w_count;
+	int				floor_count;
+	int				ceiling_count;
+	int				no_count;
+	int				so_count;
+	int				ea_count;
+	int				we_count;
 	t_color_data	color_data;
-	t_texture_data	texture_data;
-	
+	t_texture_data	texture_data;	
 }					t_map;
 
 /* ************************************************************************** */
@@ -268,5 +290,6 @@ int		is_map_line(char *line);
 int		is_valid(char line);
 int		is_player(char type);
 int		is_valid_input(char line);
+void	free_all(t_map *map);
 
 #endif

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   return_utils.c                                     :+:      :+:    :+:   */
+/*   other_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
+/*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 17:29:49 by abita             #+#    #+#             */
-/*   Updated: 2026/04/28 11:34:48 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/29 12:22:58 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,28 @@ int	is_number(char *n)
 	return (1);
 }
 
-int	check_hidden_path(const char *path)
+void	free_all(t_map *map)
 {
-	char	*slash;
+	if (map->line)
+		free(map->line);
+	if (map->grid)
+		free_split(map->grid);
+	free_texture_paths(&map->texture_data);
+}
 
-	slash = ft_strrchr(path, '.');
-	if (!slash || slash == &path[0] || *(--slash) == '/')
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
+void	free_split(char **split)
+{
+	size_t	i;
+
+	i = 0;
+	if (!split)
+		return ;
+	while (split[i])
+	{
+		free(split[i]);
+		split[i] = NULL;
+		i++;
+	}
+	free(split);
+	split = NULL;
 }
