@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 17:29:49 by abita             #+#    #+#             */
-/*   Updated: 2026/04/29 15:07:14 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/29 15:10:48 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	print_error(const char *msg)
 {
-// 	write(STDERR_FILENO, RED, 5);
+	write(STDERR_FILENO, RED, 5);
 	write(STDERR_FILENO, msg, ft_strlen(msg));
-	// write(STDERR_FILENO, RED, 5);
+	write(STDERR_FILENO, RED, 5);
 }
 
 int	is_number(char *n)
@@ -46,7 +46,7 @@ void	freedom(t_map *map)
 	free_texture_paths(&map->texture_data);
 }
 
-void flush(t_map *map)
+void	flush(t_map *map)
 {
 	get_next_line(-1);
 	close(map->fd);

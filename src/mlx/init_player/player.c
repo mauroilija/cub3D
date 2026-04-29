@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 18:00:28 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/29 12:33:17 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/29 15:10:03 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,5 @@ void	init_player(t_player *player, t_map *map)
 	player->texture_y = 0;
 	player->move_speed = 0;
 	player->rot_speed = 0;
-	player->key_down = false;
-	player->key_left = false;
-	player->key_right = false;
-	player->key_up = false;
-	player->a_key = false;
-	player->d_key = false;
+	init_keys(player);
 }

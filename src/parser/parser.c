@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:02:56 by abita             #+#    #+#             */
-/*   Updated: 2026/04/29 15:05:05 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/29 15:10:27 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,6 @@ static int	parse_input(char *line, t_map *map)
 
 static int	parser(char *path, t_map *map)
 {
-	
-
 	map->fd = open(path, O_RDONLY);
 	if (map->fd == -1)
 		return (print_error(CANT_OPEN_FILE), EXIT_FAILURE);
