@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_texture.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 11:56:47 by abita             #+#    #+#             */
-/*   Updated: 2026/04/29 12:18:03 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/29 15:06:12 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	parse_texture(char *line, t_texture_data *texture_data)
 	if (!path)
 		return (EXIT_FAILURE);
 	path_trimmed = ft_strtrim(path, "\n \t");
-	if (!path)
+	if (!path_trimmed)
 		return (EXIT_FAILURE);
 	if (check_hidden_path(path_trimmed) == EXIT_FAILURE)
 		return (print_error(HIDDEN_PATH), free(path),
