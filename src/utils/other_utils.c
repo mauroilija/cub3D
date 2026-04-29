@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   other_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 17:29:49 by abita             #+#    #+#             */
-/*   Updated: 2026/04/29 12:22:58 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/29 15:07:14 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,19 @@ int	is_number(char *n)
 	return (1);
 }
 
-void	free_all(t_map *map)
+void	freedom(t_map *map)
 {
 	if (map->line)
 		free(map->line);
 	if (map->grid)
 		free_split(map->grid);
 	free_texture_paths(&map->texture_data);
+}
+
+void flush(t_map *map)
+{
+	get_next_line(-1);
+	close(map->fd);
 }
 
 void	free_split(char **split)
