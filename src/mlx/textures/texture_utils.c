@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
+/*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/24 16:56:59 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/28 19:59:57 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/29 12:07:50 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	load_textures(t_data *data)
 		{
 			print_error(FAILED_TO_LOAD_TEXTURE);
 			free_texture_paths(&data->map->texture_data);
-			return(EXIT_FAILURE);
+			return (EXIT_FAILURE);
 		}
 		data->texture[i].addr = mlx_get_data_addr(data->texture[i].img,
 				&data->texture[i].bpp, &data->texture[i].line_len,

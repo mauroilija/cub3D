@@ -6,19 +6,11 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 21:19:46 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/26 19:37:00 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/29 11:51:30 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../inc/cub.h"
-
-//our game works on a frame per second (image rendered per second) basis, so
-//to enable the movement to be smooth in both slow and fast computers, we have
-// to compute the time it takes for each frame to be drawn.
-// 
-// So each frame: movement_this_frame = speed_per_second * frame_time
-//it also helps us with the rotation, we will rotate movement_this_frame each
-//time
 
 void	compute_speed(t_player *p, double frame_time)
 {
@@ -40,7 +32,6 @@ void	move_forward_backward(t_player *p, double move_speed, char **map,
 		p->pos_y = new_y;
 }
 
-//turn player left of right
 void	rotate_player(t_player *p, double rot_speed, int dir)
 {
 	double	old_dir_x;
@@ -56,6 +47,19 @@ void	rotate_player(t_player *p, double rot_speed, int dir)
 	p->plane_y = old_plane_x * sin(angle) + p->plane_y * cos(angle);
 }
 
+void	move_left_right(t_player *p, double move_speed, char **map, int dir)
+{
+	double	new_x;
+	double	new_y;
+
+	new_x = p->pos_x + p->dir_y * move_speed * dir;
+	new_y = p->pos_y - p->dir_x * move_speed * dir;
+	if (map[(int)p->pos_y][(int)new_x] != '1')
+		p->pos_x = new_x;
+	if (map[(int)new_y][(int)p->pos_x] != '1')
+		p->pos_y = new_y;
+}
+
 void	update_player(t_player *p, char **map, double frame_time)
 {
 	compute_speed(p, frame_time);
@@ -67,4 +71,8 @@ void	update_player(t_player *p, char **map, double frame_time)
 		rotate_player(p, p->rot_speed, -1);
 	if (p->key_right)
 		rotate_player(p, p->rot_speed, +1);
+	if (p->a_key)
+		move_left_right(p, p->move_speed, map, 1);
+	if (p->d_key)
+		move_left_right(p, p->move_speed, map, -1);
 }

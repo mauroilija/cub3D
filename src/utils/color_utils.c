@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   color_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
+/*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 19:31:29 by abita             #+#    #+#             */
-/*   Updated: 2026/04/28 20:01:08 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/29 12:22:32 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cub.h"
 
-static int match_color(char *line, int i, char *id, int *count)
+static int	match_color(char *line, int i, char *id, int *count)
 {
 	if (line[i] != id[0])
 		return (-1);
@@ -23,10 +23,11 @@ static int match_color(char *line, int i, char *id, int *count)
 	(*count)++;
 	return (EXIT_SUCCESS);
 }
+
 int	is_color_line(char *line, t_map *map)
 {
 	int	i;
-	int ret;
+	int	ret;
 
 	i = 0;
 	while (line[i] == ' ' || line[i] == '\t')

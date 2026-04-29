@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   other_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
+/*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 17:29:49 by abita             #+#    #+#             */
-/*   Updated: 2026/04/28 20:27:48 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/29 12:22:58 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	is_number(char *n)
 	return (1);
 }
 
-void free_all(t_map *map)
+void	free_all(t_map *map)
 {
 	if (map->line)
 		free(map->line);

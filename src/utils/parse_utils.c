@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
+/*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:06:52 by abita             #+#    #+#             */
-/*   Updated: 2026/04/28 19:57:38 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/29 12:23:20 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	skip_whitespace(char *line)
 		i++;
 	return (i);
 }
+
 int	is_valid_input(char line)
 {
 	return (line == SPACE || line == WALL || line == NORTH || line == SOUTH
@@ -43,4 +44,3 @@ int	is_valid(char line)
 	return (line == 'N' || line == 'S' || line == 'E' || line == 'W'
 		|| line == '1' || line == '0');
 }
-

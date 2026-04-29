@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   texture_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
+/*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/28 19:31:46 by abita             #+#    #+#             */
-/*   Updated: 2026/04/28 20:01:15 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/29 12:24:13 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cub.h"
 
-static int match_texture(char *line, int i, char *id, int *count)
+static int	match_texture(char *line, int i, char *id, int *count)
 {
 	if (line[i] != id[0] || line[i + 1] != id[1])
 		return (-1);
@@ -27,7 +27,7 @@ static int match_texture(char *line, int i, char *id, int *count)
 int	is_texture_line(char *line, t_map *map)
 {
 	int	i;
-	int ret;
+	int	ret;
 
 	i = 0;
 	while (line[i] == ' ' || line[i] == '\t')
@@ -45,6 +45,7 @@ int	is_texture_line(char *line, t_map *map)
 		return (EXIT_FAILURE);
 	return (ret);
 }
+
 int	check_hidden_path(const char *path)
 {
 	char	*slash;

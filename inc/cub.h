@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
+/*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/04/28 20:34:08 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/29 12:17:13 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,13 @@
 # define INVALID_LINE 				"Error\nInvalid line.\n"
 # define PASS_TEXTURE_COLOR 		"Error\nMissing a texture or color.\n"
 # define FAILED_INIT_WINDOW 		"Error\nFailed to initialize the window.\n"
-# define NO_MAP_FILE 				"Error\nPass a map file with an extension: '.cub'.\n"
+# define NO_MAP_FILE 				"Error\nPass a map file with \
+										an extension: '.cub'.\n"
 # define TOO_MANY_ARGS 				"Error\nToo many arguments.\n"
-# define HIDDEN_PATH 				"Error\nSeems like you passed a hidden file.\n"
-# define CUB_EXTENSION				"Error\nThe map must have '.cub' extension.\n"
+# define HIDDEN_PATH 				"Error\nSeems like you passed \
+										a hidden file.\n"
+# define CUB_EXTENSION				"Error\nThe map must have '.cub' \
+										extension.\n"
 # define CANT_OPEN_FILE				"Error\nFailed to open the file.\n"
 # define NO_MAP_FOUND				"Error\nNo map was found in the file.\n"
 # define MISSING_COLOR				"Error\nThere is a missing color.\n"
@@ -67,7 +70,6 @@
 # define DUPLICATE_COLOR			"Error\nDuplicate color.\n"
 # define NOT_VALID_TEX_Y			"Error\ntex_y is not valid.\n"
 # define FAILED_TO_LOAD_TEXTURE 	"Error\nfailed to load texture\n"
-
 
 /* ************************************************************************** */
 /*                             ENUM Texture Types                             */
@@ -126,6 +128,8 @@ typedef struct s_player
 	bool		key_down;
 	bool		key_right;
 	bool		key_left;
+	bool		a_key;
+	bool		d_key;
 }				t_player;
 
 /* ************************************************************************** */
@@ -186,15 +190,14 @@ typedef struct s_map
 	bool			texture_flag;
 	bool			color_flag;
 	bool			map_flag;
-	int 			floor_count;
-	int 			ceiling_count;
+	int				floor_count;
+	int				ceiling_count;
 	int				no_count;
 	int				so_count;
 	int				ea_count;
 	int				we_count;
 	t_color_data	color_data;
-	t_texture_data	texture_data;
-	
+	t_texture_data	texture_data;	
 }					t_map;
 
 /* ************************************************************************** */

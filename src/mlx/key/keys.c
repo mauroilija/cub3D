@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keys.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
+/*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:33:15 by abita             #+#    #+#             */
-/*   Updated: 2026/04/27 17:12:13 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/29 12:01:33 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,14 @@ int	keyhandler(int keycode, void *param)
 		data->player->key_up = true;
 	if (keycode == 65364 || keycode == 115)
 		data->player->key_down = true;
-	if (keycode == 65361 || keycode == 97)
+	if (keycode == 65361)
 		data->player->key_left = true;
-	if (keycode == 65363 || keycode == 100)
+	if (keycode == 65363)
 		data->player->key_right = true;
+	if (keycode == 97)
+		data->player->a_key = true;
+	if (keycode == 100)
+		data->player->d_key = true;
 	if (keycode == 65307)
 		ft_exit(data, 0);
 	return (0);
@@ -41,9 +45,13 @@ int	key_release(int keycode, void *param)
 		p->key_up = false;
 	if (keycode == 65364 || keycode == 115)
 		p->key_down = false;
-	if (keycode == 65361 || keycode == 97)
+	if (keycode == 65361)
 		p->key_left = false;
-	if (keycode == 65363 || keycode == 100)
+	if (keycode == 65363)
 		p->key_right = false;
+	if (keycode == 97)
+		data->player->a_key = false;
+	if (keycode == 100)
+		data->player->d_key = false;
 	return (0);
 }

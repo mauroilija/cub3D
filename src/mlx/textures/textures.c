@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
+/*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 18:04:38 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/28 19:59:07 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/29 12:09:52 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,12 @@ static void	init_tex_column(t_data *data, int wall_height)
 		data->text_column->draw_end = HEIGHT - 1;
 	data->text_column->texture_x = (int)(data->player->wall_x
 			* data->text_column->texture->width);
-	if ((data->player->side == 0 && data->player->ray_dir_x > 0)
-		|| (data->player->side == 1 && data->player->ray_dir_y < 0))
+	if ((data->player->side == 0 && data->player->ray_dir_x < 0)
+		|| (data->player->side == 1 && data->player->ray_dir_y > 0))
 		data->text_column->texture_x = data->text_column->texture->width
 			- data->text_column->texture_x - 1;
-	data->text_column->step = (float)data->text_column->texture->height / (wall_height * 2);
+	data->text_column->step = (float)data->text_column->texture->height
+		/ (wall_height * 2);
 	data->text_column->texture_position = (data->text_column->draw_start
 			- HEIGHT / 2 + wall_height) * data->text_column->step;
 }
@@ -69,7 +70,8 @@ void	draw_textured_column(t_data *data, int ray_col, int wall_height)
 	init_tex_column(data, wall_height);
 	while (data->text_column->draw_start < data->text_column->draw_end)
 	{
-		tex_y = (int)data->text_column->texture_position % data->text_column->texture->height;
+		tex_y = (int)data->text_column->texture_position
+			% data->text_column->texture->height;
 		if (tex_y < 0)
 		{
 			print_error(NOT_VALID_TEX_Y);
@@ -77,8 +79,8 @@ void	draw_textured_column(t_data *data, int ray_col, int wall_height)
 		}
 		data->text_column->texture_position += data->text_column->step;
 		my_pixel_put(data->img, ray_col, data->text_column->draw_start,
-			pixel_from_texture(data->text_column->texture, data->text_column->texture_x,
-				tex_y));
+			pixel_from_texture(data->text_column->texture,
+				data->text_column->texture_x, tex_y));
 		data->text_column->draw_start++;
 	}
 }
