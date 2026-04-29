@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/04/29 15:27:19 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/29 16:32:45 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,8 +128,6 @@ typedef struct s_player
 	bool		key_down;
 	bool		key_right;
 	bool		key_left;
-	bool		a_key;
-	bool		d_key;
 }				t_player;
 
 /* ************************************************************************** */

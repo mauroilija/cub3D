@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 21:19:46 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/29 15:27:07 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/29 16:32:31 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,19 +47,6 @@ void	rotate_player(t_player *p, double rot_speed, int dir)
 	p->plane_y = old_plane_x * sin(angle) + p->plane_y * cos(angle);
 }
 
-void	move_left_right(t_player *p, double move_speed, char **map, int dir)
-{
-	double	new_x;
-	double	new_y;
-
-	new_x = p->pos_x + p->dir_y * move_speed * dir;
-	new_y = p->pos_y - p->dir_x * move_speed * dir;
-	if (map[(int)p->pos_y][(int)new_x] != '1')
-		p->pos_x = new_x;
-	if (map[(int)new_y][(int)p->pos_x] != '1')
-		p->pos_y = new_y;
-}
-
 void	update_player(t_player *p, char **map, double frame_time)
 {
 	compute_speed(p, frame_time);
@@ -71,8 +58,4 @@ void	update_player(t_player *p, char **map, double frame_time)
 		rotate_player(p, p->rot_speed, -1);
 	if (p->key_right)
 		rotate_player(p, p->rot_speed, +1);
-	if (p->a_key)
-		move_left_right(p, p->move_speed, map, 1);
-	if (p->d_key)
-		move_left_right(p, p->move_speed, map, -1);
 }
