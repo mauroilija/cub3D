@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/26 16:48:35 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/26 19:44:52 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/29 13:39:28 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,5 @@ void	draw_floor_ceiling(t_data *data, t_player *player, int x)
 	draw_ceiling(data, x, y, draw_start);
 	draw_textured_column(data, x, wall_height);
 	y = draw_end;
-	draw_floor(data, x, y, HEIGHT);
+	draw_floor(data, x, y, HEIGHT - draw_end);
 }

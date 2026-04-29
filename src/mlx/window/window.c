@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
+/*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:28:55 by abita             #+#    #+#             */
-/*   Updated: 2026/04/27 17:14:44 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/29 12:17:47 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft_exit(t_data *data, int exit_flag)
 		if (data->texture[2].img)
 			mlx_destroy_image(data->mlx, data->texture[2].img);
 		if (data->texture[3].img)
-			mlx_destroy_image(data->mlx, data->texture[3].img);	
+			mlx_destroy_image(data->mlx, data->texture[3].img);
 		mlx_destroy_display(data->mlx);
 		free(data->mlx);
 	}

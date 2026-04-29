@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 18:00:28 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/28 10:30:04 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/29 15:21:31 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,16 @@ static void	get_init_positions(t_player *player, char **map)
 	}
 }
 
+void	init_keys(t_player *player)
+{
+	player->key_down = false;
+	player->key_left = false;
+	player->key_right = false;
+	player->key_up = false;
+	player->a_key = false;
+	player->d_key = false;
+}
+
 void	init_player(t_player *player, t_map *map)
 {
 	ft_bzero(player, sizeof(t_player));
@@ -85,10 +95,5 @@ void	init_player(t_player *player, t_map *map)
 	player->texture_y = 0;
 	player->move_speed = 0;
 	player->rot_speed = 0;
-	player->key_down = false;
-	player->key_left = false;
-	player->key_right = false;
-	player->key_up = false;
-	player->a_key = false;
-	player->d_key = false;
+	init_keys(player);
 }
